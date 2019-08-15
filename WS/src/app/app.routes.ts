@@ -6,6 +6,7 @@ import { ServiciossComponent } from './components/servicioss/servicioss.componen
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 
+
 const APP_ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },

@@ -18,6 +18,10 @@ import { ServiciossComponent } from './components/servicioss/servicioss.componen
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { ServicioTarjetaComponent } from './components/servicio-tarjeta/servicio-tarjeta.component';
+import { ShoppingcartComponent } from './components/shoppingcart/shoppingcart.component';
+import { CartComponent } from './components/shoppingcart/cart/cart.component';
+import { SesionService } from './servicios/sesion.service';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +32,10 @@ import { ServicioTarjetaComponent } from './components/servicio-tarjeta/servicio
     ServicioComponent,
     ServiciossComponent,
     BuscadorComponent,
-    ServicioTarjetaComponent
+    ServicioTarjetaComponent,
+    ShoppingcartComponent,
+    CartComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -38,6 +45,8 @@ import { ServicioTarjetaComponent } from './components/servicio-tarjeta/servicio
   ],
   providers: [
     ServicioService
+    ,SesionService
+
   ],
   bootstrap: [AppComponent]
 })

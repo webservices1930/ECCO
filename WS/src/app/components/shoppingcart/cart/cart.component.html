@@ -1,0 +1,5 @@
+<ul class="list-group">
+  <li (click)="quitarServicio(item)" *ngFor="let item of servicios; let i=index">
+    {{item.nombre}} = {{item.costo}}
+  </li>
+</ul>

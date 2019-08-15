@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './servicioss.component.html'
 })
 export class ServiciossComponent implements OnInit {
-
+  seleccionados:Servi[]=[];
   servicios:Servi[] = [];
 
   constructor( private _serviciosService:ServicioService,
@@ -26,4 +26,7 @@ export class ServiciossComponent implements OnInit {
     this.router.navigate( ['/servicio',idx] );
   }
 
+  addProductoCarrito(servicio:Servi){
+    this.seleccionados.push(servicio);
+  }
 }
