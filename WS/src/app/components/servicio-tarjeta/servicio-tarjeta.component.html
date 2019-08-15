@@ -1,0 +1,15 @@
+<div class="card animated fadeIn fast" >
+  <img class="card-img-top img-fluid" [src]="servicio.img" [alt]="servicio.nombre">
+  <div class="card-body">
+    <h4 class="card-title">{{ servicio.nombre }}</h4>
+    <p class="card-text"> {{ servicio.bio }} </p>
+    <p class="card-text"><small class="text-muted">{{ servicio.aparicion }}</small></p>
+
+    <button (click)="verServicio()"
+      type="button" class="btn btn-outline-primary btn-block">
+      Ver más...
+    </button>
+    <!-- <a [routerLink]="['/servicio',i]" class="btn btn-outline-primary">Ver más link...</a> -->
+
+  </div>
+</div>

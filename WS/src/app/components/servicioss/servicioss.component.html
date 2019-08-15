@@ -1,0 +1,10 @@
+<h1>Servicios: <small>Hoteles y demás.</small></h1>
+<hr>
+
+
+<div class="card-columns">
+
+  <app-servicio-tarjeta (heroeSeleccionado)="verServicio( $event )" [servicio]="foo" [index]="i"  *ngFor="let foo of servicios; let i = index"></app-servicio-tarjeta>
+
+
+</div>
