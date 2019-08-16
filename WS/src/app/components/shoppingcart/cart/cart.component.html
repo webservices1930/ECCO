@@ -1,5 +1,33 @@
-<ul class="list-group">
-  <li (click)="quitarServicio(item)" *ngFor="let item of servicios; let i=index">
-    {{item.nombre}} = {{item.costo}}
-  </li>
-</ul>
+
+ <div *ngIf="this.servicios.length===0" >
+    No tienes productos
+ </div>
+  <div *ngIf="this.servicios.length>0" >
+    <table class="table table-striped table-responsive-md btn-table">
+      <thead>
+        <tr>
+          <td style="width:20px;">Cantidad</td>
+          <td>Producto</td>
+          <td>Precio</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="quitarServicio(item)" *ngFor="let item of servicios">
+          <td class="has-text-centered">
+            <span>1</span>
+          </td>
+          <td>{{item.nombre}}</td>
+          <td>{{item.costo}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="carrito-total">
+          <td colspan="2"></td>
+          <td>
+            Total: {{this.total[0]}} USD
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+

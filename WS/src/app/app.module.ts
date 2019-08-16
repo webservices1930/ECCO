@@ -45,7 +45,8 @@ import { SesionService } from './servicios/sesion.service';
   ],
   providers: [
     ServicioService
-    ,SesionService
+    ,SesionService,
+    CartComponent
 
   ],
   bootstrap: [AppComponent]

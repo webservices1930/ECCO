@@ -32,6 +32,7 @@ export class ServicioTarjetaComponent implements OnInit {
 
   agregarServicio(servicio:Servi){
     this._servicioSesion.agregarServicio(servicio);
+    
   }
 
 }
