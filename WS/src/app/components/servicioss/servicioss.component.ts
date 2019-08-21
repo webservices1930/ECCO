@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class ServiciossComponent implements OnInit {
   seleccionados:Servi[]=[];
   servicios:Servi[] = [];
+  serviciosCopia:Servi[] = [];
 
   constructor( private _serviciosService:ServicioService,
                private router:Router
@@ -19,6 +20,9 @@ export class ServiciossComponent implements OnInit {
 
   ngOnInit() {
     this.servicios = this._serviciosService.getServicios();
+    this.servicios.forEach(element => {
+      this.serviciosCopia.push(element);
+    });
      console.log( this.servicios );
   }
 
@@ -29,4 +33,21 @@ export class ServiciossComponent implements OnInit {
   addProductoCarrito(servicio:Servi){
     this.seleccionados.push(servicio);
   }
+
+
+  buscarServicio( termino:string ){
+     console.log(termino);
+
+        var i=0;
+        this.serviciosCopia=[];
+        console.log(this.serviciosCopia)
+        this.servicios.forEach(element => {
+          if(element.tipo.toLocaleLowerCase() === termino.toLocaleLowerCase() || termino===""){
+            console.log("iguales");
+            this.serviciosCopia.push(element);
+          }
+          i++;
+        });
+    }
+    
 }

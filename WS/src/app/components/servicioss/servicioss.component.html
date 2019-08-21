@@ -1,5 +1,17 @@
 <div class="container">
     <h1>Servicios: <small>Hoteles y demás.</small></h1>
+    <div>
+        <h2>Filtrar por: </h2>
+        <select (change)="buscarServicio($event.target.value)" name="combo" id="combo" ng-model="listItems" >
+            <option value=""> </option>
+            <option value="Alojamiento">Alojamiento</option>
+            <option value="Alimentacion">Alimentación</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Paseo">Paseo ecológico</option>
+            <option value="Otro">Otro</option>
+          </select>
+    </div>
+    
   <div class="row">
     <div class="col-md-12">
         <app-shoppingcart></app-shoppingcart>
@@ -9,7 +21,7 @@
   <div class="row">
     <div class="col-md-12">
         <div class="card-columns">
-            <app-servicio-tarjeta (heroeSeleccionado)="verServicio( $event )" [servicio]="foo" [index]="i"  *ngFor="let foo of servicios; let i = index"></app-servicio-tarjeta>
+            <app-servicio-tarjeta (heroeSeleccionado)="verServicio( $event )" [servicio]="foo" [index]="i"  *ngFor="let foo of serviciosCopia; let i = index"></app-servicio-tarjeta>
         </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<h1 class="animated fadeIn">{{ servicio.nombre | uppercase }} <small>({{ servicio.aparicion }})</small></h1>
+<h1 class="animated fadeIn">{{ servicio.nombre | uppercase }} <small>({{ servicio.ciudad }})</small></h1>
 <hr>
 
 <div class="row animated fadeIn fast">
@@ -7,7 +7,7 @@
 
     <img [src]="servicio.img" class="img-fluid" [alt]="servicio.nombre">
     <br><br>
-    <a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>
+   
 
   </div>
 
@@ -15,11 +15,28 @@
     <h3>{{ servicio.nombre }}</h3>
     <hr>
     <p>
+      Descripción:
       {{ servicio.descripcion }}
     </p>
-
-
-
+    <p>
+      Costo:
+      {{ servicio.costo | number:'.2-2'}} USD
+    </p>
   </div>
-
 </div>
+
+  <h1 class="animated fadeIn"> Opiniones y comentarios </h1>
+  <hr>
+<div class="row animated fadeIn fast">
+    <div  class="col-md-4" *ngFor="let foo of servicio.opiniones; let i = index">
+        <h2>
+            Nombre: {{ foo.nombre}}
+        </h2>
+        <p>
+          <img src="/open-iconic-master/svg/comment-square.svg">
+            Comentario:  {{foo.comentario}}
+            Calificacion: {{foo.calificacion}}
+        </p>
+    </div>
+</div>
+<a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>
