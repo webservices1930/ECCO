@@ -23,6 +23,7 @@ import { CartComponent } from './components/shoppingcart/cart/cart.component';
 import { SesionService } from './servicios/sesion.service';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,7 @@ import { SesionService } from './servicios/sesion.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    APP_ROUTING
+    APP_ROUTING,  
   ],
   providers: [
     ServicioService

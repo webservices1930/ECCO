@@ -1,3 +1,6 @@
 #Info{
     margin: 15px;
 }
+.carousel-indicators {
+    display: none;
+  }
