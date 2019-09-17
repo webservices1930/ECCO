@@ -1,0 +1,13 @@
+
+<p>
+  <label class="image-upload-container btn btn-bwm">
+    <span>Select Image</span>
+    <input type='file' (change)="onSelectFile($event)">
+  </label>
+
+  <button id="cc" (click)="upload($event)">upload</button>
+</p>
+<div>
+<button id="ccc" (click)="getEvent($event)">getusu</button>
+</div>
+<img id="img" [src]="getSantizeUrl()"/>   
