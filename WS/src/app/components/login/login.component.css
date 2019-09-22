@@ -1,0 +1,10 @@
+.login{
+  display:flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.loginForm{
+  min-width: 50%;
+
+}

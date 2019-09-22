@@ -4,11 +4,8 @@
 <div class="row animated fadeIn fast">
 
   <div class="col-md-4">
-
-    <img [src]="servicio.img" class="img-fluid" [alt]="servicio.nombre">
+    <img [src]="getSantizeUrl(servicio.img)" [alt]="servicio.nombre">
     <br><br>
-   
-
   </div>
 
   <div class="col-md-8">
@@ -30,7 +27,7 @@
 
 </div>
 
-
+<!--
   <h1 class="animated fadeIn"> Opiniones y comentarios </h1>
   <hr>
 <div class="row animated fadeIn fast">
@@ -45,4 +42,5 @@
         </p>
     </div>
 </div>
+ -->
 <a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>

@@ -2,48 +2,56 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 
 import { ServicioService } from '../../servicios/servicio.service';
+import { Servis } from '../../model/servis';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-servicio',
   templateUrl: './servicio.component.html'
 })
 export class ServicioComponent {
-
-  servicio:any = {};
-
-
-  cards = [
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-  {img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'},
-];
-slides: any = [[]];
+  seleccionados:Servis[]=[];
+  servicios;
+  serviciosCopia:Servis[] = [];
+  serv: Servis = new Servis (
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  );
+  servicio;
 
   constructor( private activatedRoute: ActivatedRoute,
-               private _serviciosService: ServicioService
+               private _serviciosService: ServicioService,
+               private sanitization:DomSanitizer
     ){
-
-    this.activatedRoute.params.subscribe( params =>{
-        this.servicio = this._serviciosService.getServicio( params['id'] );
-    });
 
   }
 
   ngOnInit(){
-    this.slides = this.chunk(this.cards, 3);
-  }
+    this.activatedRoute.params.subscribe( params =>{
+      console.log(params['id']);
+      this._serviciosService.getServiciosJSON().then(res => {
+        this.servicios = res;
+        this.servicios.forEach(element => {
+          console.log(element);
+          if(element.idx===params['id']){
+            this.servicio=element;
+          }
+      });
+    });
+  });
+}
 
-  chunk(arr: any, chunkSize: number) {
-    let R = [];
-    for (let i = 0, len = arr.length; i < len; i += chunkSize) {
-      R.push(arr.slice(i, i + chunkSize));
-    }
-    return R;
-  }
+public getSantizeUrl(img) {
+  console.log(img);
+  console.log(this.sanitization.bypassSecurityTrustUrl(img));
+  return this.sanitization.bypassSecurityTrustUrl(img);
+}
+
+
 }

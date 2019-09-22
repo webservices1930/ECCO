@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 // Rutas
 import { APP_ROUTING } from './app.routes';
@@ -21,7 +22,11 @@ import { ServicioTarjetaComponent } from './components/servicio-tarjeta/servicio
 import { ShoppingcartComponent } from './components/shoppingcart/shoppingcart.component';
 import { CartComponent } from './components/shoppingcart/cart/cart.component';
 import { SesionService } from './servicios/sesion.service';
-
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { CrearservicioComponent } from './components/crearservicio/crearservicio.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { UsuarioService } from './servicios/usuario.service';
 
 
 @NgModule({
@@ -36,17 +41,26 @@ import { SesionService } from './servicios/sesion.service';
     ServicioTarjetaComponent,
     ShoppingcartComponent,
     CartComponent,
+    LoginComponent,
+    RegisterComponent,
+    CrearservicioComponent,
+    ProfileComponent,
 
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    APP_ROUTING,  
+    HttpClientModule,
+    APP_ROUTING,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     ServicioService
     ,SesionService,
+    UsuarioService,
     CartComponent
 
   ],

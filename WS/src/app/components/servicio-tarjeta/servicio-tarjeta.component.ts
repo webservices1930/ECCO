@@ -4,6 +4,7 @@ import { ServiciossComponent } from '../servicioss/servicioss.component';
 import { Servi } from 'src/app/servicios/servicio.service';
 import { CartComponent } from '../shoppingcart/cart/cart.component';
 import { SesionService } from 'src/app/servicios/sesion.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-servicio-tarjeta',
@@ -17,7 +18,7 @@ export class ServicioTarjetaComponent implements OnInit {
 
   @Output() servicioSeleccionado: EventEmitter<number>;
 
-  constructor(private router: Router, private _servicioSesion:SesionService) {
+  constructor(private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer) {
     this.servicioSeleccionado = new EventEmitter();
   }
 
@@ -25,14 +26,18 @@ export class ServicioTarjetaComponent implements OnInit {
   }
 
   verServicio() {
-    // console.log(  this.index );
+    console.log(  this.index );
     this.router.navigate( ['/servicio', this.index] );
     // this.servicioSeleccionado.emit( this.index );
   }
 
   agregarServicio(servicio:Servi){
     this._servicioSesion.agregarServicio(servicio);
-    
   }
 
+  public getSantizeUrl(img) {
+    console.log(img);
+    console.log(this.sanitization.bypassSecurityTrustUrl(img));
+    return this.sanitization.bypassSecurityTrustUrl(img);
+ }
 }

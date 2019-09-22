@@ -1,0 +1,72 @@
+<br>
+<div class="formulario">
+  <h2>Registro </h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+          <label for="nombres">Nombres</label>
+          <input type="text" formControlName="nombres" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.nombres.errors }"/>
+      </div>
+
+
+      <div class="form-group">
+        <label for="edad">Edad</label>
+        <input type="text" formControlName="edad" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.edad.errors }"/>
+    </div>
+
+
+      <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
+      </div>
+      <!--  -->
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <input type="text" formControlName="descripcion" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }"/>
+    </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="text" formControlName="telefono" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }"/>
+    </div>
+
+    <div>
+        <label class="image-upload-container btn btn-bwm">
+            <span>Seleccionar imagen</span>
+            <p></p>
+            <input type='file' (change)="onSelectFile($event)">
+          </label>
+    </div>
+
+    <div>
+        <label for="tipo">Tipo de usuario</label>
+        <select  (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems" formControlName="tipo" class="form-control" >
+            <option value="Comprador">Comprador</option>
+            <option value="Proveedor">Proveedor</option>
+          </select>
+    </div>
+
+    <div *ngIf="this.tipo == 'Proveedor'">
+        <div class="form-group">
+          <label for="paginaweb">Página web</label>
+          <input type="text" formControlName="paginaweb" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.paginaweb.errors }"/>
+        </div>
+      <div class="form-group">
+        <label for="contacto">Contacto</label>
+        <input type="text" formControlName="contacto" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.contacto.errors }"/>
+      </div>
+    </div>
+
+      <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" formControlName="password" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Contraseña es requerida</div>
+              <div *ngIf="f.password.errors.minlength">Contraseña debe ser de al menos 6 caracteres</div>
+          </div>
+      </div>
+
+
+      <div class="form-group">
+          <button class="btn btn-outline-primary mx-auto d-block">Registrarme</button>
+      </div>
+  </form>
+</div>

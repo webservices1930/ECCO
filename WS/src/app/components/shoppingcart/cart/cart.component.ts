@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiciossComponent } from '../../servicioss/servicioss.component';
 import { Servi } from 'src/app/servicios/servicio.service';
 import { SesionService } from 'src/app/servicios/sesion.service';
+import { Servis } from '../../../model/servis';
 
 @Component({
   selector: 'app-cart',
@@ -10,7 +11,7 @@ import { SesionService } from 'src/app/servicios/sesion.service';
 })
 export class CartComponent implements OnInit {
 
-  servicios:Servi[]=[];
+  servicios:Servis[]=[];
   total:number[]=[];
   constructor(private _SesionServicio:SesionService) { }
 

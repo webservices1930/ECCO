@@ -1,62 +1,100 @@
 
 import { Injectable } from '@angular/core';
+import {xmlToJson} from './lib';
+import { Servis } from '../model/servis';
 
 @Injectable()
 export class ServicioService {
-  
-  private servicios:Servi[] = [
-    {
-      nombre: "Qiu Hotel Sukhumvit",
-      pais: "Tailandia",
-      ciudad:"Bangkok",
-      descripcion:"Está a solo 3 minutos a pie de la estación de tren aéreo BTS de On Nut. Ofrece habitaciones amplias con TV vía satélite, una pileta al aire libre y WiFi gratis.",
-      tipo:"Alojamiento",
-      costo:1000,
-      img: "assets/img/hotelPrueba.jpg",
-      opiniones: [
-                      {
-                        nombre:"Carlos",
-                        comentario:"Muy buen hotel, me encantó.",
-                        calificacion:5
-                      },{
-                        nombre:"Ana",
-                        comentario:"Muy buen hotel, me encantó.",
-                        calificacion:3
-                      }
-                  ]
-    },
-    {
-      nombre: "Hotel Presidente",
-      pais:"España",
-      ciudad: "Benidorm",
-      descripcion: "Hotel Presidente tiene como objetivo conseguir que tu visita sea lo más relajante y agradable posible, razón por la que tantos huéspedes siguen volviendo año tras año.",
-      tipo:"Alojamiento",
-      costo:1230,
-      img: "assets/img/hotelPrueba2.jpg",
-      opiniones: [ {nombre:"Carlos",
-                    comentario:"Muy buen hotel, me encantó.",
-                    calificacion:5
-                    }]
-    },
-    {
-      nombre: "L Hotel",
-      pais:"España",
-      ciudad: "Islas canarias",
-      descripcion:"Ideal para disfrutar de unas vacaciones en familia y conocer uno de los destinos turísticos más importantes del Mediterráneo",
-      tipo:"Alimentacion",
-      costo:560,
-      img: "assets/img/hotelPrueba3.jpg",
-      opiniones: []
-    },
-  ];
+  serv: Servis = new Servis (
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  );
+  serviciosCopia:any=[];
+  servicios:any=[];
+
+
 
   constructor() {
     console.log("Servicio listo para usar!!!");
+    this.getServiciosJSON().then(res => {
+      this.serviciosCopia = res;
+      this.servicios = res;
+      console.log(this.servicios);
+    });
   }
 
-
-  getServicios():Servi[]{
+  getServicios(){
     return this.servicios;
+  }
+
+  async getServiciosJSON(){
+    return new Promise(resolve => {
+      setTimeout(() => {
+
+        var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+    let sr= '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
+          '<soapenv:Header/>'+
+          '<soapenv:Body>'+
+            '<djan:getServiciosAlimentaicon/>'+
+          '</soapenv:Body>'+
+      '</soapenv:Envelope>';
+    var y = this;
+    let data;
+    xmlhttp.onreadystatechange =  function () {
+     if (xmlhttp.readyState == 4) {
+         if (xmlhttp.status == 200) {
+             var doc =  xmlToJson(xmlhttp.responseXML);
+             console.log(doc);
+             data=doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult']['s0:AlimentacionRes'];
+             let serviciosCopia=[];
+             data.forEach(element => {
+              let serv = new Servis (
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              );
+              console.log(element['s0:nombre']['#text']);
+              serv.nombre= element['s0:nombre']['#text'];
+              serv.descripcion=element['s0:descripcion']['#text'];
+              serv.costo=+element['s0:costo']['#text'];
+              let inf= element['s0:foto']['#text'];
+              serv.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
+              serv.idx=element['s0:id']['#text'];
+              serv.pais=element['s0:pais']['#text'];
+              serv.ciudad=element['s0:ciudad']['#text'];
+              serv.tipo="Alimentacion";
+              serviciosCopia.push(serv);
+              resolve(serviciosCopia);
+         });
+     }
+     }
+   }
+   xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+   xmlhttp.send(sr);
+      }, 1000);
+    });
+
+  }
+  getServicioJSON(id){
+
+    this.getServiciosJSON().then(res => {
+      this.serviciosCopia = res;
+      this.servicios = res;
+      console.log(this.servicios);
+
+  });
   }
 
   getServicio( idx: string ){

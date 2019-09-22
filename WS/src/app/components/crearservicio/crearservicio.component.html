@@ -1,0 +1,81 @@
+<br>
+<div class="formulario">
+  <h2>Crear servicio </h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+          <label for="nombres">Nombre del servicio</label>
+          <input type="text" formControlName="nombres" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.nombres.errors }"/>
+      </div>
+
+
+      <div class="form-group">
+        <label for="pais">País</label>
+        <input type="text" formControlName="pais" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.pais.errors }"/>
+    </div>
+
+
+      <div class="form-group">
+          <label for="ciudad">Ciudad</label>
+          <input type="text" formControlName="ciudad" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.ciudad.errors }"/>
+      </div>
+      <!--  -->
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <input type="text" formControlName="descripcion" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }"/>
+    </div>
+      <div class="form-group">
+        <label for="costo">Costo</label>
+        <input type="text" formControlName="costo" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.costo.errors }"/>
+    </div>
+
+    <div>
+        <label class="image-upload-container btn btn-bwm">
+            <span>Seleccionar imagen</span>
+            <p></p>
+            <input type='file' (change)="onSelectFile($event)">
+          </label>
+    </div>
+
+    <div>
+        <label for="tipo">Tipo de servicio</label>
+        <select  (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems" formControlName="tipo" class="form-control" >
+            <option value="Alimentacion">Alimentación</option>
+            <option value="Hospejade">Hospedaje</option>
+            <option value="Transporte">Transporte</option>
+            <option value="PaseoEcologico">Paseo ecológico</option>
+          </select>
+    </div>
+
+    <div *ngIf="this.tipo == 'Alimentacion'">
+        <div class="form-group">
+            <label for="numeropersonas">Número de personas</label>
+            <input type="text" formControlName="numeropersonas" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }"/>
+        </div>
+
+        <div class="form-group">
+            <label for="tipocomida">Tipo de comida</label>
+            <input type="text" formControlName="tipocomida" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }"/>
+        </div>
+
+        <div class="form-group">
+            <label for="cantidadplatos">Cantidad de platos</label>
+            <input type="text" formControlName="cantidadplatos" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.cantidadplatos.errors }"/>
+        </div>
+    </div>
+
+    <div *ngIf="this.tipo == 'Hospedaje'">
+
+      </div>
+
+      <div *ngIf="this.tipo == 'Transporte'">
+
+        </div>
+
+        <div *ngIf="this.tipo == 'PaseoEcologico'">
+
+          </div>
+      <div class="form-group">
+          <button class="btn btn-outline-primary mx-auto d-block">Crear servicio</button>
+      </div>
+  </form>
+</div>

@@ -4,3 +4,8 @@
 .carousel-indicators {
     display: none;
   }
+
+img{
+  width: 200px;
+  height: 120px;
+}

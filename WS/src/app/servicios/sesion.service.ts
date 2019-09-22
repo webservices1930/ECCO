@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Servi } from './servicio.service';
+import { Servis } from '../model/servis';
 
 @Injectable()
 export class SesionService {
-    private servicios:Servi[] =[];
+    private servicios:Servis[] =[];
     private total:number[] = [];
+    private sesion = "usuario";
     agregarServicio(servicio:Servi){
         this.servicios.push(servicio);
         if(this.total.length===0){
@@ -12,22 +14,25 @@ export class SesionService {
         }else{
             this.total[0]+=servicio.costo;
         }
-        
+
         console.log(this.servicios);
         console.log(this.total);
     }
-    getServicios():Servi[]{
+    getServicios():Servis[]{
         return this.servicios;
     }
     getTotal(){
         return this.total;
     }
-    quitarServicio(servicio:Servi){
+    quitarServicio(servicio:Servis){
         for(var i=0;i<this.servicios.length;i++) {
             if(this.servicios[i].nombre === servicio.nombre){
-                this.servicios.splice(i, 1); 
+                this.servicios.splice(i, 1);
                 this.total[0]-=servicio.costo;
             }
         }
+    }
+    getSesion(){
+      return this.sesion;
     }
 }
