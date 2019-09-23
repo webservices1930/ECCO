@@ -27,6 +27,7 @@ class Client(ComplexModel):
     nombreUsuario=String
     nombre=String
     edad = Integer
+    contrasena=String
     foto = ByteArray
     tipo = String
     descripcion = String
@@ -96,7 +97,7 @@ class SoapService(ServiceBase):
         if sc.count() == 0:
             try:
 
-                usu= models.Cliente(nombreUsuario=cliente.nombreUsuario,nombre=cliente.nombre,edad=cliente.edad,descripcion=cliente.descripcion,telefono=cliente.telefono)
+                usu= models.Cliente(nombreUsuario=cliente.nombreUsuario,nombre=cliente.nombre,edad=cliente.edad,contrasena=cliente.contrasena,descripcion=cliente.descripcion,telefono=cliente.telefono)
                 if(len(cliente.tipo)>2 and len(cliente.foto[0])>10):
                     ty = cliente.tipo.split("/")[1]
                     with open(CLIENT_IMAGES+cliente.nombreUsuario+"_profile."+ty,"wb") as f:
@@ -150,6 +151,7 @@ class SoapService(ServiceBase):
                 cli=sc[0]
                 cli.nombre=cliente.nombre
                 cli.edad=cliente.edad
+                cli.contrasena=cliente.contrasena
                 if(len(cliente.tipo)>2 and len(cliente.foto[0])>10):
                     print(len(cli.foto))
                     if(len(cli.foto)>1):
@@ -199,6 +201,7 @@ class SoapService(ServiceBase):
             aux=ClientRes()
             aux.nombreUsuario=u.nombreUsuario
             aux.nombre=u.nombre
+            aux.edad=u.edad
             if(len(u.foto) > 1):
                 in_file = open(CLIENT_IMAGES+u.foto, "rb")
                 d=in_file.read()
@@ -217,7 +220,7 @@ class SoapService(ServiceBase):
         if sc.count() == 0:
             try:
 
-                prov= models.Proveedor(nombreUsuario=proveedor.nombreUsuario,nombre=proveedor.nombre,edad=proveedor.edad,descripcion=proveedor.descripcion,telefono=proveedor.telefono,paginaWeb=proveedor.paginaWeb,contactoRS=proveedor.contactoRS)
+                prov= models.Proveedor(nombreUsuario=proveedor.nombreUsuario,nombre=proveedor.nombre,edad=proveedor.edad,contrasena=proveedor.contrasena,descripcion=proveedor.descripcion,telefono=proveedor.telefono,paginaWeb=proveedor.paginaWeb,contactoRS=proveedor.contactoRS)
                 if(len(proveedor.tipo)>2 and len(proveedor.foto[0])>10):
                     ty = proveedor.tipo.split("/")[1]
                     with open(PROVIDER_IMAGES+proveedor.nombreUsuario+"_profile."+ty,"wb") as f:
@@ -273,6 +276,7 @@ class SoapService(ServiceBase):
                 cli=sc[0]
                 cli.nombre=proveedor.nombre
                 cli.edad=proveedor.edad
+                cli.contrasena=proveedor.contrasena
                 if(len(proveedor.tipo)>2 and len(proveedor.foto[0])>10):
                     print(len(cli.foto))
                     if(len(cli.foto)>1):
@@ -324,6 +328,7 @@ class SoapService(ServiceBase):
             aux=ProveedorRes()
             aux.nombreUsuario=u.nombreUsuario
             aux.nombre=u.nombre
+            aux.edad=u.edad
             if(len(u.foto) > 1):
                 in_file = open(PROVIDER_IMAGES+u.foto, "rb")
                 d=in_file.read()
@@ -426,8 +431,50 @@ class SoapService(ServiceBase):
     @rpc(_returns=Array(AlimentacionRes))
     def getServiciosAlimentaicon (ctx):
         list=models.Alimentacion.objects.all()
-        return list
+        res=[]
+        for ser in list:
+            aux=AlimentacionRes()
+            aux.id = ser.id
+            aux.nombre =ser.nombre
+            aux.pais = ser.pais
+            aux.ciudad = ser.ciudad
+            aux.idioma = ser.idioma
+            aux.costo = ser.costo
+            aux.descripcion = ser.descripcion
+            if (len(ser.foto) > 3):
+                in_file = open(SERVICE_IMAGES + ser.foto, "rb")
+                d = in_file.read()
+                fo = str(base64.encodestring(d)).replace('\\n', '')
+                aux.foto = fo
+                in_file.close()
+                aux.tipo = ser.foto.split(".")[1]
+            else:
+                aux.foto=" "
 
+            aux.numeroPersonas = ser.numeroPersonas
+            aux.nombreProveedor = ser.proveedor.nombre
+            aux.tipoComida = ser.tipoComida
+            aux.cantidadPlatos = ser.cantidadPlatos
+            res.append(aux)
+        return res
+
+    @rpc(Integer(),_returns=ResponseText)
+    def deleteServicio(ctx,id_servicio):
+        sc=models.Servicio.objects.filter(id=id_servicio)
+        res=ResponseText()
+        if(sc.count() > 0):
+            try:
+                usu=sc[0]
+                if(len(usu.foto) > 2):
+                    os.remove(SERVICE_IMAGES+usu.foto)
+                usu.delete()
+                res.resultado="servicio eliminado con exito"
+                return res
+            except:
+                res.resultado="error al borrar servicio"
+                return res
+        res.resultado="servicio no existe en el sistema"
+        return res
 soap_app = Application(
     [SoapService],
     tns='django.soap.service',

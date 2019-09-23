@@ -10,6 +10,7 @@ class Usuario(models.Model):
     foto =models.TextField()
     descripcion =models.TextField()
     telefono =models.TextField()
+    contrasena = models.TextField(default="1234")
     class Meta:
         abstract=True
 
@@ -36,6 +37,7 @@ class Servicio(PolymorphicModel):
 class Resena(models.Model):
     cliente=models.ForeignKey(Cliente,on_delete=models.CASCADE)
     servicio=models.ForeignKey(Servicio,on_delete=models.CASCADE)
+    texto=models.TextField(default="")
 
 class Alojamiento(Servicio):
     tipoAlojamiento=models.TextField(choices=(("HOTEL","Hotel"),("CASA","Casa"),("CAMPING","Camping"),("MOTEL","Motel")))
