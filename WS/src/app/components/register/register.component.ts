@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
         nombres: ['', Validators.required],
         email: ['', Validators.required],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        password: ['', [Validators.required]],
         edad:['', Validators.required],
         telefono:['', Validators.required],
         descripcion:['', Validators.required],
@@ -64,27 +64,16 @@ export class RegisterComponent implements OnInit {
    '<soapenv:Header/>'+
    '<soapenv:Body>'+
       '<djan:createProveedor>'+
-         '<!--Optional:-->'+
          '<djan:proveedor>'+
-            '<!--Optional:-->'+
             '<ser:nombreUsuario>'+this.registerForm.value.email+'</ser:nombreUsuario>'+
-            '<!--Optional:-->'+
             '<ser:nombre>'+this.registerForm.value.nombres+'</ser:nombre>'+
-            '<!--Optional:-->'+
            '<ser:edad>'+this.registerForm.value.edad+'</ser:edad>'+
-            '<!--Optional:-->'+
             '<ser:contrasena>'+this.registerForm.value.password+'</ser:contrasena>'+
-            '<!--Optional:-->'+
             '<ser:foto>'+this.base64data+'</ser:foto>'+
-            '<!--Optional:-->'+
             '<ser:tipo>'+this.ext+'</ser:tipo>'+
-            '<!--Optional:-->'+
             '<ser:descripcion>'+this.registerForm.value.descripcion+'</ser:descripcion>'+
-            '<!--Optional:-->'+
             '<ser:telefono>'+this.registerForm.value.telefono+'</ser:telefono>'+
-            '<!--Optional:-->'+
             '<ser:paginaWeb>'+this.registerForm.value.paginaweb+'</ser:paginaWeb>'+
-            '<!--Optional:-->'+
             '<ser:contactoRS>'+this.registerForm.value.contacto+'</ser:contactoRS>'+
          '</djan:proveedor>'+
       '</djan:createProveedor>'+
@@ -97,23 +86,14 @@ export class RegisterComponent implements OnInit {
       '<soapenv:Header/>'+
       '<soapenv:Body>'+
         '<djan:createUsuario>'+
-            '<!--Optional:-->'+
             '<djan:cliente>'+
-              '<!--Optional:-->'+
                '<ser:nombreUsuario>'+this.registerForm.value.email+'</ser:nombreUsuario>'+
-               '<!--Optional:-->'+
               '<ser:nombre>'+this.registerForm.value.nombres+'</ser:nombre>'+
-               '<!--Optional:-->'+
                '<ser:edad>'+this.registerForm.value.edad+'</ser:edad>'+
-               '<!--Optional:-->'+
                '<ser:contrasena>'+this.registerForm.value.password+'</ser:contrasena>'+
-               '<!--Optional:-->'+
                '<ser:foto>'+this.base64data+'</ser:foto>'+
-              '<!--Optional:-->'+
                '<ser:tipo>'+this.ext+'</ser:tipo>'+
-               '<!--Optional:-->'+
                '<ser:descripcion>'+this.registerForm.value.descripcion+'</ser:descripcion>'+
-               '<!--Optional:-->'+
                '<ser:telefono>'+this.registerForm.value.telefono+'</ser:telefono>'+
             '</djan:cliente>'+
          '</djan:createUsuario>'+
@@ -130,7 +110,9 @@ export class RegisterComponent implements OnInit {
     // Send the POST request
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.send(sr);
+
     this.router.navigate(['login']);
+
   }
 
   cambiar(){

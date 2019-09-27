@@ -8,22 +8,33 @@ import { s } from '@angular/core/src/render3';
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
-  private sesion = "usuario";
-  private user="g"
-  constructor( private router:Router,
+  sesion = "sininiciar";
+  private user;
+  _subscription: any;
+  constructor(private router:Router,
               private sesionService:SesionService
-    ) { }
+    ) {
+      this.sesion = sesionService.sesion;
+      this._subscription = sesionService.sesionCambio.subscribe((value)=>{
+          this.sesion = value;
+      })
+    }
 
   ngOnInit() {
     document.title = 'ECCO';
-    this.sesion=this.sesionService.getSesion();
-    console.log(this.sesion);
-
   }
 
   buscarServicio( termino:string ){
     // console.log(termino);
     this.router.navigate( ['/buscar',termino] );
   }
+
+  logout(){
+    this.sesionService.sesion = 'sininiciar';
+    this.sesionService.sesionCambio.next('sininiciar');
+    console.log(this.sesion);
+
+  }
+
 
 }

@@ -54,36 +54,62 @@ export class ServicioService {
              console.log(doc);
              data=doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult']['s0:AlimentacionRes'];
              let serviciosCopia=[];
-             data.forEach(element => {
-              let serv = new Servis (
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-              );
-              console.log(element['s0:nombre']['#text']);
-              serv.nombre= element['s0:nombre']['#text'];
-              serv.descripcion=element['s0:descripcion']['#text'];
-              serv.costo=+element['s0:costo']['#text'];
-              let inf= element['s0:foto']['#text'];
-              serv.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
-              serv.idx=element['s0:id']['#text'];
-              serv.pais=element['s0:pais']['#text'];
-              serv.ciudad=element['s0:ciudad']['#text'];
-              serv.tipo="Alimentacion";
-              serviciosCopia.push(serv);
-              resolve(serviciosCopia);
-         });
-     }
+             if(data.length === undefined){
+                  let serv = new Servis (
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                  );
+                  console.log(data['s0:nombre']['#text']);
+                  serv.nombre= data['s0:nombre']['#text'];
+                  serv.descripcion=data['s0:descripcion']['#text'];
+                  serv.costo=+data['s0:costo']['#text'];
+                  let inf= data['s0:foto']['#text'];
+                  serv.img="data:image/"+data['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
+                  serv.idx=data['s0:id']['#text'];
+                  serv.pais=data['s0:pais']['#text'];
+                  serv.ciudad=data['s0:ciudad']['#text'];
+                  serv.tipo="Alimentacion";
+                  serviciosCopia.push(serv);
+                  resolve(serviciosCopia);
+             }else{
+
+                data.forEach(element => {
+                  let serv = new Servis (
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                  );
+                  console.log(element['s0:nombre']['#text']);
+                  serv.nombre= element['s0:nombre']['#text'];
+                  serv.descripcion=element['s0:descripcion']['#text'];
+                  serv.costo=+element['s0:costo']['#text'];
+                  let inf= element['s0:foto']['#text'];
+                  serv.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
+                  serv.idx=element['s0:id']['#text'];
+                  serv.pais=element['s0:pais']['#text'];
+                  serv.ciudad=element['s0:ciudad']['#text'];
+                  serv.tipo="Alimentacion";
+                  serviciosCopia.push(serv);
+                  resolve(serviciosCopia);
+            });
+          }
+        }
      }
    }
    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
    xmlhttp.send(sr);
-      }, 1000);
+      }, 1500);
     });
 
   }

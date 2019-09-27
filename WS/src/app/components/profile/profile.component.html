@@ -1,16 +1,40 @@
 <div>
 
   <div>
-    <label for="nombre">Nombre: {{this.usuarioMostrar.nombre}}</label>
+    <label for="nombre">Nombre: </label>
+    <input type="text" class="form-control" id="nombre" [(ngModel)]="this.usuarioMostrar.nombre">
   </div>
   <div>
-      <label for="username">Email: {{this.usuarioMostrar.email}}</label>
+      <label for="username">Email: </label>
+      <input type="text" class="form-control" id="username" [(ngModel)]="this.usuarioMostrar.email">
+
     </div>
     <div>
-        <label for="edad">Edad: {{this.usuarioMostrar.edad}}</label>
+        <label for="edad">Edad: </label>
+        <input type="text" class="form-control" id="edad" [(ngModel)]="this.usuarioMostrar.edad">
+
       </div>
       <div>
-          <label for="nombre">Teléfono: {{this.usuarioMostrar.telefono}}</label>
+          <label for="telefono">Teléfono:</label>
+          <input type="text" class="form-control" id="telefono" [(ngModel)]="this.usuarioMostrar.telefono">
+      </div>
+      <label for="imagen">Imagen: </label>
+      <br>
+      <img id="img" [src]="getSantizeUrl()"/>
+
+
+
+      <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary btn-block" (click)="save()">
+                Guardar
+            </button>
         </div>
-        <img id="img" [src]="getSantizeUrl()"/>
+        <div class="col">
+                <button type="button" class="btn btn-outline-danger btn-block" (click)="delete()">
+                Eliminar
+            </button>
+        </div>
+    </div>
+
 </div>

@@ -3,7 +3,6 @@ import { ServicioService, Servi } from '../../servicios/servicio.service';
 import { Router } from '@angular/router';
 import {xmlToJson} from '../../servicios/lib';
 import { Servis } from '../../model/servis';
-import { inflate } from 'zlib';
 
 
 @Component({

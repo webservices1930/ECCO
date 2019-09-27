@@ -22,7 +22,7 @@ const APP_ROUTES: Routes = [
   { path: 'crearservicio', component: CrearservicioComponent },
   { path: 'profile/:user', component: ProfileComponent },
 
-  { path: '**', pathMatch: 'full', redirectTo: 'home' }
+  { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES, {useHash:true});
