@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario.service';
 import { Usuario } from '../../model/usuario';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SesionService } from '../../servicios/sesion.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,10 +15,12 @@ export class ProfileComponent implements OnInit {
   usuarios;
   usuariosCopia:Usuario[]=[];
   usuarioMostrar;
+  _subscription: any;
   constructor( private route: ActivatedRoute,
     private router: Router,
     private usuarioService:UsuarioService,
-    private sanitization:DomSanitizer
+    private sanitization:DomSanitizer,
+    private sesionService:SesionService
     ) {
 
 
@@ -25,14 +28,18 @@ export class ProfileComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.route.params.subscribe( params =>{
-      this.user = params['user'];
-      console.log(this.user);
-        this.usuarioService.getUsuarioByUsernameJSON(this.user).then( res => {
-          this.usuarioMostrar = res;
-          console.log(this.usuarioMostrar);
-        });
-    });
+    console.log("hola");
+    this.user = this.sesionService.id;
+    console.log(this.user);
+    if(this.sesionService.sesion === 'usuario'){
+      this.usuarioService.getUsuarioByUsernameJSON(this.user).then( res => {
+        this.usuarioMostrar = res;
+        console.log(this.usuarioMostrar);
+      });
+    }else{
+      console.log("proveedor en proceso");
+    }
+
   }
   public getSantizeUrl() {
     let image = "data:image/"+this.usuarioMostrar.tipo+";base64, "+this.usuarioMostrar.img.slice(2,this.usuarioMostrar.img.length-1);

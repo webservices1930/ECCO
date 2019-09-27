@@ -42,12 +42,16 @@ export class LoginComponent implements OnInit {
       if(res === 'usuario'){
         this.sesionService.sesion = 'usuario' ;
         this.sesionService.sesionCambio.next('usuario');
+        this.sesionService.id = this.loginForm.value.email ;
+        this.sesionService.idCambio.next(this.loginForm.value.email);
+        console.log(this.sesionService.id);
         this.router.navigate(['home']);
       }else if(res === 'proveedor'){
         this.sesionService.sesion = 'proveedor';
           this.router.navigate(['home']);
           this.sesionService.sesionCambio.next('proveedor');
-
+          this.sesionService.id = this.loginForm.value.email ;
+          this.sesionService.idCambio.next(this.loginForm.value.email);
       }else{
         alert('Usuario incorrecto');
       }

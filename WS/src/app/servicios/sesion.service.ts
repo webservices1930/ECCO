@@ -8,12 +8,16 @@ import { Subject } from 'rxjs';
 export class SesionService {
     private servicios:Servis[] =[];
     private total:number[] = [];
-
+    id="";
     sesion ="";
     sesionCambio: Subject<string> = new Subject<string>();
+    idCambio: Subject<string> = new Subject<string>();
     constructor(){
         this.sesion = "sininiciar";
         this.sesionCambio.next(this.sesion);
+
+        this.id = "";
+        this.idCambio.next(this.id);
     }
 
 
@@ -45,6 +49,7 @@ export class SesionService {
     getSesion(){
       return this.sesion;
     }
+
     setSesion(x){
       this.sesion = x;
     }

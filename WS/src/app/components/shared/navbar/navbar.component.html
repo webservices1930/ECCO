@@ -36,11 +36,12 @@
           <a class="nav-link" [routerLink]="['servicioss']">Servicios</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" [routerLink]="['about']">About</a>
+          <a class="nav-link" [routerLink]="['profile']">Perfil</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" [routerLink]="['profile',this.user]">Perfil</a>
-          </li>
+          <a class="nav-link" [routerLink]="['about']">About</a>
+        </li>
+
           <li>
             <a class="nav-link" (click)="logout()" [routerLink]="['login']">LogOut</a>
           </li>
@@ -60,11 +61,16 @@
             <a class="nav-link" [routerLink]="['servicioss']">Servicios</a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" [routerLink]="['about']">About</a>
+            <a class="nav-link" [routerLink]="['crearservicio']">Crear servicio</a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" [routerLink]="['crearservicio']">Crear servicio</a>
+              <a class="nav-link" [routerLink]="['profile']">Perfil</a>
             </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['about']">About</a>
+          </li>
+
+
             <li>
               <a class="nav-link" [routerLink]="['login']" (click)="logout()">LogOut</a>
             </li>
