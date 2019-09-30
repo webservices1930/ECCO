@@ -23,24 +23,45 @@
 </div>
 
 <div>
-
-
-</div>
-
-<!--
-  <h1 class="animated fadeIn"> Opiniones y comentarios </h1>
-  <hr>
-<div class="row animated fadeIn fast">
-    <div  class="col-md-4" *ngFor="let foo of servicio.opiniones; let i = index">
-        <h2>
-            Nombre: {{ foo.nombre}}
-        </h2>
-        <p>
-          <img src="/open-iconic-master/svg/comment-square.svg">
-            Comentario:  {{foo.comentario}}
-            Calificacion: {{foo.calificacion}}
-        </p>
+  <h2> Preguntas </h2>
+  <form (ngSubmit)="hacerPregunta()" #preguntaForm="ngForm">
+    <input placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true" required name="pregunta"
+      [(ngModel)]="pregunta" maxlength="50" #txtPregunta="ngModel" />
+    <div id="botonesPregunta">
+      <button type="submit" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
+      <button type="button" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
     </div>
+  </form>
+  <div id="preguntaRespuesta" *ngFor="let pregunta of preguntass">
+    <div id="preguntaCliente">
+      <img id="fotoClientePregunta" src="assets/img/4clover.png" alt="image">
+      <div>
+        <div id="nombreClientePregunta">{{ pregunta.cliente.nombre }}</div>
+        <div>{{ pregunta.pregunta }}</div>
+      </div>
+    </div>
+    <div [hidden]="pregunta.respuesta==null" id="respuestaProveedor">
+      <span id="respuestaLabel">Respuesta:</span> {{pregunta.respuesta}}
+    </div>
+  </div>
 </div>
- -->
+
+
+
+
+<!--<h1 class="animated fadeIn"> Opiniones y comentarios </h1>
+<hr>
+<div class="row animated fadeIn fast">
+  <div class="col-md-4" *ngFor="let foo of servicio.opiniones; let i = index">
+    <h2>
+      Nombre: {{ foo.nombre}}
+    </h2>
+    <p>
+      <img src="/open-iconic-master/svg/comment-square.svg">
+      Comentario: {{foo.comentario}}
+      Calificacion: {{foo.calificacion}}
+    </p>
+  </div>
+</div>-->
+
 <a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>

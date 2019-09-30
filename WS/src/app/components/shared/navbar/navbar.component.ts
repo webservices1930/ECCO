@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SesionService } from '../../../servicios/sesion.service';
-import { s } from '@angular/core/src/render3';
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html'

@@ -9,3 +9,32 @@ img{
   width: 200px;
   height: 120px;
 }
+
+#fotoClientePregunta{
+  width:70px;
+  height:70px;
+  margin-right: 20px;
+  border: 2px solid green;
+}
+
+#preguntaCliente{
+  display : flex;
+}
+
+#nombreClientePregunta{
+  font-weight: bold;
+  text-decoration: underline black;
+}
+
+#respuestaProveedor{
+  margin-left: 90px;
+}
+#respuestaLabel{
+  font-weight: bold;
+}
+
+#preguntaRespuesta{
+  border: 0.1px solid black;
+  margin-bottom: 2px;
+  background-color: #FAFAFA;
+}
