@@ -19,7 +19,6 @@ export class ServicioService {
   servicios:any=[];
 
 
-
   constructor() {
     console.log("Servicio listo para usar!!!");
     this.getServiciosJSON().then(res => {
@@ -32,6 +31,53 @@ export class ServicioService {
   getServicios(){
     return this.servicios;
   }
+
+  crearServicio(registerForm,base64data,ext,tipo){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+    let sr='';
+    if(tipo === 'Alimentacion'){
+      console.log("si");
+      sr='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+      '<soapenv:Header/>'+
+     '<soapenv:Body>'+
+         '<djan:createServicioAlimentacion>'+
+            '<!--Optional:-->'+
+            '<djan:servicio>'+
+               '<ser:nombre>'+registerForm.value.nombres+'</ser:nombre>'+
+               '<ser:pais>'+registerForm.value.pais+'</ser:pais>'+
+               '<ser:ciudad>'+registerForm.value.ciudad+'</ser:ciudad>'+
+               '<ser:idioma>'+registerForm.value.idioma+'</ser:idioma>'+
+               '<ser:costo>'+registerForm.value.costo+'</ser:costo>'+
+               '<ser:descripcion>'+registerForm.value.descripcion+'</ser:descripcion>'+
+               '<ser:foto>'+base64data+'</ser:foto>'+
+               '<ser:tipo>'+ext+'</ser:tipo>'+
+               '<ser:numeroPersonas>'+registerForm.value.numeropersonas+'</ser:numeroPersonas>'+
+               '<ser:nombreProveedor>'+'pepe@gmail.com'+'</ser:nombreProveedor>'+
+               '<ser:tipoComida>'+registerForm.value.tipocomida+'</ser:tipoComida>'+
+               '<ser:cantidadPlatos>'+ registerForm.value.cantidadplatos+'</ser:cantidadPlatos>'+
+            '</djan:servicio>'+
+         '</djan:createServicioAlimentacion>'+
+      '</soapenv:Body>'+
+   '</soapenv:Envelope>';
+    }else if(tipo === 'Transporte'){
+
+      sr='';
+    }else{
+
+    }
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState == 4) {
+          if (xmlhttp.status == 200) {
+              alert("Se creó el servicio correctamente");
+            }
+      }
+    }
+    // Send the POST request
+    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+    xmlhttp.send(sr);
+  }
+
 
   async getServiciosJSON(){
     return new Promise(resolve => {
@@ -53,8 +99,9 @@ export class ServicioService {
              var doc =  xmlToJson(xmlhttp.responseXML);
              console.log(doc);
              data=doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult']['s0:AlimentacionRes'];
+             console.log(data);
              let serviciosCopia=[];
-             if(data.length === undefined){
+             if(data.length === undefined && data!==undefined){
                   let serv = new Servis (
                     undefined,
                     undefined,
@@ -77,7 +124,7 @@ export class ServicioService {
                   serv.tipo="Alimentacion";
                   serviciosCopia.push(serv);
                   resolve(serviciosCopia);
-             }else{
+             }else if(data!==undefined){
 
                 data.forEach(element => {
                   let serv = new Servis (

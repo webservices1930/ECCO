@@ -94,4 +94,39 @@ export class UsuarioService {
           });
         });
       }
+
+      registrarUsuario(registerForm, base64data, ext){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+        let sr=
+        '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+        '<soapenv:Header/>'+
+         '<soapenv:Body>'+
+           '<djan:createUsuario>'+
+               '<djan:cliente>'+
+                 '<ser:nombreUsuario>'+registerForm.value.email+'</ser:nombreUsuario>'+
+                 '<ser:nombre>'+registerForm.value.nombres+'</ser:nombre>'+
+                 '<ser:edad>'+registerForm.value.edad+'</ser:edad>'+
+                 '<ser:contrasena>'+registerForm.value.password+'</ser:contrasena>'+
+                 '<ser:foto>'+base64data+'</ser:foto>'+
+                 '<ser:tipo>'+ext+'</ser:tipo>'+
+                 '<ser:descripcion>'+registerForm.value.descripcion+'</ser:descripcion>'+
+                 '<ser:telefono>'+registerForm.value.telefono+'</ser:telefono>'+
+               '</djan:cliente>'+
+           '</djan:createUsuario>'+
+         '</soapenv:Body>'+
+     '</soapenv:Envelope>';
+
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4) {
+              if (xmlhttp.status == 200) {
+                  alert("Se creó el usuario correctamente");
+                }
+          }
+        }
+        // Send the POST request
+        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+        xmlhttp.send(sr);
+
+      }
 }

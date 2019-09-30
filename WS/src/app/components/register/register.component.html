@@ -32,7 +32,7 @@
         <label class="image-upload-container btn btn-bwm">
             <span>Seleccionar imagen</span>
             <p></p>
-            <input type='file' (change)="onSelectFile($event)">
+            <input type='file' (change)="onSelectFile($event)" formControlName="foto"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.foto.errors }">
           </label>
     </div>
 

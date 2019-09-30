@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ServiciossComponent } from '../servicioss/servicioss.component';
 import { Servi } from 'src/app/servicios/servicio.service';
-import { CartComponent } from '../shoppingcart/cart/cart.component';
+import { CartComponent } from '../../shoppingcart/cart/cart.component';
 import { SesionService } from 'src/app/servicios/sesion.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -28,7 +27,6 @@ export class ServicioTarjetaComponent implements OnInit {
   verServicio() {
     console.log(  this.index );
     this.router.navigate( ['/servicio', this.index] );
-    // this.servicioSeleccionado.emit( this.index );
   }
 
   agregarServicio(servicio:Servi){

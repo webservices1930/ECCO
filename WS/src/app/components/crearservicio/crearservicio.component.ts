@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ServicioService } from '../../servicios/servicio.service';
 
 @Component({
   selector: 'app-crearservicio',
@@ -21,14 +22,13 @@ export class CrearservicioComponent implements OnInit {
   ext : string;
   image :string;
 
-  proveedor:string = "randyD45";
-
   tipo="";
   constructor(
       private formBuilder: FormBuilder,
       private router: Router,
       private route: ActivatedRoute,
-      private sanitization:DomSanitizer
+      private sanitization:DomSanitizer,
+      private servicioService:ServicioService
   ) {
     this.base64data=" ";
      this.ext=" ";
@@ -56,50 +56,7 @@ export class CrearservicioComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log(this.registerForm.value);
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-    let sr='';
-    if(this.tipo === 'Alimentacion'){
-      console.log("si");
-      sr='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
-      '<soapenv:Header/>'+
-     '<soapenv:Body>'+
-         '<djan:createServicioAlimentacion>'+
-            '<!--Optional:-->'+
-            '<djan:servicio>'+
-               '<ser:nombre>'+this.registerForm.value.nombres+'</ser:nombre>'+
-               '<ser:pais>'+this.registerForm.value.pais+'</ser:pais>'+
-               '<ser:ciudad>'+this.registerForm.value.ciudad+'</ser:ciudad>'+
-               '<ser:idioma>'+this.registerForm.value.idioma+'</ser:idioma>'+
-               '<ser:costo>'+this.registerForm.value.costo+'</ser:costo>'+
-               '<ser:descripcion>'+this.registerForm.value.descripcion+'</ser:descripcion>'+
-               '<ser:foto>'+this.base64data+'</ser:foto>'+
-               '<ser:tipo>'+this.ext+'</ser:tipo>'+
-               '<ser:numeroPersonas>'+this.registerForm.value.numeropersonas+'</ser:numeroPersonas>'+
-               '<ser:nombreProveedor>'+this.proveedor+'</ser:nombreProveedor>'+
-               '<ser:tipoComida>'+ this.registerForm.value.tipocomida+'</ser:tipoComida>'+
-               '<ser:cantidadPlatos>'+ this.registerForm.value.cantidadplatos+'</ser:cantidadPlatos>'+
-            '</djan:servicio>'+
-         '</djan:createServicioAlimentacion>'+
-      '</soapenv:Body>'+
-   '</soapenv:Envelope>';
-    }else if(this.tipo === 'Transporte'){
-
-      sr='';
-    }else{
-
-    }
-    xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == 4) {
-          if (xmlhttp.status == 200) {
-              alert("Se creó el servicio correctamente");
-            }
-      }
-    }
-    // Send the POST request
-    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-    xmlhttp.send(sr);
-    this.router.navigate(['servicioss']);
+    this.servicioService.crearServicio(this.registerForm,this.base64data,this.ext,this.tipo);
 
   }
 

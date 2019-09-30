@@ -2,13 +2,13 @@
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
-import { ServiciossComponent } from './components/servicioss/servicioss.component';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { CrearservicioComponent } from './components/crearservicio/crearservicio.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ServiciossComponent } from './components/mostrarservicio/servicioss/servicioss.component';
+import { CrearservicioComponent } from './components/crearservicio/crearservicio.component';
 
 
 const APP_ROUTES: Routes = [
