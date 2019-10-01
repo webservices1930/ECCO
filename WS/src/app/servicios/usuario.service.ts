@@ -96,6 +96,31 @@ export class UsuarioService {
         });
       }
 
+
+borrarUsuario(usuario){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+  let sr=
+        '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
+        '<soapenv:Header/>'+
+        '<soapenv:Body>'+
+            '<djan:deleteUsuario>'+
+              '<djan:nombreUsuario>'+usuario+'</djan:nombreUsuario>'+
+            '</djan:deleteUsuario>'+
+        '</soapenv:Body>'+
+      '</soapenv:Envelope>';
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                alert("Se borró el usuario correctamente");
+              }
+        }
+      }
+      // Send the POST request
+      xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+      xmlhttp.send(sr);
+}
+
       registrarUsuario(registerForm, base64data, ext){
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);

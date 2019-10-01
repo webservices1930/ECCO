@@ -17,6 +17,13 @@ export class ProfileComponent implements OnInit {
   usuariosCopia:Usuario[]=[];
   usuarioMostrar;
   _subscription: any;
+  cambio=false;
+
+  base64data: string;
+  ext : string;
+  image :string;
+
+  url:string;
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -25,7 +32,8 @@ export class ProfileComponent implements OnInit {
     private sesionService:SesionService,
     private proveedorService:ProveedorService
     ) {
-
+     this.base64data=" ";
+     this.ext=" ";
     }
 
   ngOnInit() {
@@ -44,7 +52,42 @@ export class ProfileComponent implements OnInit {
 
   }
   public getSantizeUrl() {
-    let image = "data:image/"+this.usuarioMostrar.tipo+";base64, "+this.usuarioMostrar.img.slice(2,this.usuarioMostrar.img.length-1);
-    return this.sanitization.bypassSecurityTrustUrl(image);
+    this.image = "data:image/"+this.usuarioMostrar.tipo+";base64, "+this.usuarioMostrar.img.slice(2,this.usuarioMostrar.img.length-1);
+    return this.sanitization.bypassSecurityTrustUrl(this.image);
  }
+
+ onSelectFile(event) { // called each time file input changes
+  if (event.target.files && event.target.files[0]) {
+    var reader = new FileReader();
+    reader.readAsBinaryString(event.target.files[0]);
+    this.ext=event.target.files[0].type;
+    reader.onload = (event) => { // called once readAsDataURL is completed
+          this.base64data=btoa(reader.result as string);
+          this.cambio = true;
+      }
+    }
+  }
+  normal(){
+    this.image = "data:image/"+this.ext+";base64, "+this.base64data.slice(2,this.base64data.length-1);
+    return this.sanitization.bypassSecurityTrustUrl(this.image);
+  }
+
+  actualizar(){
+    if(this.sesionService.sesion === 'usuario'){
+
+    }else{
+
+    }
+  }
+
+  eliminar(){
+    if(this.sesionService.sesion === 'usuario'){
+           this.usuarioService.borrarUsuario(this.usuarioMostrar.email);
+                this.router.navigate(['login']);
+
+    }else{
+     this.proveedorService.borrarProveedor(this.usuarioMostrar.email);
+     this.router.navigate(['login']);
+    }
+  }
 }

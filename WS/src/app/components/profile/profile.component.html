@@ -20,8 +20,17 @@
       </div>
       <label for="imagen">Imagen: </label>
       <br>
-      <img id="img" [src]="getSantizeUrl()"/>
 
+      <img *ngIf="!this.cambio" id="img" [src]="getSantizeUrl()"/>
+
+
+      <div>
+        <label class="image-upload-container btn btn-bwm">
+            <span>Seleccionar imagen</span>
+            <p></p>
+            <input type='file' (change)="onSelectFile($event)"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.foto.errors }">
+          </label>
+    </div>
 
 
       <div class="row">
@@ -31,7 +40,7 @@
             </button>
         </div>
         <div class="col">
-                <button type="button" class="btn btn-outline-danger btn-block" (click)="delete()">
+                <button type="button" class="btn btn-outline-danger btn-block" (click)="eliminar()">
                 Eliminar
             </button>
         </div>

@@ -29,6 +29,32 @@ export class ProveedorService {
 
    proveedores;
    proveedoresCopia: Proveedor[] = [];
+
+
+borrarProveedor(usuarioProveedor){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+  let sr=
+        '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
+        '<soapenv:Header/>'+
+        '<soapenv:Body>'+
+            '<djan:deleteProveedor>'+
+              '<djan:nombreUsuario>'+usuarioProveedor+'</djan:nombreUsuario>'+
+            '</djan:deleteProveedor>'+
+        '</soapenv:Body>'+
+      '</soapenv:Envelope>';
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                alert("Se borró el proveedor correctamente");
+              }
+        }
+      }
+      // Send the POST request
+      xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+      xmlhttp.send(sr);
+}
+
   registrarProveedor(registerForm, base64data, ext){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);

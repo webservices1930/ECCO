@@ -21,8 +21,8 @@
 
     </ul>
 
-    <button class="botonNavBar" type="button" [routerLink]="['login']">Iniciar sesión</button>
-    <button class="botonNavBar" type="button" [routerLink]="['register']">Registrarse</button>
+    <button class="botonNavBar" type="button"  routerLinkActive="active" [routerLink]="['login']">Iniciar sesión</button>
+    <button class="botonNavBar" type="button"  routerLinkActive="active" [routerLink]="['register']">Registrarse</button>
 
   </div>
 
@@ -40,7 +40,7 @@
           <a class="nav-link" [routerLink]="['about']">About</a>
         </li>
       </ul>
-      <button class="botonNavBar" type="button" (click)="logout()" [routerLink]="['login']">Cerrar sesión</button>
+      <button class="botonNavBar" type="button" (click)="logout()"  routerLinkActive="active" [routerLink]="['login']">Cerrar sesión</button>
 
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Buscar servicio" (keyup.enter)="buscarServicio(buscarTexto.value)" #buscarTexto>
@@ -67,11 +67,11 @@
           </li>
         </ul>
 
-        <button class="botonNavBar" type="button" (click)="logout()" [routerLink]="['login']">Cerrar sesión</button>
+        <button class="botonNavBar" type="button" (click)="logout()"  routerLinkActive="active" [routerLink]="['login']">Cerrar sesión</button>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Buscar servicio" (keyup.enter)="buscarServicio(buscarTexto.value)" #buscarTexto>
           <button (click)="buscarServicio(buscarTexto.value)"
-              class="btn btn-outline-primary my-2 my-sm-0" type="button">Buscar</button>
+              class="btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button>
         </form>
       </div>
 
