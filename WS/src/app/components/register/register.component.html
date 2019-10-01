@@ -36,13 +36,14 @@
           </label>
     </div>
 
+
     <div>
-        <label for="tipo">Tipo de usuario</label>
-        <select  (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems" formControlName="tipo" class="form-control" >
-            <option value="Comprador">Comprador</option>
-            <option value="Proveedor">Proveedor</option>
-          </select>
-    </div>
+      <label for="tipo">Tipo de usuario</label>
+      <select  (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems" formControlName="tipo" class="form-control" >
+          <option value="Comprador">Comprador</option>
+          <option value="Proveedor">Proveedor</option>
+        </select>
+  </div>
 
     <div *ngIf="this.tipo == 'Proveedor'">
         <div class="form-group">

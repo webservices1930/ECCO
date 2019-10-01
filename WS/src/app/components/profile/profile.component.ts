@@ -4,6 +4,7 @@ import { UsuarioService } from '../../servicios/usuario.service';
 import { Usuario } from '../../model/usuario';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SesionService } from '../../servicios/sesion.service';
+import { ProveedorService } from '../../servicios/proveedor.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,28 +17,29 @@ export class ProfileComponent implements OnInit {
   usuariosCopia:Usuario[]=[];
   usuarioMostrar;
   _subscription: any;
+
   constructor( private route: ActivatedRoute,
     private router: Router,
     private usuarioService:UsuarioService,
     private sanitization:DomSanitizer,
-    private sesionService:SesionService
+    private sesionService:SesionService,
+    private proveedorService:ProveedorService
     ) {
-
-
 
     }
 
   ngOnInit() {
-    console.log("hola");
     this.user = this.sesionService.id;
-    console.log(this.user);
     if(this.sesionService.sesion === 'usuario'){
       this.usuarioService.getUsuarioByUsernameJSON(this.user).then( res => {
         this.usuarioMostrar = res;
         console.log(this.usuarioMostrar);
       });
     }else{
-      console.log("proveedor en proceso");
+      this.proveedorService.getProveedorByUsernameJSON(this.user).then( res => {
+        this.usuarioMostrar = res;
+        console.log(this.usuarioMostrar);
+      });
     }
 
   }

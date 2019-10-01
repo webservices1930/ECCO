@@ -40,17 +40,17 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-        nombres: ['', Validators.required],
-        email: ['', Validators.required],
-        password: ['', [Validators.required]],
-        edad:['', Validators.required],
-        telefono:['', Validators.required],
-        descripcion:['', Validators.required],
-        tipo:['', Validators.required],
-        foto:['',Validators.required],
-        paginaweb:['', ],
-        contacto:['', ]
-    });
+      nombres: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', [Validators.required]],
+      edad:['', Validators.required],
+      telefono:['', Validators.required],
+      descripcion:['', Validators.required],
+      tipo:['', Validators.required],
+      foto:['',Validators.required],
+      paginaweb:['', ],
+      contacto:['', ]
+  });
   }
 
   // convenience getter for easy access to form fields

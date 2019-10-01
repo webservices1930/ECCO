@@ -63,29 +63,30 @@ export class UsuarioService {
           this.getUsuariosJSON().then(res => {
             this.usuarios = res;
             console.log(this.usuarios);
-            this.usuarios.forEach(element => {
-              this.usuario = new Usuario (
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-              );
-              console.log(element['s0:nombre']['#text']);
-              this.usuario.nombre = element['s0:nombre']['#text'];
-              this.usuario.descripcion = element['s0:descripcion']['#text'];
-              this.usuario.edad = +element['s0:edad']['#text'];
-              this.usuario.telefono = element['s0:telefono']['#text'];
-              this.usuario.img = element['s0:foto']['#text'];
-              this.usuario.tipo = element['s0:tipo']['#text'];
-              this.usuario.email = element['s0:nombreUsuario']['#text'];
-              this.usuariosCopia.push(this.usuario);
-              console.log(this.usuariosCopia);
-              console.log(user);
-            });
+            if(this.usuarios.length === undefined){
+                this.usuarios = [];
+                this.usuarios.push(res);
+            }
+              this.usuarios.forEach(element => {
+                this.usuario = new Usuario (
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                );
+                this.usuario.nombre = element['s0:nombre']['#text'];
+                this.usuario.descripcion = element['s0:descripcion']['#text'];
+                this.usuario.edad = +element['s0:edad']['#text'];
+                this.usuario.telefono = element['s0:telefono']['#text'];
+                this.usuario.img = element['s0:foto']['#text'];
+                this.usuario.tipo = element['s0:tipo']['#text'];
+                this.usuario.email = element['s0:nombreUsuario']['#text'];
+                this.usuariosCopia.push(this.usuario);
+              });
               this.usuariosCopia.forEach(element => {
                   if(element.email === user){
                       resolve(element);

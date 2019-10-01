@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ServicioService } from '../../servicios/servicio.service';
+import { SesionService } from '../../servicios/sesion.service';
 
 @Component({
   selector: 'app-crearservicio',
@@ -22,13 +23,16 @@ export class CrearservicioComponent implements OnInit {
   ext : string;
   image :string;
 
+  user;
+
   tipo="";
   constructor(
       private formBuilder: FormBuilder,
       private router: Router,
       private route: ActivatedRoute,
       private sanitization:DomSanitizer,
-      private servicioService:ServicioService
+      private servicioService:ServicioService,
+      private sesionService:SesionService
   ) {
     this.base64data=" ";
      this.ext=" ";
@@ -36,18 +40,20 @@ export class CrearservicioComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-        nombres: ['', Validators.required],
-        pais: ['', Validators.required],
-        ciudad: ['', Validators.required],
-        idioma:['', Validators.required],
-        costo:['', Validators.required],
-        descripcion:['', Validators.required],
-        tipo:['', Validators.required],
-        numeropersonas:[],
-        tipocomida:[],
-        cantidadplatos:[],
-
-    });
+      nombres: ['', Validators.required],
+      pais: ['', Validators.required],
+      ciudad: ['', Validators.required],
+      idioma:['', Validators.required],
+      descripcion:['', Validators.required],
+      costo:['', Validators.required],
+      foto:['',Validators.required],
+      tipo:['', Validators.required],
+      numeropersonas:[],
+      tipocomida:[],
+      cantidadplatos:[],
+  });
+    this.user = this.sesionService.id;
+    console.log(this.user);
   }
 
   // convenience getter for easy access to form fields
@@ -56,8 +62,12 @@ export class CrearservicioComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log(this.registerForm.value);
-    this.servicioService.crearServicio(this.registerForm,this.base64data,this.ext,this.tipo);
-
+    if(this.registerForm.invalid){
+      alert("Ingrese todos los campos por favor");
+    }else{
+      this.servicioService.crearServicio(this.registerForm,this.base64data,this.ext,this.tipo,this.user);
+      this.router.navigate(['servicioss']);
+    }
   }
 
   cambiar(){

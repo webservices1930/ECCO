@@ -5,3 +5,7 @@
 .combo{
     margin: 15px;
 }
+
+.filtrar select option {
+  display:inline-block;
+}

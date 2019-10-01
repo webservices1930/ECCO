@@ -18,6 +18,12 @@
           <label for="ciudad">Ciudad</label>
           <input type="text" formControlName="ciudad" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.ciudad.errors }"/>
       </div>
+
+
+      <div class="form-group">
+        <label for="idioma">Idioma</label>
+        <input type="text" formControlName="idioma" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.idioma.errors }"/>
+     </div>
       <!--  -->
       <div class="form-group">
         <label for="descripcion">Descripción</label>
@@ -32,19 +38,19 @@
         <label class="image-upload-container btn btn-bwm">
             <span>Seleccionar imagen</span>
             <p></p>
-            <input type='file' (change)="onSelectFile($event)">
+            <input type='file' (change)="onSelectFile($event)" formControlName="foto"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.foto.errors }">
           </label>
     </div>
 
     <div>
-        <label for="tipo">Tipo de servicio</label>
-        <select  (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems" formControlName="tipo" class="form-control" >
-            <option value="Alimentacion">Alimentación</option>
-            <option value="Hospejade">Hospedaje</option>
-            <option value="Transporte">Transporte</option>
-            <option value="PaseoEcologico">Paseo ecológico</option>
-          </select>
-    </div>
+      <label for="tipo">Tipo de servicio</label>
+      <select  (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems" formControlName="tipo" class="form-control" >
+          <option value="Alimentacion">Alimentación</option>
+          <option value="Hospejade">Hospedaje</option>
+          <option value="Transporte">Transporte</option>
+          <option value="PaseoEcologico">Paseo ecológico</option>
+        </select>
+  </div>
 
     <div *ngIf="this.tipo == 'Alimentacion'">
         <div class="form-group">
