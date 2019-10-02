@@ -11,7 +11,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="has-text-centered" *ngFor="let item of carrito.servicios">
+        <tr class="has-text-centered" *ngFor="let item of servicios">
+          <td>1</td>
           <td>{{item.nombre}}</td>
           <td>{{item.costo | number:'.2-2'}} USD</td>
         </tr>
@@ -20,7 +21,7 @@
         <tr class="carrito-total">
           <td colspan="2"></td>
           <td>
-            Total: {{carrito.total}} USD
+            Total: {{total}} USD
           </td>
         </tr>
       </tfoot>
@@ -52,7 +53,7 @@
     </div>
 
     <div class="form-group">
-      <button class="btn btn-outline-primary mx-auto d-block" type="submit">Pagar</button>
+      <button class="btn btn-outline-success mx-auto d-block" type="submit">Pagar</button>
     </div>
   </form>
 </div>

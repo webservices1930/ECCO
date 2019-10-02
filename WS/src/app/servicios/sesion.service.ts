@@ -54,6 +54,16 @@ export class SesionService {
       this.sesion = x;
     }
 
+    setServicios(servicios){
+      this.servicios = servicios;
+    }
+
+    reiniciarCarrito(){
+      this.servicios = [];
+      this.total = [];
+      this.total[0] = 0;
+    }
+
     async login(usuario,contrasena){
       console.log(usuario + contrasena);
         return new Promise(resolve => {

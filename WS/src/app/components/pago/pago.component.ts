@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { isUndefined } from 'util';
 import { Servis } from '../../model/servis';
+import { SesionService } from 'src/app/servicios/sesion.service';
+
 
 @Component({
   selector: 'app-pago',
@@ -16,18 +18,27 @@ export class PagoComponent implements OnInit {
   fechavencimiento: Date;
   //carrito: Carrito;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  servicios:Servis[]=[];
+  total:number[]=[];
+
+  constructor(private router: Router, private route: ActivatedRoute,private _SesionServicio:SesionService) { }
 
   ngOnInit() {
-    this.route.queryParams
+    /*this.route.queryParams
     .subscribe(params => {
       console.log(params);
      /* this.carritoService.findCarrito(params.id).subscribe(result => {
         this.carrito = result;
-      });*/
+      });
     });
+
     //buscarLaOrden
     //lleanr tabla
+    */
+   this.total=this._SesionServicio.getTotal();
+    this.servicios=this._SesionServicio.getServicios();
+    console.log(this.servicios);
+    console.log(this.total);
   }
 
   public pago(){

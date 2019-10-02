@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm.value);
     this.sesionService.login(this.loginForm.value.email,this.loginForm.value.password).then( res => {
       console.log(res);
+      this.sesionService.reiniciarCarrito();
       if(res === 'usuario'){
         this.sesionService.sesion = 'usuario' ;
         this.sesionService.sesionCambio.next('usuario');

@@ -31,6 +31,6 @@ export class CartComponent implements OnInit {
 
   pago() {
     //create Order en el servidor
-    this.router.navigate(['/pago'], { queryParams: { id: idCarrito } });
+    this.router.navigate(['/pago']);
   }
 }
