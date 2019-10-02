@@ -1,0 +1,30 @@
+<br>
+<div class="formulario">
+  <h2>Pago</h2>
+  <form (ngSubmit)="Pagar()">
+    <div class="form-group">
+      <label for="numTarjeta">Numero tarjeta</label>
+      <input type="number" required id="numTarjeta" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+      <label for="cuotas">Numero de cuotas</label>
+      <input type="number" required id="cuotas" class="form-control" required/>
+    </div>
+
+
+    <div class="form-group">
+      <label for="cvs">CVS</label>
+      <input type="password" id="cvs" class="form-control" required/>
+    </div>
+      <!--  -->
+    <div class="form-group">
+      <label for="fechavencimiento">Fecha de vencimiento</label>
+      <input type="date" formControlName="descripcion" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-outline-primary mx-auto d-block" type="submit">Pagar</button>
+      </div>
+  </form>
+</div>

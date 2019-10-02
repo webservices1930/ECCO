@@ -27,6 +27,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { UsuarioService } from './servicios/usuario.service';
 import { CrearservicioComponent } from './components/crearservicio/crearservicio.component';
 import { ServiciossComponent } from './components/mostrarservicio/servicioss/servicioss.component';
+import { PagoComponent } from './components/pago/pago.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { ServiciossComponent } from './components/mostrarservicio/servicioss/ser
     RegisterComponent,
     CrearservicioComponent,
     ProfileComponent,
+    PagoComponent,
 
   ],
   imports: [
