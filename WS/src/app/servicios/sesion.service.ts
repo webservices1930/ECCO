@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Servi } from './servicio.service';
 import { Servis } from '../model/servis';
 import {xmlToJson} from './lib';
 import { Subject } from 'rxjs';
@@ -21,7 +20,7 @@ export class SesionService {
     }
 
 
-    agregarServicio(servicio:Servi){
+    agregarServicio(servicio:Servis){
         this.servicios.push(servicio);
         if(this.total.length===0){
             this.total[0]=servicio.costo;

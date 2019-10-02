@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { Servi } from 'src/app/servicios/servicio.service';
-import { CartComponent } from '../../shoppingcart/cart/cart.component';
 import { SesionService } from 'src/app/servicios/sesion.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Servis } from 'src/app/model/servis';
 
 @Component({
   selector: 'app-servicio-tarjeta',
@@ -29,7 +28,7 @@ export class ServicioTarjetaComponent implements OnInit {
     this.router.navigate( ['/servicio', this.index] );
   }
 
-  agregarServicio(servicio:Servi){
+  agregarServicio(servicio:Servis){
     this._servicioSesion.agregarServicio(servicio);
   }
 
