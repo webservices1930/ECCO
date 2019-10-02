@@ -51,6 +51,10 @@ export class CrearservicioComponent implements OnInit {
       numeropersonas:[],
       tipocomida:[],
       cantidadplatos:[],
+      origen:[],
+      destino:[],
+      horainicio:[],
+      horafin:[],
   });
     this.user = this.sesionService.id;
     console.log(this.user);

@@ -71,15 +71,42 @@
 
     <div *ngIf="this.tipo == 'Hospedaje'">
 
-      </div>
+    </div>
 
       <div *ngIf="this.tipo == 'Transporte'">
 
         </div>
 
         <div *ngIf="this.tipo == 'PaseoEcologico'">
-
+          <div class="form-group">
+            <label for="numeropersonas">Número de personas</label>
+            <input type="text" formControlName="numeropersonas" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }"/>
           </div>
+
+          <div class="form-group">
+            <label for="origen">Origen</label>
+            <input type="text" formControlName="origen" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.origen.errors }"/>
+        </div>
+
+        <div class="form-group">
+          <label for="destino">Destino</label>
+          <input type="text" formControlName="destino" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.destino.errors }"/>
+        </div>
+
+
+        <div class="form-group">
+          <label for="horainicio">Hora inicio</label>
+          <input type="time" formControlName="horainicio" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.horainicio.errors }"/>
+        </div>
+
+        <div class="form-group">
+          <label for="horafin">Hora Fin</label>
+          <input type="time" formControlName="horafin" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.horafin.errors }"/>
+        </div>
+
+        </div>
+
+
       <div class="form-group">
           <button class="btn btn-outline-primary mx-auto d-block">Crear servicio</button>
       </div>

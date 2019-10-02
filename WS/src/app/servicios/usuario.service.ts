@@ -60,41 +60,52 @@ export class UsuarioService {
 
       async getUsuarioByUsernameJSON(user){
         return new Promise(resolve => {
-          this.getUsuariosJSON().then(res => {
-            this.usuarios = res;
-            console.log(this.usuarios);
-            if(this.usuarios.length === undefined){
-                this.usuarios = [];
-                this.usuarios.push(res);
+          setTimeout(() => {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+            let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
+            '<soapenv:Header/>'+
+            '<soapenv:Body>'+
+               '<djan:readUsuario>'+
+                  '<!--Optional:-->'+
+                  '<djan:userName>'+user+'</djan:userName>'+
+               '</djan:readUsuario>'+
+            '</soapenv:Body>'+
+         '</soapenv:Envelope>';
+          var y = this;
+          xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status == 200) {
+                    var doc =  xmlToJson(xmlhttp.responseXML);
+                    console.log(doc);
+                    let data=doc['soap11env:Envelope']['soap11env:Body']['tns:readUsuarioResponse']['tns:readUsuarioResult1'];
+                    console.log(data);
+                    let usuario = new Usuario (
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                    );
+                    usuario.nombre = data['s0:nombre']['#text'];
+                    usuario.descripcion = data['s0:descripcion']['#text'];
+                    usuario.edad = +data['s0:edad']['#text'];
+                    usuario.telefono = data['s0:telefono']['#text'];
+                    usuario.img = data['s0:foto']['#text'];
+                    usuario.tipo = data['s0:tipo']['#text'];
+                    usuario.email = data['s0:nombreUsuario']['#text'];
+                    resolve(usuario);
+                }
             }
-              this.usuarios.forEach(element => {
-                this.usuario = new Usuario (
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                );
-                this.usuario.nombre = element['s0:nombre']['#text'];
-                this.usuario.descripcion = element['s0:descripcion']['#text'];
-                this.usuario.edad = +element['s0:edad']['#text'];
-                this.usuario.telefono = element['s0:telefono']['#text'];
-                this.usuario.img = element['s0:foto']['#text'];
-                this.usuario.tipo = element['s0:tipo']['#text'];
-                this.usuario.email = element['s0:nombreUsuario']['#text'];
-                this.usuariosCopia.push(this.usuario);
-              });
-              this.usuariosCopia.forEach(element => {
-                  if(element.email === user){
-                      resolve(element);
-                  }
-              });
-          });
-        });
-      }
+          }
+          xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+          xmlhttp.send(sr);
+              }, 500);
+    });
+  }
 
 
 borrarUsuario(usuario){

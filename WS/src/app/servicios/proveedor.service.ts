@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Proveedor } from '../model/proveedor';
 import {xmlToJson} from './lib';
+import { resolve } from 'url';
 
 @Injectable({
   providedIn: 'root'
@@ -122,16 +123,29 @@ borrarProveedor(usuarioProveedor){
             }
 
     async getProveedorByUsernameJSON(user){
-        return new Promise(resolve => {
-           this.getProveedoresJSON().then(res => {
-           this.proveedores = res;
-           console.log(this.proveedores);
-           if(this.proveedores.length === undefined){
-            this.proveedores = [];
-            this.proveedores.push(res);
-        }
-           this.proveedores.forEach(element => {
-           this.proveedor = new Proveedor (
+      console.log('hola');
+      return new Promise(resolve => {
+        setTimeout(() => {
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+          let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
+          '<soapenv:Header/>'+
+          '<soapenv:Body>'+
+             '<djan:readProveedor>'+
+                '<!--Optional:-->'+
+                '<djan:provName>'+user+'</djan:provName>'+
+             '</djan:readProveedor>'+
+          '</soapenv:Body>'+
+       '</soapenv:Envelope>';
+        var y = this;
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4) {
+              if (xmlhttp.status == 200) {
+                  var doc =  xmlToJson(xmlhttp.responseXML);
+                  console.log(doc);
+                  let data=doc['soap11env:Envelope']['soap11env:Body']['tns:readProveedorResponse']['tns:readProveedorResult1'];
+                  console.log(data);
+                  let proveedor = new Proveedor (
                       undefined,
                       undefined,
                       undefined,
@@ -143,23 +157,20 @@ borrarProveedor(usuarioProveedor){
                       undefined,
                       undefined
                     );
-              this.proveedor.nombre = element['s0:nombre']['#text'];
-              this.proveedor.descripcion = element['s0:descripcion']['#text'];
-              this.proveedor.edad = +element['s0:edad']['#text'];
-              this.proveedor.telefono = element['s0:telefono']['#text'];
-              this.proveedor.img = element['s0:foto']['#text'];
-              this.proveedor.tipo = element['s0:tipo']['#text'];
-              this.proveedor.email = element['s0:nombreUsuario']['#text'];
-              this.proveedoresCopia.push(this.proveedor);
-           });
-           this.proveedoresCopia.forEach(element => {
-            if(element.email === user){
-                resolve(element);
-            }
-        });
-          });
-        });
-      }
-
-
+                    proveedor.nombre = data['s0:nombre']['#text'];
+                    proveedor.descripcion = data['s0:descripcion']['#text'];
+                    proveedor.edad = +data['s0:edad']['#text'];
+                    proveedor.telefono = data['s0:telefono']['#text'];
+                    proveedor.img = data['s0:foto']['#text'];
+                    proveedor.tipo = data['s0:tipo']['#text'];
+                    proveedor.email = data['s0:nombreUsuario']['#text'];
+                    resolve(proveedor);
+              }
+          }
+        }
+        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+        xmlhttp.send(sr);
+            }, 500);
+     });
+  }
 }

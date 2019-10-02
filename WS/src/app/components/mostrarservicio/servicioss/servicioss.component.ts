@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicioService, Servi } from '../../../servicios/servicio.service';
+import { ServicioService } from '../../../servicios/servicio.service';
 import { Router } from '@angular/router';
 import {xmlToJson} from '../../../servicios/lib';
 import { Servis } from '../../../model/servis';
@@ -31,9 +31,9 @@ export class ServiciossComponent implements OnInit {
   }
 
    ngOnInit() {
-     this._serviciosService.getServiciosJSON().then(res => {
-        this.serviciosCopia = res;
-        this.servicios = res;
+     this._serviciosService.getServicios().then(res =>{
+      this.serviciosCopia= res;
+      console.log(this.serviciosCopia);
      });
   }
 

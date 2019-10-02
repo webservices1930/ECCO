@@ -35,7 +35,8 @@ export class ServicioComponent {
 
   constructor( private activatedRoute: ActivatedRoute,
                private _serviciosService: ServicioService,
-               private sanitization:DomSanitizer
+               private sanitization:DomSanitizer,
+               private servicioService:ServicioService
     ){
 
   }
@@ -44,9 +45,9 @@ export class ServicioComponent {
 
     //mock preguntas:
     let usuarioPregunta:Usuario= new Usuario("Nombre_Usuario", undefined, undefined, undefined, undefined, undefined, undefined, undefined);
-    
+
     let preguntaPrueba:Pregunta = new Pregunta(usuarioPregunta, "¿Hay Wi-Fi?", "Sí");
-    
+
     this.preguntass.push(preguntaPrueba);
     this.preguntass.push(preguntaPrueba);
     this.preguntass.push(preguntaPrueba);
@@ -57,22 +58,15 @@ export class ServicioComponent {
 
 
     //fin de mock de preguntas
-
+/*
     this.activatedRoute.params.subscribe( params =>{
       console.log(params['id']);
-      this._serviciosService.getServiciosJSON().then(res => {
-        this.servicios = res;
-        this.servicios.forEach(element => {
-          console.log(element);
-          if(element.idx===params['id']){
-            this.servicio=element;
-
-            
-          }
+      this._serviciosService.getServicioById(params['id']).then(res => {
+          this.servicio=res;
+          console.log(this.servicio);
       });
-    });
-  });
-}
+    });*/
+  }
 
 public getSantizeUrl(img) {
   //console.log(img);
