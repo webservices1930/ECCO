@@ -9,3 +9,20 @@
 .filtrar select option {
   display:inline-block;
 }
+
+#logoECCO{
+  height:150px;
+  width: auto;
+
+  display:block;
+  margin:auto;
+}
+
+.filtrar{
+  display: flex;
+  margin-left: 10px;
+}
+#buscadorForm{
+  display:block;
+  margin:auto;
+}

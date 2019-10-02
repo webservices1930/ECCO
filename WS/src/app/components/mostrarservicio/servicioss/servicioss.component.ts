@@ -7,7 +7,8 @@ import { Servis } from '../../../model/servis';
 
 @Component({
   selector: 'app-servicioss',
-  templateUrl: './servicioss.component.html'
+  templateUrl: './servicioss.component.html',
+  styleUrls: ['./servicioss.component.css']
 })
 export class ServiciossComponent implements OnInit {
   seleccionados:Servis[]=[];
