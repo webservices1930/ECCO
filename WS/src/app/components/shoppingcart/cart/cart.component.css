@@ -22,10 +22,16 @@
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-  
+
     /* Position the tooltip */
     position: absolute;
     justify-content: center;
     justify-items: center;
     z-index: 1;
+  }
+
+  .centrar {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
   }

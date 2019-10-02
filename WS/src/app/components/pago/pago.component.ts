@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { isUndefined } from 'util';
+import { Servis } from '../../model/servis';
 
 @Component({
   selector: 'app-pago',
@@ -13,10 +14,20 @@ export class PagoComponent implements OnInit {
   cuotas: number;
   cvs: string;
   fechavencimiento: Date;
+  //carrito: Carrito;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.queryParams
+    .subscribe(params => {
+      console.log(params);
+     /* this.carritoService.findCarrito(params.id).subscribe(result => {
+        this.carrito = result;
+      });*/
+    });
+    //buscarLaOrden
+    //lleanr tabla
   }
 
   public pago(){
@@ -28,6 +39,7 @@ export class PagoComponent implements OnInit {
       alert('Llene todos los campos');
     } else {
       alert('Pago realizado bajo el numero de tarjeta ' + this.numTarjeta);
+      //borrarOrden del sistema
       this.router.navigate([`/home`]);
     }
   }

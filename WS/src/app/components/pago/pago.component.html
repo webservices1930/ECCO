@@ -1,6 +1,34 @@
 <br>
+<div>
+  <h2>Carrito</h2>
+  <div class="carritoSi">
+    <table class="table table-striped table-responsive-md btn-table">
+      <thead>
+        <tr >
+          <td style="width:20px;">Cantidad</td>
+          <td>Producto</td>
+          <td>Precio</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="has-text-centered" *ngFor="let item of carrito.servicios">
+          <td>{{item.nombre}}</td>
+          <td>{{item.costo | number:'.2-2'}} USD</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="carrito-total">
+          <td colspan="2"></td>
+          <td>
+            Total: {{carrito.total}} USD
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  <div>
+</div>
 <div class="formulario">
-  <h2>Pago</h2>
+  <h2>Información para realizar pago</h2>
   <form (ngSubmit)="pago()">
     <div class="form-group">
       <label for="numTarjeta">Numero tarjeta</label>
