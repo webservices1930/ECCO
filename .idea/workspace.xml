@@ -2,9 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38975723-ab1d-48bb-8eb8-167f0a05e802" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/images/profile/client/randyD45_profile.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/images/profile/client/randyD_profile.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/images/profile/provider/randyD45_profile.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/images/services/Comida al atardecer0_randyD45img.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/images/services/Comida al atardecer1_randyD45img.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/images/services/Comida al atardecer2_randyD45img.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/images/services/Comida al atardecer3_randyD45img.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/images/services/Comida al atardecer4_randyD45img.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/servicios/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0002_auto_20190915_0220.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0003_auto_20190915_0241.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0004_auto_20190917_0139.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0005_auto_20190917_0223.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0006_auto_20190917_0233.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0007_auto_20190917_0349.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0008_auto_20190921_2226.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/servicios/migrations/0009_resena_texto.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server/servicios/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/servicios/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/servicios/soapServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/servicios/soapServices.py" afterDir="false" />
     </list>
@@ -85,6 +101,16 @@
       <workItem from="1568566786683" duration="15239000" />
       <workItem from="1568652926876" duration="33432000" />
       <workItem from="1569103638647" duration="3861000" />
+      <workItem from="1569430145846" duration="48000" />
+      <workItem from="1569545815071" duration="4825000" />
+      <workItem from="1569874808050" duration="611000" />
+      <workItem from="1569891069130" duration="640000" />
+      <workItem from="1569947014403" duration="4270000" />
+      <workItem from="1569967458859" duration="4577000" />
+      <workItem from="1570026949048" duration="4805000" />
+      <workItem from="1570045499936" duration="11261000" />
+      <workItem from="1570064891208" duration="2654000" />
+      <workItem from="1570119997327" duration="6650000" />
     </task>
     <servers />
   </component>
@@ -96,7 +122,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

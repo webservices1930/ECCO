@@ -1,9 +1,11 @@
+import django
 from django.db import models
 from polymorphic.models import PolymorphicModel
+import datetime
 
 # Create your models here.
 
-class Usuario(models.Model):
+class Usuario(PolymorphicModel):
     nombreUsuario=models.TextField(blank=False,unique=True,default="")
     nombre = models.TextField(blank=False)
     edad = models.IntegerField()
@@ -11,8 +13,6 @@ class Usuario(models.Model):
     descripcion =models.TextField()
     telefono =models.TextField()
     contrasena = models.TextField(default="1234")
-    class Meta:
-        abstract=True
 
 class Cliente(Usuario):
     pass
@@ -48,9 +48,9 @@ class Alojamiento(Servicio):
 
 class PaseoEcologico(Servicio):
     origen=models.TextField()
-    destino=models.TextField
-    horaInicio=models.DateField()
-    horaFin=models.DateField()
+    destino=models.TextField(default="")
+    horaInicio=models.TextField()
+    horaFin=models.TextField()
 
 class Alimentacion(Servicio):
     tipoComida=models.TextField()
@@ -61,26 +61,19 @@ class Transporte(Servicio):
     tipoTransporte=models.TextField(choices=(("TERRESTRE","Terrestre"),("AEREO","Aereo"),("MARITIMO","Maritimo")))
     origen=models.TextField()
     destino=models.TextField()
-    horaSalida=models.DateField()
-    horaLlegada=models.DateField()
+    horaSalida=models.TextField()
+    horaLlegada=models.TextField()
 
 class CarritoCompras(models.Model):
     numServicios = models.IntegerField()
     costoTotal = models.FloatField()
     cliente = models.OneToOneField(Cliente, on_delete=models.CASCADE)
-
-class Carr_Serv_rel(models.Model):
-    carrito=models.ForeignKey(CarritoCompras,on_delete=models.CASCADE)
-    servicio= models.ForeignKey(Servicio,on_delete=models.CASCADE)
-
-class MetodoDePago(models.Model):
-    numeroTarjeta = models.TextField()
-    cvv = models.TextField()
-    banco = models.TextField()
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    servicios= models.ManyToManyField(Servicio)
 
 class Pregunta(models.Model):
     pregunta=models.TextField()
+    fechaPregunta=models.TextField()
     respuesta=models.TextField()
+    fechaRespuesta=models.TextField()
     servicio=models.ForeignKey(Servicio, on_delete=models.CASCADE)
     cliente=models.ForeignKey(Cliente,on_delete=models.CASCADE)
