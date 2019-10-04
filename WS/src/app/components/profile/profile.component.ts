@@ -32,8 +32,7 @@ export class ProfileComponent implements OnInit {
     private sesionService:SesionService,
     private proveedorService:ProveedorService
     ) {
-     this.base64data=" ";
-     this.ext=" ";
+     
     }
 
   ngOnInit() {
@@ -41,11 +40,15 @@ export class ProfileComponent implements OnInit {
     if(this.sesionService.sesion === 'usuario'){
       this.usuarioService.getUsuarioByUsernameJSON(this.user).then( res => {
         this.usuarioMostrar = res;
+        this.base64data=this.usuarioMostrar.foto;
+        this.ext=this.usuarioMostrar.tipo;
         console.log(this.usuarioMostrar);
       });
     }else{
       this.proveedorService.getProveedorByUsernameJSON(this.user).then( res => {
         this.usuarioMostrar = res;
+        this.base64data=this.usuarioMostrar.foto;
+        this.ext=this.usuarioMostrar.tipo;
         console.log(this.usuarioMostrar);
       });
     }
@@ -74,7 +77,8 @@ export class ProfileComponent implements OnInit {
 
   actualizar(){
     if(this.sesionService.sesion === 'usuario'){
-
+        this.usuarioService.updateUsuario(this.usuarioMostrar,this.base64data,this.ext);
+          
     }else{
 
     }

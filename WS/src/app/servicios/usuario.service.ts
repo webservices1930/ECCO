@@ -107,6 +107,44 @@ export class UsuarioService {
     });
   }
 
+updateUsuario(usuarioMostrar,base64data, ext){
+
+      var x= "";
+        x=usuarioMostrar.email;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+        let sr= '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+        '<soapenv:Header/>'+
+         '<soapenv:Body>'+
+           '<djan:updateUsuario>'+
+           '<djan:nomUsuCli>'+usuarioMostrar.email+'</djan:nomUsuCli>'+
+               '<djan:cliente>'+
+                 '<ser:nombreUsuario>'+usuarioMostrar.email+'</ser:nombreUsuario>'+
+                 '<ser:nombre>'+usuarioMostrar.nombre+'</ser:nombre>'+
+                 '<ser:edad>'+usuarioMostrar.edad+'</ser:edad>'+
+                 '<ser:contrasena>'+usuarioMostrar.password+'</ser:contrasena>'+
+                 '<ser:foto>'+base64data+'</ser:foto>'+
+                 '<ser:tipo>'+ext+'</ser:tipo>'+
+                 '<ser:contrasena>'+usuarioMostrar.password+'</ser:contrasena>'+
+                 '<ser:descripcion>'+usuarioMostrar.descripcion+'</ser:descripcion>'+
+                 '<ser:telefono>'+usuarioMostrar.telefono+'</ser:telefono>'+
+               '</djan:cliente>'+
+           '</djan:updateUsuario>'+
+         '</soapenv:Body>'+
+     '</soapenv:Envelope>';
+
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4) {
+              if (xmlhttp.status == 200) {
+                  alert("Se actualizó el usuario correctamente");
+                }
+          }
+        }
+        // Send the POST request
+        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+        xmlhttp.send(sr);
+     
+  }
 
 borrarUsuario(usuario){
   var xmlhttp = new XMLHttpRequest();
