@@ -182,59 +182,7 @@ export class ServicioService {
 
   }
 
-  getServicioAlimentacionById(id){
-    return new Promise(resolve => {
-      setTimeout(() => {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-        let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
-        '<soapenv:Header/>'+
-        '<soapenv:Body>'+
-          '<djan:readServicioAlimentacion>'+
-              '<djan:serviceId>'+id+'</djan:serviceId>'+
-           '</djan:readServicioAlimentacion>'+
-        '</soapenv:Body>'+
-      '</soapenv:Envelope>';
-        var y = this;
-        xmlhttp.onreadystatechange = function () {
-          if (xmlhttp.readyState == 4) {
-              if (xmlhttp.status == 200) {
-                  var doc =  xmlToJson(xmlhttp.responseXML);
-                  console.log(doc);
-                  let data=doc['soap11env:Envelope']['soap11env:Body']['tns:readServicioAlimentacionResponse']['tns:readServicioAlimentacionResult1'];
-                  console.log(data);
-                  let servicioAlimentacion = new ServicioAlimentacion (
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined
-                  );
-                  servicioAlimentacion.nombre= data['s0:nombre']['#text'];
-                  servicioAlimentacion.descripcion=data['s0:descripcion']['#text'];
-                  servicioAlimentacion.costo=+data['s0:costo']['#text'];
-                  let inf= data['s0:foto']['#text'];
-                  servicioAlimentacion.img="data:image/"+data['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
-                  servicioAlimentacion.idx=data['s0:id']['#text'];
-                  servicioAlimentacion.pais=data['s0:pais']['#text'];
-                  servicioAlimentacion.ciudad=data['s0:ciudad']['#text'];
-                  servicioAlimentacion.tipo="Alimentacion";
-                  resolve(servicioAlimentacion);
-              }
-          }
-        }
-        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-        xmlhttp.send(sr);
-            }, 500);
-      });
-}
-
+  
 async getServiciosPaseoEcologicoJSON(){
   return new Promise(resolve => {
     setTimeout(() => {
@@ -286,7 +234,7 @@ async getServiciosPaseoEcologicoJSON(){
                     servicioAlimentacion.idx=element['s0:id']['#text'];
                     servicioAlimentacion.pais=element['s0:pais']['#text'];
                     servicioAlimentacion.ciudad=element['s0:ciudad']['#text'];
-                    servicioAlimentacion.tipo="Alimentacion";
+                    servicioAlimentacion.tipo=element['s0:tipoServicio']['#text'];
                     servicioAlimentacion.cantidadplatos=['s0:cantidadPlatos']['#text'];
                     servicioAlimentacion.numeropersonas=['s0:numeroPersonas']['#text'];
                     servicioAlimentacion.nombreproveedor=['s0:nombreProveedor']['#text'];
@@ -421,11 +369,11 @@ getServicioId(id){
                     servicio.descripcion=element['s0:descripcion']['#text'];
                     servicio.costo=+element['s0:costo']['#text'];
                     let inf= element['s0:foto']['#text'];
-                    servicio.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
+                    servicio.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf;
                     servicio.idx=element['s0:id']['#text'];
                     servicio.pais=element['s0:pais']['#text'];
                     servicio.ciudad=element['s0:ciudad']['#text'];
-                    servicio.tipo="Alimentacion";
+                    servicio.tipo=element['s0:tipoServicio']['#text'];
                     servicio.nombreproveedor=['s0:nombreProveedor']['#text'];
                     serviciosCopia.push(servicio);
                     resolve(serviciosCopia);

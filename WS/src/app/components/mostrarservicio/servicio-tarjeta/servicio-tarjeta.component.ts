@@ -5,6 +5,7 @@ import { SesionService } from 'src/app/servicios/sesion.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Servis } from '../../../model/servis';
 
+
 @Component({
   selector: 'app-servicio-tarjeta',
   templateUrl: './servicio-tarjeta.component.html',
