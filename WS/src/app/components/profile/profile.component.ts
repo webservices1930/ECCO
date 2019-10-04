@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
 
   }
   public getSantizeUrl() {
-    this.image = "data:image/"+this.usuarioMostrar.tipo+";base64, "+this.usuarioMostrar.img.slice(2,this.usuarioMostrar.img.length-1);
+    this.image = "data:image/"+this.usuarioMostrar.tipo+";base64, "+this.usuarioMostrar.img;
     return this.sanitization.bypassSecurityTrustUrl(this.image);
  }
 
@@ -68,7 +68,7 @@ export class ProfileComponent implements OnInit {
     }
   }
   normal(){
-    this.image = "data:image/"+this.ext+";base64, "+this.base64data.slice(2,this.base64data.length-1);
+    this.image = "data:image/"+this.ext+";base64, "+this.base64data;
     return this.sanitization.bypassSecurityTrustUrl(this.image);
   }
 

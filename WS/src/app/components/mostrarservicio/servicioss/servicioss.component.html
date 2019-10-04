@@ -8,12 +8,12 @@
         type="button">Buscar</button>
       <div class="filtrar">
         <label for="combo">Filtrar por:</label>
-        <select (change)="buscarServicio($event.target.value)" name="combo" id="combo" ng-model="listItems">
+        <select (change)="filtrarServicio($event.target.value)" name="combo" id="combo" ng-model="listItems">
           <option value=""> </option>
           <option value="Alojamiento">Alojamiento</option>
           <option value="Alimentacion">Alimentación</option>
           <option value="Transporte">Transporte</option>
-          <option value="Paseo">Paseo ecológico</option>
+          <option value="PaseoEcologico">Paseo ecológico</option>
           <option value="Otro">Otro</option>
         </select>
       </div>

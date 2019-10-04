@@ -34,6 +34,7 @@ export class ServiciossComponent implements OnInit {
    ngOnInit() {
      this._serviciosService.getTodosServicios().then(res =>{
       this.serviciosCopia= res;
+      this.servicios=res;
       console.log(this.serviciosCopia);
      });
   }
@@ -47,7 +48,7 @@ export class ServiciossComponent implements OnInit {
   }
 
 
-  buscarServicio( termino:string ){
+  filtrarServicio( termino:string ){
      console.log(termino);
         var i=0;
         this.serviciosCopia=[];
@@ -58,6 +59,11 @@ export class ServiciossComponent implements OnInit {
           }
           i++;
         });
+    }
+
+    buscarServicio( termino:string ){
+      console.log(termino);
+      this.router.navigate( ['/buscar',termino] );
     }
 
 

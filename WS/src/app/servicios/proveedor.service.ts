@@ -164,6 +164,9 @@ borrarProveedor(usuarioProveedor){
                     proveedor.img = data['s0:foto']['#text'];
                     proveedor.tipo = data['s0:tipo']['#text'];
                     proveedor.email = data['s0:nombreUsuario']['#text'];
+                    proveedor.contacto = data['s0:contactoRS']['#text'];
+                    proveedor.paginaweb = data['s0:paginaWeb']['#text'];
+
                     resolve(proveedor);
               }
           }

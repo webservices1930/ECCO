@@ -23,24 +23,14 @@ export class ServicioService {
   serviciosAux:any=[];
 
   constructor() {
-    this.getServicios().then(res => {
+    this.getTodosServicios().then(res => {
       this.serviciosCopia = res;
       this.servicios = res;
       console.log(this.servicios);
     });
   }
 
-  getServicios(){
-    return new Promise(resolve => {
-      setTimeout(() => {
-        this.getServiciosAlimentacionJSON().then(res => {
-            this.serviciosAux = res;
-            console.log(this.serviciosAux);
-            resolve(this.serviciosAux);
-         });
-     }, 500);
-    });
-}
+  
 
   crearServicio(registerForm,base64data,ext,tipo,user){
     var xmlhttp = new XMLHttpRequest();
@@ -183,75 +173,7 @@ export class ServicioService {
   }
 
   
-async getServiciosPaseoEcologicoJSON(){
-  return new Promise(resolve => {
-    setTimeout(() => {
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-      let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
-                  '<soapenv:Header/>'+
-                     '<soapenv:Body>'+
-                  '<djan:getServiciosAlimentaicon/>'+
-                '</soapenv:Body>'+
-             '</soapenv:Envelope>';
-      var y = this;
-      let data;
-      xmlhttp.onreadystatechange =  function () {
-      if (xmlhttp.readyState == 4) {
-          if (xmlhttp.status == 200) {
-              var doc =  xmlToJson(xmlhttp.responseXML);
-              console.log(doc);
-              data=doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult0'];
-              console.log(data);
-              let serviciosCopia=[];
-              if(data['#text']==="true"){
-              data = doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult1']['s0:AlimentacionRes'];
-              console.log(data);
-              if(data.length === undefined ){
-                    data = [];
-                    data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult1']['s0:AlimentacionRes']);
-              }
-                  data.forEach(element => {
-                    let servicioAlimentacion = new ServicioAlimentacion (
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined
-                    );
-                    console.log(element['s0:nombre']['#text']);
-                    servicioAlimentacion.nombre= element['s0:nombre']['#text'];
-                    servicioAlimentacion.descripcion=element['s0:descripcion']['#text'];
-                    servicioAlimentacion.costo=+element['s0:costo']['#text'];
-                    let inf= element['s0:foto']['#text'];
-                    servicioAlimentacion.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
-                    servicioAlimentacion.idx=element['s0:id']['#text'];
-                    servicioAlimentacion.pais=element['s0:pais']['#text'];
-                    servicioAlimentacion.ciudad=element['s0:ciudad']['#text'];
-                    servicioAlimentacion.tipo=element['s0:tipoServicio']['#text'];
-                    servicioAlimentacion.cantidadplatos=['s0:cantidadPlatos']['#text'];
-                    servicioAlimentacion.numeropersonas=['s0:numeroPersonas']['#text'];
-                    servicioAlimentacion.nombreproveedor=['s0:nombreProveedor']['#text'];
-                    servicioAlimentacion.tipocomida=['s0:tipoComida']['#text'];
-                    serviciosCopia.push(servicioAlimentacion);
-                    resolve(serviciosCopia);
-              });
-            }
-          }
-    }
-  }
-    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-    xmlhttp.send(sr);
-        }, 1500);
-      });
 
-}
 //Busca en TODOS los servicios
 getServicioId(id){
   return new Promise(resolve => {
@@ -303,12 +225,12 @@ getServicioId(id){
                     servicio.descripcion=element['s0:descripcion']['#text'];
                     servicio.costo=+element['s0:costo']['#text'];
                     let inf= element['s0:foto']['#text'];
-                    servicio.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
+                    servicio.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf;
                     servicio.idx=element['s0:id']['#text'];
                     servicio.pais=element['s0:pais']['#text'];
                     servicio.ciudad=element['s0:ciudad']['#text'];
                     servicio.tipo=element['s0:tipoServicio']['#text'];
-                    servicio.nombreproveedor=['s0:nombreProveedor']['#text'];
+                    servicio.nombreproveedor=element['s0:nombreProveedor']['#text'];
                     serviciosCopia.push(servicio);
                     resolve(serviciosCopia);
               });
@@ -374,7 +296,7 @@ getServicioId(id){
                     servicio.pais=element['s0:pais']['#text'];
                     servicio.ciudad=element['s0:ciudad']['#text'];
                     servicio.tipo=element['s0:tipoServicio']['#text'];
-                    servicio.nombreproveedor=['s0:nombreProveedor']['#text'];
+                    servicio.nombreproveedor=element['s0:nombreProveedor']['#text'];
                     serviciosCopia.push(servicio);
                     resolve(serviciosCopia);
               });
@@ -389,7 +311,28 @@ getServicioId(id){
 
  }
 
-  getServicioById(id){
+  eliminarServicio(id){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+    let sr=
+          '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
+          '<soapenv:Header/>'+
+          '<soapenv:Body>'+
+              '<djan:deleteServicio>'+
+                '<djan:id_servicio>'+id+'</djan:id_servicio>'+
+              '</djan:deleteServicio>'+
+          '</soapenv:Body>'+
+        '</soapenv:Envelope>';
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4) {
+              if (xmlhttp.status == 200) {
+                  alert("Se borró el servicio correctamente");
+                }
+          }
+        }
+        // Send the POST request
+        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+        xmlhttp.send(sr);
 
   }
 
@@ -401,20 +344,13 @@ getServicioId(id){
 
     let serviciosArr:Servis[] = [];
     termino = termino.toLowerCase();
-
-    for( let i = 0; i < this.servicios.length; i ++ ){
-
-      let servicio = this.servicios[i];
-
-      let nombre = servicio.nombre.toLowerCase();
-
-      if( nombre.indexOf( termino ) >= 0  ){
-        servicio.idx = i;
-        serviciosArr.push( servicio )
-      }
-
-    }
-
+    this.servicios.forEach(element => {
+        let servicio = element;
+        let nombre = servicio.nombre.toLowerCase();
+        if( nombre.indexOf( termino ) >= 0  ){
+          serviciosArr.push( servicio );
+        }
+    });
     return serviciosArr;
 
   }

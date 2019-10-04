@@ -34,9 +34,7 @@ export class ServicioTarjetaComponent implements OnInit {
     this._servicioSesion.agregarServicio(servicio);
   }
 
-  public getSantizeUrl(img) {
-    console.log(img);
-    console.log(this.sanitization.bypassSecurityTrustUrl(img));
+  public getSantizeUrl(img) {   
     return this.sanitization.bypassSecurityTrustUrl(img);
  }
 }

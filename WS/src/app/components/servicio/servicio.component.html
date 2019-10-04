@@ -23,6 +23,12 @@
       Tipo:
       {{ servicio.tipo }} 
     </p>
+
+    <div *ngIf="servicioProveedorid == userid">
+        <button type="button" class="btn btn-warning" (click)="editar()">Editar</button>
+      <button type="button" class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+    </div>
+
   </div>
 </div>
 

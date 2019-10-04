@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ServicioService } from '../../servicios/servicio.service';
 import { Servis } from '../../model/servis';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Pregunta } from 'src/app/model/pregunta';
 import { Usuario } from 'src/app/model/usuario';
+import { SesionService } from '../../servicios/sesion.service';
 
 @Component({
   selector: 'app-servicio',
@@ -17,6 +18,9 @@ export class ServicioComponent {
   preguntar:boolean = false;
 
   preguntass:Pregunta[]=[];
+
+  userid;
+  servicioProveedorid;
 
   seleccionados:Servis[]=[];
   servicios;
@@ -36,6 +40,8 @@ export class ServicioComponent {
   constructor( private activatedRoute: ActivatedRoute,
                private _serviciosService: ServicioService,
                private sanitization:DomSanitizer,
+               private _sesionService:SesionService,
+               private router:Router
     ){
 
   }
@@ -63,7 +69,10 @@ export class ServicioComponent {
       this._serviciosService.getServicioId(params['id']).then(res => {
           this.servicio=res[0];
           console.log(this.servicio);
-      });
+          this.servicioProveedorid=res[0].nombreproveedor;
+          this.userid = this._sesionService.id;
+          console.log(this.userid + this.servicioProveedorid);
+       });
     });
   }
 
@@ -71,6 +80,11 @@ public getSantizeUrl(img) {
   //console.log(img);
   //console.log(this.sanitization.bypassSecurityTrustUrl(img));
   return this.sanitization.bypassSecurityTrustUrl(img);
+}
+
+eliminar(){
+  this._serviciosService.eliminarServicio(this.servicio.idx);
+  this.router.navigate(['servicioss']);
 }
 
 hacerPregunta(){
