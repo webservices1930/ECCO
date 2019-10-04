@@ -10,6 +10,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ServiciossComponent } from './components/mostrarservicio/servicioss/servicioss.component';
 import { CrearservicioComponent } from './components/crearservicio/crearservicio.component';
 import { PagoComponent } from './components/pago/pago.component';
+import { EditarservicioComponent } from './components/editarservicio/editarservicio.component';
 
 
 const APP_ROUTES: Routes = [
@@ -23,6 +24,8 @@ const APP_ROUTES: Routes = [
   { path: 'crearservicio', component: CrearservicioComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'pago', component: PagoComponent },
+  { path: 'editarservicio/:id', component: EditarservicioComponent },
+
 
   { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];

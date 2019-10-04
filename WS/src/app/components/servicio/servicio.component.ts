@@ -87,6 +87,12 @@ eliminar(){
   this.router.navigate(['servicioss']);
 }
 
+editar(){
+  this.activatedRoute.params.subscribe( params =>{
+    this.router.navigate( ['/editarservicio', params['id']] );
+  });
+}
+
 hacerPregunta(){
   //Aquí se debe enviar la pregunta al servicio
   console.log(this.pregunta);

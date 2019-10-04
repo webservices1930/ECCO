@@ -19,18 +19,19 @@ export class ServicioTarjetaComponent implements OnInit {
 
   carrito: CarritoCompras;
   usuario;
-
+  sesion;
   @Input() servicio: any = {};
   @Input() index: number;
 
   @Output() servicioSeleccionado: EventEmitter<number>;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService, private carritoservice: CarritoService) {
+  constructor(private sesionService:SesionService ,private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService, private carritoservice: CarritoService) {
     this.servicioSeleccionado = new EventEmitter();
   }
 
   ngOnInit() {
+    this.sesion = this.sesionService.sesion;
     const idUsuario = this._servicioSesion.id;
       this.usuarioservice.getUsuarioByUsernameJSON(idUsuario).then( res => {
         this.usuario = res;
