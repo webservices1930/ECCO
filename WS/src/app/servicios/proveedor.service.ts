@@ -122,6 +122,45 @@ borrarProveedor(usuarioProveedor){
                 });
             }
 
+            updateProveedor(proveedorMostrar,base64data, ext){
+              console.log(proveedorMostrar);
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+                let sr= '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+                '<soapenv:Header/>'+
+                 '<soapenv:Body>'+
+                   '<djan:updateProveedor>'+
+                   '<djan:nomUsuProv>'+proveedorMostrar.email+'</djan:nomUsuProv>'+
+                       '<djan:proveedor>'+
+                         '<ser:nombreUsuario>'+proveedorMostrar.email+'</ser:nombreUsuario>'+
+                         '<ser:nombre>'+proveedorMostrar.nombre+'</ser:nombre>'+
+                         '<ser:edad>'+proveedorMostrar.edad+'</ser:edad>'+
+                         '<ser:contrasena>'+proveedorMostrar.password+'</ser:contrasena>'+
+                         '<ser:foto>'+base64data+'</ser:foto>'+
+                         '<ser:tipo>'+ext+'</ser:tipo>'+
+                         '<ser:descripcion>'+proveedorMostrar.descripcion+'</ser:descripcion>'+
+                         '<ser:telefono>'+proveedorMostrar.telefono+'</ser:telefono>'+
+                         '<ser:paginaWeb>'+proveedorMostrar.paginaweb +'</ser:paginaWeb>'+
+                         '<ser:contactoRS>'+ proveedorMostrar.contacto+'</ser:contactoRS>'+
+                       '</djan:proveedor>'+
+                   '</djan:updateProveedor>'+
+                 '</soapenv:Body>'+
+             '</soapenv:Envelope>';
+        
+                xmlhttp.onreadystatechange = function () {
+                  if (xmlhttp.readyState == 4) {
+                      if (xmlhttp.status == 200) {
+                          alert("Se actualizó el proveedor correctamente");
+                        }
+                  }
+                }
+                // Send the POST request
+                xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+                xmlhttp.send(sr);
+             
+          }
+
+
     async getProveedorByUsernameJSON(user){
       console.log('hola');
       return new Promise(resolve => {

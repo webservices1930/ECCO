@@ -108,9 +108,6 @@ export class UsuarioService {
   }
 
 updateUsuario(usuarioMostrar,base64data, ext){
-
-      var x= "";
-        x=usuarioMostrar.email;
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
         let sr= '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+

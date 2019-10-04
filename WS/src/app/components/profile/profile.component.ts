@@ -80,7 +80,9 @@ export class ProfileComponent implements OnInit {
         this.usuarioService.updateUsuario(this.usuarioMostrar,this.base64data,this.ext);
           
     }else{
-
+      this.usuarioMostrar.password =(<HTMLInputElement>document.getElementById("password")).value;
+      this.proveedorService.updateProveedor(this.usuarioMostrar,this.base64data,this.ext);
+          
     }
   }
 

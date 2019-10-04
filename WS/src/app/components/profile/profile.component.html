@@ -45,13 +45,13 @@
 
 
     <div *ngIf="this.sesionService.sesion == 'proveedor'">
-        <label for="edad">Página web: </label>
+        <label for="paginaweb">Página web: </label>
         <input type="text" class="form-control" id="paginaweb" [(ngModel)]="this.usuarioMostrar.paginaweb">
 
     </div>
 
     <div *ngIf="this.sesionService.sesion == 'proveedor'">
-        <label for="edad">Contacto: </label>
+        <label for="contacto">Contacto: </label>
         <input type="text" class="form-control" id="contacto" [(ngModel)]="this.usuarioMostrar.contacto">
       </div>
 
