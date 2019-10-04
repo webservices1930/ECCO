@@ -9,12 +9,12 @@ export class ServicioAlimentacion extends Servis {
     public tipo:string,
     public costo:number,
     public img: string,
+    public nombreproveedor:string,
     public numeropersonas:number,
     public tipocomida:string,
-    public nombreproveedor:string,
     public cantidadplatos:number,
     public idx?: number,
   ) {
-    super(nombre,pais,ciudad,descripcion,tipo,costo,img);
+    super(nombre,pais,ciudad,descripcion,tipo,costo,img,nombreproveedor);
   }
 }

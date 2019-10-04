@@ -36,7 +36,6 @@ export class ServicioComponent {
   constructor( private activatedRoute: ActivatedRoute,
                private _serviciosService: ServicioService,
                private sanitization:DomSanitizer,
-               private servicioService:ServicioService
     ){
 
   }
@@ -58,14 +57,14 @@ export class ServicioComponent {
 
 
     //fin de mock de preguntas
-/*
+
     this.activatedRoute.params.subscribe( params =>{
       console.log(params['id']);
-      this._serviciosService.getServicioById(params['id']).then(res => {
-          this.servicio=res;
+      this._serviciosService.getServicioId(params['id']).then(res => {
+          this.servicio=res[0];
           console.log(this.servicio);
       });
-    });*/
+    });
   }
 
 public getSantizeUrl(img) {

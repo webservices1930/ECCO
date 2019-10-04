@@ -31,7 +31,7 @@ export class ServiciossComponent implements OnInit {
   }
 
    ngOnInit() {
-     this._serviciosService.getServicios().then(res =>{
+     this._serviciosService.getTodosServicios().then(res =>{
       this.serviciosCopia= res;
       console.log(this.serviciosCopia);
      });

@@ -9,7 +9,7 @@ export class Servis {
     public tipo:string,
     public costo:number,
     public img: string,
+    public nombreproveedor:string,
     public idx?: number,
-    
   ) {}
 }

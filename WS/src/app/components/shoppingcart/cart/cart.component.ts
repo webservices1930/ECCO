@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Servi } from 'src/app/servicios/servicio.service';
 import { SesionService } from 'src/app/servicios/sesion.service';
 import { Servis } from '../../../model/servis';
 import { Router } from '@angular/router';
@@ -24,7 +23,7 @@ export class CartComponent implements OnInit {
   actualizarTotal(){
     this.total=this._SesionServicio.getTotal();
   }
-  quitarServicio(servicio:Servi){
+  quitarServicio(servicio:Servis){
     this._SesionServicio.quitarServicio(servicio);
     this.total=this._SesionServicio.getTotal();
   }
