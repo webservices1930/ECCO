@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {xmlToJson} from './lib';
 import { CarritoCompras } from '../model/carrito-compras';
+import { Usuario } from '../model/usuario';
+import { Servis } from '../model/servis';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +17,17 @@ export class CarritoService {
     this.ext = " ";
    }
 
-   registrarUsuario(carrito: CarritoCompras) {
+   public agregarAlCarrito(cliente: Usuario, servicio: Servis) {
     var xmlhttp = new XMLHttpRequest();
+    //console.log(carrito.servicios[carrito.servicios.length - 1].idx );
     xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
     let sr=
     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
       '<soapenv:Header/>'+
         '<soapenv:Body>'+
           '<djan:agregarAlCarrito>'+
-            '<djan:nomUsuario>' + carrito.cliente.email + '</djan:nomUsuario>'+
-            '<djan:idServicio>' + carrito.servicios[carrito.servicios.length - 1] + '</djan:idServicio>'+
+            '<djan:nomUsuario>' + cliente.email + '</djan:nomUsuario>'+
+            '<djan:idServicio>' + servicio.idx + '</djan:idServicio>'+
           '</djan:agregarAlCarrito>'+
         '</soapenv:Body>'+
     '</soapenv:Envelope>';

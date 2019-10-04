@@ -4,6 +4,10 @@ import { CartComponent } from '../../shoppingcart/cart/cart.component';
 import { SesionService } from 'src/app/servicios/sesion.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Servis } from '../../../model/servis';
+import { CarritoCompras } from '../../../model/carrito-compras';
+import { UsuarioService } from '../../../servicios/usuario.service';
+import { Usuario } from 'src/app/model/usuario';
+import { CarritoService } from '../../../servicios/carrito.service';
 
 
 @Component({
@@ -13,16 +17,26 @@ import { Servis } from '../../../model/servis';
 })
 export class ServicioTarjetaComponent implements OnInit {
 
+  carrito: CarritoCompras;
+  usuario;
+
   @Input() servicio: any = {};
   @Input() index: number;
 
   @Output() servicioSeleccionado: EventEmitter<number>;
 
-  constructor(private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer) {
+  // tslint:disable-next-line: max-line-length
+  constructor(private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService, private carritoservice: CarritoService) {
     this.servicioSeleccionado = new EventEmitter();
   }
 
   ngOnInit() {
+    const idUsuario = this._servicioSesion.id;
+      this.usuarioservice.getUsuarioByUsernameJSON(idUsuario).then( res => {
+        this.usuario = res;
+        console.log(this.usuario);
+      });
+    // this.carrito.setCliente(this.usuario);
   }
 
   verServicio() {
@@ -30,11 +44,16 @@ export class ServicioTarjetaComponent implements OnInit {
     this.router.navigate( ['/servicio', this.index] );
   }
 
-  agregarServicio(servicio:Servis){
-    this._servicioSesion.agregarServicio(servicio);
+  agregarServicio(servicio : Servis){
+    /*this.carrito.agregarServicio(this.servicio);
+    this.carrito.setCostoTotal = this.carrito.calcularCostoTotal;
+    this.carrito.setNumPlanes = this.carrito.calcularNumPlanes;*/
+
+    this.carritoservice.agregarAlCarrito(this.usuario, servicio);
+    this._servicioSesion.agregarServicio(this.servicio);
   }
 
-  public getSantizeUrl(img) {   
+  public getSantizeUrl(img) {
     return this.sanitization.bypassSecurityTrustUrl(img);
  }
 }
