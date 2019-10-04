@@ -15,7 +15,7 @@ export class CarritoService {
     this.ext = " ";
    }
 
-   registrarUsuario(nombreUsuario: string, idServicio: number) {
+   registrarUsuario(carrito: CarritoCompras) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
     let sr=
@@ -23,8 +23,8 @@ export class CarritoService {
       '<soapenv:Header/>'+
         '<soapenv:Body>'+
           '<djan:agregarAlCarrito>'+
-            '<djan:nomUsuario>' + nombreUsuario + '</djan:nomUsuario>'+
-            '<djan:idServicio>' + idServicio + '</djan:idServicio>'+
+            '<djan:nomUsuario>' + carrito.cliente.email + '</djan:nomUsuario>'+
+            '<djan:idServicio>' + carrito.servicios[carrito.servicios.length - 1] + '</djan:idServicio>'+
           '</djan:agregarAlCarrito>'+
         '</soapenv:Body>'+
     '</soapenv:Envelope>';
