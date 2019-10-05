@@ -65,11 +65,16 @@ class Transporte(Servicio):
     horaSalida=models.TextField()
     horaLlegada=models.TextField()
 
+
 class CarritoCompras(models.Model):
     numServicios = models.IntegerField()
     costoTotal = models.FloatField()
     cliente = models.OneToOneField(Cliente, on_delete=models.CASCADE)
-    servicios= models.ManyToManyField(Servicio)
+    servicios= models.ManyToManyField('Servicio' ,through='Carrito_servicio',related_name="servicios")
+
+class Carrito_servicio(models.Model):
+    carrito = models.ForeignKey(CarritoCompras, on_delete=models.CASCADE)
+    servicio = models.ForeignKey(Servicio , on_delete=models.CASCADE)
 
 class Pregunta(models.Model):
     id = models.AutoField(primary_key=True)

@@ -983,29 +983,35 @@ class SoapService(ServiceBase):
                 res.resultado = "carrito creado con exito"
                 carrito = models.CarritoCompras(numServicios=1, costoTotal=sc1[0].costo, cliente=sc[0])
                 carrito.save()
-                carrito.servicios.add(sc1[0])
-                carrito.save()
+                servi=models.Carrito_servicio(carrito= carrito, servicio = sc1[0])
+                servi.save()
             else:
                 sc2 = sc2[0]
                 sc2.numServicios = sc2.servicios.count() + 1
                 sc2.costoTotal += sc1[0].costo
-                sc2.servicios.add(sc1[0])
-                res.resultado = "carrito actualizado con exito"
                 sc2.save()
+                servi = models.Carrito_servicio(carrito=sc2, servicio=sc1[0])
+                servi.save()
+                res.resultado = "carrito actualizado con exito"
+
 
         return res
 
     @rpc(String, Integer, _returns=ResponseText)
     def removerDelCarrito(ctx, nomUsuario, idServicio):
-        sc2 = models.CarritoCompras.objects.filter(cliente__nombreUsuario=nomUsuario)
         sc1 = models.Servicio.objects.filter(id=idServicio)
         res = ResponseText()
-        if (sc2.count() > 0 and sc1.count() > 0):
-            sc2 = sc2[0]
-            sc2.servicios.remove(sc1[0])
-            sc2.numServicios -= 1
-            sc2.save()
-            res.resultado = "servicio removido"
+        if (sc1.count() > 0):
+            sc2 = models.Carrito_servicio.objects.filter(carrito__cliente__nombreUsuario=nomUsuario, servicio=sc1[0])
+            if(sc2.count()>0):
+                sc2 = sc2[0]
+                sc2.carrito.costoTotal -= sc1[0].costo
+                sc2.carrito.numServicios -= 1
+                sc2.carrito.save()
+                sc2.delete()
+                res.resultado = "servicio removido"
+        else:
+            res.resultado = "servicio no encontrado"
         return res
 
     @rpc(String,_returns=CarritoCompras)
@@ -1018,7 +1024,6 @@ class SoapService(ServiceBase):
             car.cliente=sc[0].cliente
             car.servicios = []
             for s in sc[0].servicios.all():
-                print("h")
                 aux=ServicioRes()
                 aux.nombreProveedor=s.proveedor.nombreUsuario
                 aux.nombre=s.nombre
