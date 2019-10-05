@@ -58,11 +58,11 @@ export class PreguntaService {
                   pregunta.pregunta = element['s0:pregunta']['#text'];
                   pregunta.fechaPregunta = element['s0:fechaPregunta']['#text'];
 
-                  //pregunta.respuesta="prueba";
-                  //pregunta.fechaRespuesta="15-20-2019 15:33"
+                  pregunta.respuesta="prueba";
+                  pregunta.fechaRespuesta="15-20-2019 15:33"
 
-                  pregunta.respuesta = element['s0:respuesta']['#text'];
-                  pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
+                  //pregunta.respuesta = element['s0:respuesta']['#text'];
+                  //pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
 
                   let cliente = new Usuario(
                     undefined,
@@ -100,28 +100,33 @@ export class PreguntaService {
 
 
 
-  /*
+  
 
   public crearPregunta(pregunta:Pregunta){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
     let sr=
-    '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
+    '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
       '<soapenv:Header/>'+
         '<soapenv:Body>'+
           '<djan:createPregunta>'+
-            '<djan:pregun>'+
-              '<ser:pregunta>' + pregunta.pregunta + '</ser:pregunta>'+
-              '<ser:idServicio>' + pregunta.idServicio + '</ser:idServicio>'+
-              '<ser:idCliente>'+ pregunta.idCliente +'</ser:idCliente>'+
-            '<djan:pregun>'+
-          '</djan:createPregunta>'+
-        '</soapenv:Body>'+
+
+           '<djan:pregun>'+
+  
+            '<ser:pregunta>'+ pregunta.pregunta+'</ser:pregunta>'+
+
+            '<ser:idServicio>'+ pregunta.idServicio+'</ser:idServicio>'+
+
+            '<ser:nombreUsuario>'+pregunta.cliente.email+'</ser:nombreUsuario>'+
+           '</djan:pregun>'+
+        '</djan:createPregunta>'+
+      '</soapenv:Body>'+
     '</soapenv:Envelope>';
     xmlhttp.onreadystatechange = function () {
+      console.log(xmlhttp.readyState +" YY "+ xmlhttp.status);
       if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
-              console.log("Se cargaron las preguntas del servicio");
+              console.log("Se creó la pregunta");
             }
       }
     }
@@ -129,5 +134,5 @@ export class PreguntaService {
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.send(sr);
   }
-  */
+  
 }

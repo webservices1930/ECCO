@@ -7,7 +7,8 @@ export class Pregunta {
         public respuesta:string,
         public fechaPregunta:string,
         public fechaRespuesta: string,
-               
+
+        public idServicio?:any           
 
     ) {}
 }

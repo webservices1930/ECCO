@@ -35,11 +35,14 @@
 <div>
   <h2> Preguntas </h2>
   <form (ngSubmit)="hacerPregunta()" #preguntaForm="ngForm">
-    <input placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true" required name="pregunta"
-      [(ngModel)]="pregunta" maxlength="50" #txtPregunta="ngModel" />
+    <input class="form-control mr-sm-2" placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true" required name="pregunta"
+      [(ngModel)]="pregunta.pregunta" maxlength="50" #txtPregunta="ngModel" />
     <div id="botonesPregunta">
       <button type="submit" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
       <button type="button" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
+    </div>
+    <div id="errorPregunta" [hidden]="autenticadoComoCliente || !preguntar">
+      Para hacer preguntas a los proveedores debe estar autenticado como un cliente
     </div>
   </form>
   <div id="preguntaRespuesta" *ngFor="let pregunta of preguntass">

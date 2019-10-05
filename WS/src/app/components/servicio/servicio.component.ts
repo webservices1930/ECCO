@@ -15,18 +15,27 @@ import { PreguntaService } from 'src/app/servicios/pregunta.service';
   styleUrls: ['./servicio.component.css']
 })
 export class ServicioComponent {
-  pregunta:string;
-  preguntar:boolean = false;
+  pregunta: Pregunta = new Pregunta(
+    new Usuario(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined),
+    undefined,
+    undefined,
+    undefined,
+    undefined
+  );
+  preguntar: boolean = false;
+  autenticadoComoCliente: boolean = true;
 
-  preguntass:any=[];
+
+
+  preguntass: any = [];
 
   userid;
   servicioProveedorid;
 
-  seleccionados:Servis[]=[];
+  seleccionados: Servis[] = [];
   servicios;
-  serviciosCopia:Servis[] = [];
-  serv: Servis = new Servis (
+  serviciosCopia: Servis[] = [];
+  serv: Servis = new Servis(
     undefined,
     undefined,
     undefined,
@@ -38,67 +47,79 @@ export class ServicioComponent {
   );
   servicio;
 
-  constructor( private activatedRoute: ActivatedRoute,
-               private _serviciosService: ServicioService,
-               private sanitization:DomSanitizer,
-               private _sesionService:SesionService,
-               private router:Router,
-               private _preguntaService: PreguntaService
-    ){
+  constructor(private activatedRoute: ActivatedRoute,
+    private _serviciosService: ServicioService,
+    private sanitization: DomSanitizer,
+    private _sesionService: SesionService,
+    private router: Router,
+    private _preguntaService: PreguntaService
+  ) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
-    
 
-    this.activatedRoute.params.subscribe( params =>{
+
+    this.activatedRoute.params.subscribe(params => {
       console.log(params['id']);
+
+      this.pregunta.idServicio = params['id'];
+      if (this._sesionService.getSesion() == "usuario") {
+        this.pregunta.cliente.email = this._sesionService.id;
+      }
+
       this._serviciosService.getServicioId(params['id']).then(res => {
-          this.servicio=res[0];
-          console.log(this.servicio);
-          this.servicioProveedorid=res[0].nombreproveedor;
-          this.userid = this._sesionService.id;
-          console.log(this.userid + this.servicioProveedorid);
+        this.servicio = res[0];
+        console.log(this.servicio);
+        this.servicioProveedorid = res[0].nombreproveedor;
+        this.userid = this._sesionService.id;
+        console.log(this.userid + this.servicioProveedorid);
 
-          this._preguntaService.getPreguntasServicio(params['id']).then(res => {
-            console.log("HOLAAA"+res[0]);
-            this.preguntass = res;
-          });
 
-       });
+        this._preguntaService.getPreguntasServicio(params['id']).then(res => {
+          this.preguntass = res;
+        });
 
-       
+      });
+
+
     });
   }
 
-public getSantizeUrl(img) {
-  //console.log(img);
-  //console.log(this.sanitization.bypassSecurityTrustUrl(img));
-  return this.sanitization.bypassSecurityTrustUrl(img);
-}
+  public getSantizeUrl(img) {
+    //console.log(img);
+    //console.log(this.sanitization.bypassSecurityTrustUrl(img));
+    return this.sanitization.bypassSecurityTrustUrl(img);
+  }
 
-eliminar(){
-  this._serviciosService.eliminarServicio(this.servicio.idx);
-  this.router.navigate(['servicioss']);
-}
+  eliminar() {
+    this._serviciosService.eliminarServicio(this.servicio.idx);
+    this.router.navigate(['servicioss']);
+  }
 
-editar(){
-  this.activatedRoute.params.subscribe( params =>{
-    this.router.navigate( ['/editarservicio', params['id']] );
-  });
-}
+  editar() {
+    this.activatedRoute.params.subscribe(params => {
+      this.router.navigate(['/editarservicio', params['id']]);
+    });
+  }
 
-hacerPregunta(){
-  //Aquí se debe enviar la pregunta al servicio
-  console.log(this.pregunta);
-  this.pregunta = "";
-  this.preguntar = false;
-}
-cancelarPregunta(){
-  this.pregunta = "";
-  this.preguntar = false;
-}
+  hacerPregunta() {
+    //Aquí se debe enviar la pregunta al servicio
+    console.log(this.pregunta.pregunta);
+    if (this.pregunta.cliente.email == undefined) {
+      this.autenticadoComoCliente = false;
+    }
+    else {
+      this._preguntaService.crearPregunta(this.pregunta);
+      this.pregunta.pregunta = "";
+      this.preguntar = false;
+    }
+  }
+  cancelarPregunta() {
+    this.pregunta.pregunta = "";
+    this.preguntar = false;
+  }
 
 
 }

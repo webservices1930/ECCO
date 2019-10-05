@@ -49,3 +49,7 @@ img{
 #nombreYFechaPregunta{
   display : flex;
 }
+
+#errorPregunta{
+  color: red;
+}
