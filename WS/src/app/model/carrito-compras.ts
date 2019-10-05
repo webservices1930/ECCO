@@ -5,7 +5,7 @@ export class CarritoCompras {
   public cliente;
   public servicios: Servis[];
   public CostoTotal: number;
-  public numPlanes: number;
+  public numServicios: number;
 
   constructor(
   ) {}
@@ -35,11 +35,11 @@ export class CarritoCompras {
   }
 
   public getNumPlanes(){
-    return this.numPlanes;
+    return this.numServicios;
   }
 
-  public setNumPlanes(num: number){
-     this.numPlanes = num;
+  public setNumServicios(num: number){
+     this.numServicios = num;
   }
 
   public calcularCostoTotal(){
