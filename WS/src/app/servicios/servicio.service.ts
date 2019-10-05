@@ -30,8 +30,6 @@ export class ServicioService {
     });
   }
 
-  
-
   crearServicio(registerForm,base64data,ext,tipo,user){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
@@ -172,7 +170,7 @@ export class ServicioService {
 
   }
 
-  
+
 
 //Busca en TODOS los servicios
 getServicioId(id){
