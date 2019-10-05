@@ -44,14 +44,21 @@
   </form>
   <div id="preguntaRespuesta" *ngFor="let pregunta of preguntass">
     <div id="preguntaCliente">
-      <img id="fotoClientePregunta" src="assets/img/4clover.png" alt="image">
+      <img id="fotoClientePregunta" [src]="getSantizeUrl(pregunta.cliente.img)" alt="image">
       <div>
-        <div id="nombreClientePregunta">{{ pregunta.cliente.nombre }}</div>
+        <div id="nombreYFechaPregunta">
+          <div class="nombreClientePregunta">{{ pregunta.cliente.nombre }}</div>
+          <div class="fechaPregunta">{{ pregunta.fechaPregunta }} </div>
+        </div> 
         <div>{{ pregunta.pregunta }}</div>
       </div>
     </div>
-    <div [hidden]="pregunta.respuesta==null" id="respuestaProveedor">
-      <span id="respuestaLabel">Respuesta:</span> {{pregunta.respuesta}}
+    <div [hidden]="pregunta.respuesta==''" id="respuestaProveedor">
+      <div id="nombreYFechaPregunta">
+        <div class="nombreClientePregunta">Respuesta:</div>
+        <div class="fechaPregunta">{{ pregunta.fechaRespuesta }}</div>
+      </div>
+      <div>{{ pregunta.respuesta }}</div>
     </div>
   </div>
 </div>

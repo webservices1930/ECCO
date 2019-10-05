@@ -21,10 +21,17 @@ img{
   display : flex;
 }
 
-#nombreClientePregunta{
+#fechaPregunta{
+  color:gray;
+}
+
+.nombreClientePregunta{
   font-weight: bold;
   text-decoration: underline black;
+  width:800px;
+  margin-right: 5px;
 }
+
 
 #respuestaProveedor{
   margin-left: 90px;
@@ -37,4 +44,8 @@ img{
   border: 0.1px solid black;
   margin-bottom: 2px;
   background-color: #FAFAFA;
+}
+
+#nombreYFechaPregunta{
+  display : flex;
 }

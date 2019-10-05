@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Pregunta } from 'src/app/model/pregunta';
 import { Usuario } from 'src/app/model/usuario';
 import { SesionService } from '../../servicios/sesion.service';
+import { PreguntaService } from 'src/app/servicios/pregunta.service';
 
 @Component({
   selector: 'app-servicio',
@@ -17,7 +18,7 @@ export class ServicioComponent {
   pregunta:string;
   preguntar:boolean = false;
 
-  preguntass:Pregunta[]=[];
+  preguntass:any=[];
 
   userid;
   servicioProveedorid;
@@ -41,7 +42,8 @@ export class ServicioComponent {
                private _serviciosService: ServicioService,
                private sanitization:DomSanitizer,
                private _sesionService:SesionService,
-               private router:Router
+               private router:Router,
+               private _preguntaService: PreguntaService
     ){
 
   }
@@ -51,7 +53,7 @@ export class ServicioComponent {
     //mock preguntas:
     let usuarioPregunta:Usuario= new Usuario("Nombre_Usuario", undefined, undefined, undefined, undefined, undefined, undefined, undefined);
 
-    let preguntaPrueba:Pregunta = new Pregunta(usuarioPregunta, "¿Hay Wi-Fi?", "Sí");
+    let preguntaPrueba:Pregunta = new Pregunta(usuarioPregunta, "¿Hay Wi-Fi?", "Sí", undefined, undefined);
 
     this.preguntass.push(preguntaPrueba);
     this.preguntass.push(preguntaPrueba);
@@ -72,7 +74,15 @@ export class ServicioComponent {
           this.servicioProveedorid=res[0].nombreproveedor;
           this.userid = this._sesionService.id;
           console.log(this.userid + this.servicioProveedorid);
+
+          this._preguntaService.getPreguntasServicio(params['id']).then(res => {
+            console.log("HOLAAA"+res[0]);
+            this.preguntass = res;
+          });
+
        });
+
+       
     });
   }
 

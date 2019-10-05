@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Pregunta } from '../model/pregunta';
+import { xmlToJson } from './lib';
+import { Usuario } from '../model/usuario';
+import { resolve } from 'url';
 
 @Injectable({
   providedIn: 'root'
@@ -8,32 +11,96 @@ export class PreguntaService {
 
   constructor() { }
 
-  /*
-  public descargarPreguntas(idServicio:number) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-    let sr=
-    '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
-      '<soapenv:Header/>'+
-        '<soapenv:Body>'+
-          '<djan:getPreguntasServicio>'+
-            '<djan:idServicio>' + idServicio + '</djan:idServicio>'+
-          '</djan:getPreguntasServicio>'+
-        '</soapenv:Body>'+
-    '</soapenv:Envelope>';
-    xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == 4) {
-          if (xmlhttp.status == 200) {
+
+  async getPreguntasServicio(idServicio: number) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+        let sr =
+          '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">' +
+            '<soapenv:Header/>' +
+              '<soapenv:Body>' +
+                '<djan:getPreguntasServicio>' +
+                  '<djan:idServicio>' + idServicio + '</djan:idServicio>' +
+                '</djan:getPreguntasServicio>' +
+              '</soapenv:Body>' +
+          '</soapenv:Envelope>';
+
+        let data;
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
               console.log("Se cargaron las preguntas del servicio");
               //falta pasarlas a las preguntas
+
+              var doc = xmlToJson(xmlhttp.responseXML);
+              console.log(doc);
+              data = doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult0'];
+              console.log(data);
+              let preguntas = [];
+              if (data['#text'] === "true") {
+                data = doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult1']['s0:PreguntaRes'];
+                console.log(data);
+                if (data.length === undefined) {
+                  data = [];
+                  data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult1']['s0:PreguntaRes']);
+                }
+                data.forEach(element => {
+                  let pregunta = new Pregunta(
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined
+                  );
+                  console.log(element['s0:id']['#text']);
+                  pregunta.pregunta = element['s0:pregunta']['#text'];
+                  pregunta.fechaPregunta = element['s0:fechaPregunta']['#text'];
+
+                  //pregunta.respuesta="prueba";
+                  //pregunta.fechaRespuesta="15-20-2019 15:33"
+
+                  pregunta.respuesta = element['s0:respuesta']['#text'];
+                  pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
+
+                  let cliente = new Usuario(
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined
+                  )
+
+                  cliente.nombre = element['s0:cliente']['s0:nombre']['#text'];
+                  let inf = element['s0:cliente']['s0:foto']['#text'];
+                  cliente.img = "data:image/" + element['s0:cliente']['s0:tipo']['#text'] + ";base64, " + inf;
+
+                  pregunta.cliente = cliente;
+
+
+                  preguntas.push(pregunta);
+                  console.log(pregunta);
+                  resolve(preguntas);
+                });
+              }
             }
-      }
-    }
-    // Send the POST request
-    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-    xmlhttp.send(sr);
+          }
+        }
+        // Send the POST request
+        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+        xmlhttp.send(sr);
+      }, 1500);
+    });
 
   }
+
+
+
+  /*
 
   public crearPregunta(pregunta:Pregunta){
     var xmlhttp = new XMLHttpRequest();

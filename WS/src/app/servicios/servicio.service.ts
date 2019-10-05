@@ -147,7 +147,7 @@ export class ServicioService {
                       servicioAlimentacion.descripcion=element['s0:descripcion']['#text'];
                       servicioAlimentacion.costo=+element['s0:costo']['#text'];
                       let inf= element['s0:foto']['#text'];
-                      servicioAlimentacion.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
+                      servicioAlimentacion.img="data:image/"+element['s0:tipo']['#text']+";base64, "+ inf;
                       servicioAlimentacion.idx=element['s0:id']['#text'];
                       servicioAlimentacion.pais=element['s0:pais']['#text'];
                       servicioAlimentacion.ciudad=element['s0:ciudad']['#text'];
