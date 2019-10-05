@@ -7,6 +7,7 @@ import { Servis } from '../../../model/servis';
 import { CarritoCompras } from '../../../model/carrito-compras';
 import { UsuarioService } from '../../../servicios/usuario.service';
 import { Usuario } from 'src/app/model/usuario';
+import { CarritoService } from '../../../servicios/carrito.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ServicioTarjetaComponent implements OnInit {
   @Output() servicioSeleccionado: EventEmitter<number>;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private sesionService:SesionService ,private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService) {
+  constructor(private sesionService:SesionService ,private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService, private carritoService: CarritoService) {
     this.servicioSeleccionado = new EventEmitter();
   }
 
@@ -45,14 +46,11 @@ export class ServicioTarjetaComponent implements OnInit {
   }
 
   agregarServicio(servicio : Servis){
-     this._servicioSesion.agregarServicio(this.servicio);
+    this.carritoService.agregarAlCarrito(this.usuario, servicio);
+    this._servicioSesion.agregarServicio(this.servicio);
   }
 
   public getSantizeUrl(img) {
     return this.sanitization.bypassSecurityTrustUrl(img);
- }
-
- public actualizarCarritoEnOtraVista() {
-    //this.myEvent.emit(true);
  }
 }
