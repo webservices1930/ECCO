@@ -7,8 +7,6 @@ import { Servis } from '../../../model/servis';
 import { CarritoCompras } from '../../../model/carrito-compras';
 import { UsuarioService } from '../../../servicios/usuario.service';
 import { Usuario } from 'src/app/model/usuario';
-import { CarritoService } from '../../../servicios/carrito.service';
-import { TarjetaCarritoService } from '../../../servicios/tarjeta-carrito.service';
 
 
 @Component({
@@ -27,7 +25,7 @@ export class ServicioTarjetaComponent implements OnInit {
   @Output() servicioSeleccionado: EventEmitter<number>;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private sesionService:SesionService ,private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService, private carritoservice: CarritoService, private tarjetaCarrito: TarjetaCarritoService) {
+  constructor(private sesionService:SesionService ,private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService) {
     this.servicioSeleccionado = new EventEmitter();
   }
 
@@ -47,12 +45,7 @@ export class ServicioTarjetaComponent implements OnInit {
   }
 
   agregarServicio(servicio : Servis){
-    /*this.carrito.agregarServicio(this.servicio);
-    this.carrito.setCostoTotal = this.carrito.calcularCostoTotal;
-    this.carrito.setNumPlanes = this.carrito.calcularNumPlanes;*/
-    this.carritoservice.agregarAlCarrito(this.usuario, servicio);
-    this.tarjetaCarrito.actualizarCarrito();
-     //this._servicioSesion.agregarServicio(this.servicio);
+     this._servicioSesion.agregarServicio(this.servicio);
   }
 
   public getSantizeUrl(img) {
