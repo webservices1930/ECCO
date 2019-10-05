@@ -35,12 +35,13 @@ class Servicio(PolymorphicModel):
 
 
 class Resena(models.Model):
+    id = models.AutoField(primary_key=True)
     cliente=models.ForeignKey(Cliente,on_delete=models.CASCADE)
     servicio=models.ForeignKey(Servicio,on_delete=models.CASCADE)
     texto=models.TextField(default="")
 
 class Alojamiento(Servicio):
-    tipoAlojamiento=models.TextField(choices=(("HOTEL","Hotel"),("CASA","Casa"),("CAMPING","Camping"),("MOTEL","Motel")))
+    tipoAlojamiento=models.TextField(choices=(("HOTEL","HOTEL"),("CASA","CASA"),("CAMPING","CAMPING"),("MOTEL","MOTEL")))
     numeroHabitaciones=models.IntegerField()
     numeroBanos=models.IntegerField()
     servicioLimpieza=models.TextField(choices=(("Si","Si"),("No","No")))
@@ -71,6 +72,7 @@ class CarritoCompras(models.Model):
     servicios= models.ManyToManyField(Servicio)
 
 class Pregunta(models.Model):
+    id = models.AutoField(primary_key=True)
     pregunta=models.TextField()
     fechaPregunta=models.TextField()
     respuesta=models.TextField()
