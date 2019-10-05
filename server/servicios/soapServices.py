@@ -130,7 +130,7 @@ class Transporte(Servicio):
 
 class TransporteRes(ServicioRes):
     empresa = String
-    tipoTransporte = String(values = ["TERRESTRE","AEREO","MARITIMO"])
+    tipoTransporte = String
     origen = String
     destino = String
     horaSalida = String
