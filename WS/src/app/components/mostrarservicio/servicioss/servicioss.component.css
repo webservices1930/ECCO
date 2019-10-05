@@ -20,9 +20,28 @@
 
 .filtrar{
   display: flex;
-  margin-left: 10px;
+
+  align-items: center;
+  justify-content: center;
 }
+.filtrar select{
+  margin-left: 15px;
+  margin-right: 25px;
+  width: 250px;
+}
+
+
 #buscadorForm{
-  display:block;
   margin:auto;
 }
+
+#buscadorBuscar{
+  display:block;
+  margin:auto;
+  margin-bottom: 5px;
+}
+
+#campoBusqueda{
+  width:400px;
+}
+

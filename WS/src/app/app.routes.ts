@@ -27,7 +27,7 @@ const APP_ROUTES: Routes = [
   { path: 'editarservicio/:id', component: EditarservicioComponent },
 
 
-  { path: '**', pathMatch: 'full', redirectTo: 'login' }
+  { path: '**', pathMatch: 'full', redirectTo: 'servicioss' }
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES, {useHash:true});

@@ -1,24 +1,29 @@
+
 <div id="buscador">
-  <img id="logoECCO" src="assets/img/logo_ecco.png" [routerLink]="['home']" alt="">
-  <div id="buscadorForm">
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" name="termino" type="text" placeholder="Buscar servicio" [(ngModel)]="termino"
-        (keyup.enter)="buscarServicio(buscarTexto.value)"  #buscarTexto>
-      <button (click)="buscarServicio(buscarTexto.value)" class="btn btn-outline-success my-2 my-sm-0"
-        type="button">Buscar</button>
-      <div class="filtrar">
-        <label for="combo">Filtrar por:</label>
-        <select (change)="filtrarServicio($event.target.value)" name="combo" id="combo" ng-model="listItems">
-          <option value=""> </option>
-          <option value="Alojamiento">Alojamiento</option>
-          <option value="Alimentacion">Alimentación</option>
-          <option value="Transporte">Transporte</option>
-          <option value="PaseoEcologico">Paseo ecológico</option>
-        </select>
-      </div>
-    </form>
+    <img id="logoECCO" src="assets/img/logo_ecco.png" [routerLink]="['home']" alt="">
+    <div id="buscadorForm">
+      <form class="form-inline my-2 my-lg-0">
+        <div id="buscadorBuscar">
+          <input class="form-control mr-sm-2" name="termino" type="text" placeholder="Buscar servicio" [(ngModel)]="termino" id="campoBusqueda" type="text" placeholder="Buscar servicio"
+            (keyup.enter)="buscarServicio(buscarTexto.value)" #buscarTexto>
+          <button (click)="buscarServicio(buscarTexto.value)" class="btn btn-outline-success my-2 my-sm-0"
+            type="button">Buscar</button>
+        </div>
+      </form>
+    </div>
+    <div class="filtrar">
+      <label for="combo">Filtrar por:</label>
+      <select (change)="filtrarServicio($event.target.value)" class="form-control" name="combo" id="combo"
+        ng-model="listItems">
+        <option value=""> </option>
+        <option value="Alojamiento">Alojamiento</option>
+        <option value="Alimentacion">Alimentación</option>
+        <option value="Transporte">Transporte</option>
+        <option value="PaseoEcologico">Paseo ecológico</option>
+      </select>
+    </div>
   </div>
-</div>
+
 
 <div class="row animated fadeIn fast" *ngIf="servicios.length == 0">
   <div class="col-md-12">
