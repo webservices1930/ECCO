@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { isUndefined } from 'util';
 import { Servis } from '../../model/servis';
 import { SesionService } from 'src/app/servicios/sesion.service';
+import { PagoService } from '../../servicios/pago.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class PagoComponent implements OnInit {
   servicios:Servis[]=[];
   total:number[]=[];
 
-  constructor(private router: Router, private route: ActivatedRoute,private _SesionServicio:SesionService) { }
+  // tslint:disable-next-line: max-line-length
+  constructor(private router: Router, private route: ActivatedRoute,private _SesionServicio:SesionService, private pagoservice: PagoService) { }
 
   ngOnInit() {
     /*this.route.queryParams
@@ -49,8 +51,8 @@ export class PagoComponent implements OnInit {
     if ( this.numTarjeta === undefined || this.cuotas === undefined || this.cvs === undefined || this.fechavencimiento === undefined) {
       alert('Llene todos los campos');
     } else {
-      alert('Pago realizado bajo el numero de tarjeta ' + this.numTarjeta);
-      //borrarOrden del sistema
+      alert('El pago se realizara bajo el numero de tarjeta ' + this.numTarjeta);
+      this.pagoservice.pago(this._SesionServicio.id);
       this.router.navigate([`/home`]);
     }
   }
