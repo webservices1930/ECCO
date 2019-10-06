@@ -7,6 +7,7 @@ import { resolve } from 'url';
 
 @Injectable()
 export class ServicioService {
+
   serv: Servis = new Servis (
     undefined,
     undefined,
@@ -29,6 +30,53 @@ export class ServicioService {
       console.log(this.servicios);
     });
   }
+
+  updateServicio(servicio) {
+    console.log(servicio);
+    console.log(servicio.img.split(";",1)[0]);
+    console.log(servicio.img.split(" ",2)[1]);
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+    let sr='';
+    if(servicio.tipo === 'Alimentacion'){
+      sr='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+      '<soapenv:Header/>'+
+     '<soapenv:Body>'+
+         '<djan:updateServicioAlimentacion>'+
+         '<djan:idServicio>'+servicio.idx+'</djan:idServicio>'+
+              '<djan:servAlimentacion>'+
+               '<ser:nombre>'+servicio.nombre+'</ser:nombre>'+
+               '<ser:pais>'+servicio.pais+'</ser:pais>'+
+               '<ser:ciudad>'+servicio.ciudad+'</ser:ciudad>'+
+               '<ser:idioma>'+servicio.idioma+'</ser:idioma>'+
+               '<ser:costo>'+servicio.costo+'</ser:costo>'+
+               '<ser:descripcion>'+servicio.descripcion+'</ser:descripcion>'+
+               '<ser:foto>'+servicio.img.split(" ",2)[1]+'</ser:foto>'+
+               '<ser:tipo>'+servicio.img.split(";",1)[0]+'</ser:tipo>'+
+               '<ser:numeroPersonas>'+servicio.numeroPersonas+'</ser:numeroPersonas>'+
+               '<ser:nombreProveedor>'+servicio.nombreproveedor+'</ser:nombreProveedor>'+
+               '<ser:tipoComida>'+servicio.tipoComida+'</ser:tipoComida>'+
+               '<ser:cantidadPlatos>'+ servicio.cantidadPlatos+'</ser:cantidadPlatos>'+
+            '</djan:servAlimentacion>'+
+         '</djan:updateServicioAlimentacion>'+
+      '</soapenv:Body>'+
+   '</soapenv:Envelope>';
+    }else if(servicio.tipo=== 'Transporte'){
+
+    }xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState == 4) {
+          if (xmlhttp.status == 200) {
+              alert("Se actualizó el servicio correctamente");
+            }
+      }
+    }
+    // Send the POST request
+    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+    xmlhttp.send(sr);
+
+  }
+
 
   crearServicio(registerForm,base64data,ext,tipo,user){
     var xmlhttp = new XMLHttpRequest();

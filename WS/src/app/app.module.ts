@@ -29,6 +29,7 @@ import { CrearservicioComponent } from './components/crearservicio/crearservicio
 import { ServiciossComponent } from './components/mostrarservicio/servicioss/servicioss.component';
 import { PagoComponent } from './components/pago/pago.component';
 import { EditarservicioComponent } from './components/editarservicio/editarservicio.component';
+import { ServiciosproveedorComponent } from './components/serviciosproveedor/serviciosproveedor.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { EditarservicioComponent } from './components/editarservicio/editarservi
     ProfileComponent,
     PagoComponent,
     EditarservicioComponent,
+    ServiciosproveedorComponent,
 
   ],
   imports: [
