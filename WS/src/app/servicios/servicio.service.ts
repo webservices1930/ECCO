@@ -257,7 +257,7 @@ getServicioId(id){
                     data = [];
                     data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:readServicioResponse']['tns:readServicioResult1']);
               }
-            
+
                   data.forEach(element => {
                     let servicio = new Servis (
                       undefined,
@@ -282,11 +282,10 @@ getServicioId(id){
                     servicio.tipo=element['s0:tipoServicio']['#text'];
                     servicio.nombreproveedor=element['s0:nombreProveedor']['#text'];
 
-                    //ESTÁ EN TODOS??
+                    //ESTÁ EN TODOS?? SI ESTA EN  TODOS.
                     servicio.numeroPersonas = element['s0:numeroPersonas']['#text'];
 
                     if (servicio.tipo=="Alimentacion"){
-                      
                       servicio.tipoComida = element['s0:tipoComida']['#text'];
                       servicio.cantidadPlatos = element['s0:cantidadPlatos']['#text'];
                     }
@@ -304,6 +303,14 @@ getServicioId(id){
                       servicio.destino = element['s0:destino']['#text'];
                       servicio.horaSalida = element['s0:horaSalida']['#text'];
                       servicio.horaLlegada = element['s0:horaLlegada']['#text'];
+                    }
+
+                    if (servicio.tipo=="Alojamiento"){
+                      servicio.tipoAlojamiento = element['s0:tipoAlojamiento']['#text'];
+                      servicio.numeroHabitaciones = element['s0:numeroHabitaciones']['#text'];
+                      servicio.numeroBanos = element['s0:numeroBanos']['#text'];
+                      servicio.servicioLimpieza = element['s0:servicioLimpieza']['#text'];
+                      servicio.servicioWifi = element['s0:servicioWifi']['#text'];
                     }
 
                     serviciosCopia.push(servicio);
