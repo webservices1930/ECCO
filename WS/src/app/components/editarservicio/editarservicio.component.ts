@@ -45,4 +45,11 @@ public getSantizeUrl(img) {
   regresar(){
     this.router.navigate( ['/servicio', this.servicioid] );
   }
+
+  guardar(){
+    console.log(this.servicio[0]);
+    console.log(this.servicio[0].img.split(";",1)[0]);
+    console.log(this.servicio[0].img.split(" ",2)[1]);
+    this._serviciosService.updateServicio(this.servicio[0]);
+  }
 }

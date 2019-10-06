@@ -53,3 +53,7 @@ img{
 #errorPregunta{
   color: red;
 }
+
+.subtitulo{
+  font-weight: bold;
+}

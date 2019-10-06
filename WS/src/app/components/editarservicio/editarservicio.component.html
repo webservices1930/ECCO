@@ -22,7 +22,7 @@
       </div>
 
       <div>
-          <label for="descripcion">Descripción: </label>
+          <label for="descripcion">Costo: </label>
           <input type="text" class="form-control" id="descripcion" [(ngModel)]="item.costo" >
       </div>
 
@@ -34,20 +34,26 @@
       <div *ngIf="item.tipo == 'Alimentacion'">
 
           <div>
-              <label for="cantidadpersonas">Cantidad de personas: </label>
-              <input type="text" class="form-control" id="cantidadpersonas" [(ngModel)]="item.cantidadpersonas" >
+              <label for="numeroPersonas">Cantidad de personas: </label>
+              <input type="text" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
           </div>
           <div>
-              <label for="tipocomida">Tipo de comida:</label>
-              <input type="text" class="form-control" id="tipocomida" [(ngModel)]="item.tipocomida" >
+              <label for="tipoComida">Tipo de comida:</label>
+              <input type="text" class="form-control" id="tipoComida" [(ngModel)]="item.tipoComida" >
           </div>
           <div>
-              <label for="cantidadplatos">Cantidad de platos:</label>
-              <input type="text" class="form-control" id="cantidadplatos" [(ngModel)]="item.cantidadplatos" >
+              <label for="cantidadPlatos">Cantidad de platos:</label>
+              <input type="text" class="form-control" id="cantidadPlatos" [(ngModel)]="item.cantidadPlatos" >
           </div>
       </div>
 
       <div *ngIf="item.tipo == 'PaseoEcologico'">
+
+          <div>
+              <label for="numeroPersonas">Número de personas:</label>
+              <input type="text" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
+          </div>
+
               <div>
                   <label for="origen">Origen:</label>
                   <input type="text" class="form-control" id="origen" [(ngModel)]="item.origen" >
@@ -60,21 +66,86 @@
 
               <div>
                       <label for="horainicio">Hora inicio:</label>
-                      <input type="text" class="form-control" id="horainicio" [(ngModel)]="item.horainicio" >
+                      <input type="text" class="form-control" id="horainicio" [(ngModel)]="item.horaInicio" >
               </div>
 
               <div>
-                      <label for="horafin">Hora fin:</label>
-                      <input type="text" class="form-control" id="horafin" [(ngModel)]="item.horafin" >
+                      <label for="horafin">Hora final:</label>
+                      <input type="text" class="form-control" id="horafin" [(ngModel)]="item.horaFinal" >
               </div>
 
       </div>
 
       <div *ngIf="item.tipo == 'Alojamiento'">
 
+          <div>
+              <label for="numeroPersonas">Número de personas:</label>
+              <input type="text" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
+          </div>
+
+          <div>
+              <label for="tipoAlojamiento">Tipo de alojamiento:</label>
+              <input type="text" class="form-control" id="tipoAlojamiento" [(ngModel)]="item.tipoAlojamiento" >
+          </div>
+
+          <div>
+              <label for="numeroHabitaciones">Número de habitaciones:</label>
+              <input type="text" class="form-control" id="numeroHabitaciones" [(ngModel)]="item.numeroHabitaciones" >
+          </div>
+
+          <div>
+              <label for="numeroBanos">Número de baños:</label>
+              <input type="text" class="form-control" id="numeroBanos" [(ngModel)]="item.numeroBanos" >
+          </div>
+
+          <div>
+              <label for="servicioLimpieza">Servicio de limpieza:</label>
+              <input type="text" class="form-control" id="servicioLimpieza" [(ngModel)]="item.servicioLimpieza" >
+          </div>
+
+          <div>
+              <label for="servicioWifi">Servicio de Wifi:</label>
+              <input type="text" class="form-control" id="servicioWifi" [(ngModel)]="item.servicioWifi" >
+          </div>
+
       </div>
 
       <div *ngIf="item.tipo == 'Transporte'">
+
+          <div>
+              <label for="numeroPersonas">Número de personas:</label>
+              <input type="text" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
+          </div>
+
+          <div>
+              <label for="empresa">Empresa transportadora:</label>
+              <input type="text" class="form-control" id="empresa" [(ngModel)]="item.empresa" >
+          </div>
+
+          <div>
+              <label for="tipoTransporte">Tipo de transporte:</label>
+              <input type="text" class="form-control" id="tipoTransporte" [(ngModel)]="item.tipoTransporte" >
+          </div>
+
+          <div>
+              <label for="origen">Origen:</label>
+              <input type="text" class="form-control" id="origen" [(ngModel)]="item.origen" >
+          </div>
+
+          <div>
+                  <label for="destino">Destino:</label>
+                  <input type="text" class="form-control" id="destino" [(ngModel)]="item.destino" >
+          </div>
+
+          <div>
+                  <label for="horaSalida">Hora Salida:</label>
+                  <input type="text" class="form-control" id="horaSalida" [(ngModel)]="item.horaSalida" >
+          </div>
+
+          <div>
+                  <label for="horaLlegada">Hora llegada:</label>
+                  <input type="text" class="form-control" id="horaLlegada" [(ngModel)]="item.horaLlegada" >
+          </div>
 
       </div>
     </div>
