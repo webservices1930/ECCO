@@ -17,9 +17,6 @@ export class NavbarComponent implements OnInit {
       //this.sesion=sesionService.getUserLoggedIn();
       this._subscription = sesionService.sesionCambio.subscribe((value)=>{
           this.sesion = value;
-          if(this.sesion===null){
-            this.sesion = 'sininiciar';
-          }
       })
 
       console.log(this.sesion);
@@ -40,6 +37,7 @@ export class NavbarComponent implements OnInit {
     //this.sesionService.sesionCambio.next('sininiciar');
     this.sesionService.loginSatisfactorio('','sininiciar');
     console.log(this.sesion);
+    this.sesion='sininiciar';
 
   }
 

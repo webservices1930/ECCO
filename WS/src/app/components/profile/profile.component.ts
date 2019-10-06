@@ -42,15 +42,15 @@ export class ProfileComponent implements OnInit {
     if(this.sesionService.sesion === 'usuario'){
       this.usuarioService.getUsuarioByUsernameJSON(this.user).then( res => {
         this.usuarioMostrar[0] = res;
-        this.base64data=this.usuarioMostrar[0].foto;
-        this.ext=this.usuarioMostrar[0].tipo;
+        this.base64data=this.usuarioMostrar[0].img;
+        this.ext="data:image/"+this.usuarioMostrar[0].tipo;
         console.log(this.usuarioMostrar);
       });
     }else{
       this.proveedorService.getProveedorByUsernameJSON(this.user).then( res => {
         this.usuarioMostrar[0] = res;
-        this.base64data=this.usuarioMostrar[0].foto;
-        this.ext=this.usuarioMostrar[0].tipo;
+        this.base64data=this.usuarioMostrar[0].img;
+        this.ext="data:image/"+this.usuarioMostrar[0].tipo;
         console.log(this.usuarioMostrar);
       });
     }
@@ -79,11 +79,11 @@ export class ProfileComponent implements OnInit {
 
   actualizar(){
     if(this.sesionService.sesion === 'usuario'){
-        this.usuarioService.updateUsuario(this.usuarioMostrar,this.base64data,this.ext);
+        this.usuarioService.updateUsuario(this.usuarioMostrar[0],this.base64data,this.ext);
 
     }else{
       this.usuarioMostrar[0].password =(<HTMLInputElement>document.getElementById("password")).value;
-      this.proveedorService.updateProveedor(this.usuarioMostrar,this.base64data,this.ext);
+      this.proveedorService.updateProveedor(this.usuarioMostrar[0],this.base64data,this.ext);
 
     }
   }
