@@ -257,6 +257,7 @@ getServicioId(id){
                     data = [];
                     data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:readServicioResponse']['tns:readServicioResult1']);
               }
+            
                   data.forEach(element => {
                     let servicio = new Servis (
                       undefined,
@@ -280,6 +281,31 @@ getServicioId(id){
                     servicio.ciudad=element['s0:ciudad']['#text'];
                     servicio.tipo=element['s0:tipoServicio']['#text'];
                     servicio.nombreproveedor=element['s0:nombreProveedor']['#text'];
+
+                    //ESTÁ EN TODOS??
+                    servicio.numeroPersonas = element['s0:numeroPersonas']['#text'];
+
+                    if (servicio.tipo=="Alimentacion"){
+                      
+                      servicio.tipoComida = element['s0:tipoComida']['#text'];
+                      servicio.cantidadPlatos = element['s0:cantidadPlatos']['#text'];
+                    }
+                    if (servicio.tipo=="PaseoEcologico"){
+                      servicio.origen = element['s0:origen']['#text'];
+                      servicio.destino = element['s0:destino']['#text'];
+                      servicio.horaInicio = element['s0:horaInicio']['#text'];
+                      servicio.horaFinal = element['s0:horaFin']['#text'];
+                    }
+//POR REVISAR
+                    if (servicio.tipo=="Transporte"){
+                      servicio.empresa = element['s0:empresa']['#text'];
+                      servicio.tipoTransporte = element['s0:tipoTransporte']['#text'];
+                      servicio.origen = element['s0:origen']['#text'];
+                      servicio.destino = element['s0:destino']['#text'];
+                      servicio.horaSalida = element['s0:horaSalida']['#text'];
+                      servicio.horaLlegada = element['s0:horaLlegada']['#text'];
+                    }
+
                     serviciosCopia.push(servicio);
                     resolve(serviciosCopia);
               });

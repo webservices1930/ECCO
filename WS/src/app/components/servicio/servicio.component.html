@@ -25,6 +25,104 @@
         {{ item.tipo }}
       </p>
 
+      <hr>
+      <div *ngIf="item.tipo=='Alimentacion'">
+        <p>
+          Número de personas:
+          {{ item.numeroPersonas }}
+        </p>
+        <p>
+          Tipo de comida:
+          {{ item.tipoComida }}
+        </p>
+        <p>
+          Cantidad de platos:
+          {{ item.cantidadPlatos }}
+        </p>
+      </div>
+
+
+      <div *ngIf="item.tipo=='PaseoEcologico'">
+        <p>
+          Número de personas:
+          {{ item.numeroPersonas }}
+        </p>
+        <p>
+          Orígen:
+          {{ item.origen }}
+        </p>
+        <p>
+          Destino:
+          {{ item.destino }}
+        </p>
+        <p>
+          Hora Inicio:
+          {{ item.horaInicio }}
+        </p>
+        <p>
+          Hora Final:
+          {{ item.horaFinal }}
+        </p>
+      </div>
+
+      <div *ngIf="item.tipo=='Transporte'">
+        <p>
+          Número de personas:
+          {{ item.numeroPersonas }}
+        </p>
+        <p>
+          Empresa transportadora:
+          {{ item.empresa }}
+        </p>
+        <p>
+          Tipo de transporte:
+          {{ item.tipoTransporte }}
+        </p>
+        <p>
+          Orígen:
+          {{ item.origen }}
+        </p>
+        <p>
+          Destino:
+          {{ item.destino }}
+        </p>
+        <p>
+          Hora Salida:
+          {{ item.horaSalida }}
+        </p>
+        <p>
+          Hora Llegada:
+          {{ item.horaLlegada }}
+        </p>
+      </div>
+
+      <div *ngIf="item.tipo=='Alojamiento'">
+        <p>
+          Número de personas:
+          {{ item.numeroPersonas }}
+        </p>
+        <p>
+          Tipo de alojamiento:
+          {{ item.tipoAlojamiento }}
+        </p>
+        <p>
+          Número de habitaciones:
+          {{ item.numeroHabitaciones }}
+        </p>
+        <p>
+          Número de baños:
+          {{ item.numeroBanos }}
+        </p>
+        <p>
+          Servicio de Limpieza:
+          {{ item.servicioLimpieza }}
+        </p>
+        <p>
+          Servicio de Wi-Fi:
+          {{ item.servicioWifi }}
+        </p>
+      </div>
+
       <div *ngIf="servicioProveedorid == userid">
         <button type="button" class="btn btn-warning" (click)="editar()">Editar</button>
         <button type="button" class="btn btn-danger" (click)="eliminar()">Eliminar</button>
@@ -33,57 +131,58 @@
   </div>
 
 </div>
-  <div>
-    <h2> Preguntas </h2>
-    <form (ngSubmit)="hacerPregunta()" #preguntaForm="ngForm">
-      <input class="form-control mr-sm-2" placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true"
-        required name="pregunta" [(ngModel)]="pregunta.pregunta" maxlength="50" #txtPregunta="ngModel" />
-      <div id="botonesPregunta">
-        <button type="submit" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
-        <button type="button" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
-      </div>
-      <div id="errorPregunta" [hidden]="autenticadoComoCliente || !preguntar">
-        Para hacer preguntas a los proveedores debe estar autenticado como un cliente
-      </div>
-    </form>
-    <div id="preguntaRespuesta" *ngFor="let pregunta of preguntass; let i=index">
-      <div id="preguntaCliente">
-        <img id="fotoClientePregunta" [src]="getSantizeUrl(pregunta.cliente.img)" alt="image">
-        <div>
-          <div id="nombreYFechaPregunta">
-            <div class="nombreClientePregunta">{{ pregunta.cliente.nombre }}</div>
-            <div class="fechaPregunta">{{ pregunta.fechaPregunta }} </div>
-          </div>
-          <div>{{ pregunta.pregunta }}</div>
-        </div>
-      </div>
-      <div *ngIf="preguntass[i].respuesta.length>1" id="respuestaProveedor">
+<div>
+  <h2> Preguntas </h2>
+  <form (ngSubmit)="hacerPregunta()" #preguntaForm="ngForm">
+    <input class="form-control mr-sm-2" placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true"
+      required name="pregunta" [(ngModel)]="pregunta.pregunta" maxlength="50" #txtPregunta="ngModel" />
+    <div id="botonesPregunta">
+      <button type="submit" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
+      <button type="button" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
+    </div>
+    <div id="errorPregunta" [hidden]="autenticadoComoCliente || !preguntar">
+      Para hacer preguntas a los proveedores debe estar autenticado como un cliente
+    </div>
+  </form>
+  <div id="preguntaRespuesta" *ngFor="let pregunta of preguntass; let i=index">
+    <div id="preguntaCliente">
+      <img id="fotoClientePregunta" [src]="getSantizeUrl(pregunta.cliente.img)" alt="image">
+      <div>
         <div id="nombreYFechaPregunta">
-          <div class="nombreClientePregunta">Respuesta:</div>
-          <div class="fechaPregunta">{{ pregunta.fechaRespuesta }}</div>
+          <div class="nombreClientePregunta">{{ pregunta.cliente.nombre }}</div>
+          <div class="fechaPregunta">{{ pregunta.fechaPregunta }} </div>
         </div>
-        <div>{{ pregunta.respuesta }}</div>
-      </div>
-      <div *ngIf="servicioProveedorid == userid && !(preguntass[i].respuesta.length>1) && !preguntass[i].responder">
-          <button type="button" (click)="responder(i)">Responder</button>
-      </div>
-      <div [hidden]="!preguntass[i].responder">
-          <form (ngSubmit)="agregarRespuesta(i)" #preguntaForm="ngForm">
-              <input class="form-control mr-sm-2" placeholder="Escribir respuesta..."
-                required name="respuesta" [(ngModel)]="preguntass[i].respuesta"  maxlength="80" #txtPregunta="ngModel" />
-              <div id="botonesPregunta">
-                <button type="submit"  [disabled]="!preguntaForm.form.valid || !(preguntass[i].respuesta.length>1)">Enviar respuesta</button>
-                <button type="button"  (click)="cancelarRespuesta(i)">Cancelar</button>
-              </div>
-            </form>
+        <div>{{ pregunta.pregunta }}</div>
       </div>
     </div>
+    <div *ngIf="preguntass[i].respuesta.length>1" id="respuestaProveedor">
+      <div id="nombreYFechaPregunta">
+        <div class="nombreClientePregunta">Respuesta:</div>
+        <div class="fechaPregunta">{{ pregunta.fechaRespuesta }}</div>
+      </div>
+      <div>{{ pregunta.respuesta }}</div>
+    </div>
+    <div *ngIf="servicioProveedorid == userid && !(preguntass[i].respuesta.length>1) && !preguntass[i].responder">
+      <button type="button" (click)="responder(i)">Responder</button>
+    </div>
+    <div [hidden]="!preguntass[i].responder">
+      <form (ngSubmit)="agregarRespuesta(i)" #preguntaForm="ngForm">
+        <input class="form-control mr-sm-2" placeholder="Escribir respuesta..." required name="respuesta"
+          [(ngModel)]="preguntass[i].respuesta" maxlength="80" #txtPregunta="ngModel" />
+        <div id="botonesPregunta">
+          <button type="submit" [disabled]="!preguntaForm.form.valid || !(preguntass[i].respuesta.length>1)">Enviar
+            respuesta</button>
+          <button type="button" (click)="cancelarRespuesta(i)">Cancelar</button>
+        </div>
+      </form>
+    </div>
   </div>
+</div>
 
 
 
 
-  <!--<h1 class="animated fadeIn"> Opiniones y comentarios </h1>
+<!--<h1 class="animated fadeIn"> Opiniones y comentarios </h1>
   <hr>
   <div class="row animated fadeIn fast">
     <div class="col-md-4" *ngFor="let foo of servicio.opiniones; let i = index">
@@ -98,5 +197,4 @@
     </div>
   </div>-->
 
-  <a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>
-
+<a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>
