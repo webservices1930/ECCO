@@ -57,22 +57,22 @@
           <div>{{ pregunta.pregunta }}</div>
         </div>
       </div>
-      <div *ngIf="!preguntass[i].respuesta==''" id="respuestaProveedor">
+      <div *ngIf="preguntass[i].respuesta.length>1" id="respuestaProveedor">
         <div id="nombreYFechaPregunta">
           <div class="nombreClientePregunta">Respuesta:</div>
           <div class="fechaPregunta">{{ pregunta.fechaRespuesta }}</div>
         </div>
         <div>{{ pregunta.respuesta }}</div>
       </div>
-      <div *ngIf="servicioProveedorid == userid && preguntass[i].respuesta=='' && !preguntass[i].responder">
+      <div *ngIf="servicioProveedorid == userid && !(preguntass[i].respuesta.length>1) && !preguntass[i].responder">
           <button type="button" (click)="responder(i)">Responder</button>
       </div>
       <div [hidden]="!preguntass[i].responder">
           <form (ngSubmit)="agregarRespuesta(i)" #preguntaForm="ngForm">
               <input class="form-control mr-sm-2" placeholder="Escribir respuesta..."
-                required name="respuesta" [(ngModel)]="preguntass[i].respuesta" maxlength="80" #txtPregunta="ngModel" />
+                required name="respuesta" [(ngModel)]="preguntass[i].respuesta"  maxlength="80" #txtPregunta="ngModel" />
               <div id="botonesPregunta">
-                <button type="submit"  [disabled]="!preguntaForm.form.valid">Enviar respuesta</button>
+                <button type="submit"  [disabled]="!preguntaForm.form.valid || !(preguntass[i].respuesta.length>1)">Enviar respuesta</button>
                 <button type="button"  (click)="cancelarRespuesta(i)">Cancelar</button>
               </div>
             </form>

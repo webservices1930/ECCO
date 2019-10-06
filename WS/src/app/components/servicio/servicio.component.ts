@@ -32,6 +32,7 @@ export class ServicioComponent {
 
   userid;
   servicioProveedorid;
+  idServicio;
 
   seleccionados: Servis[] = [];
   servicios;
@@ -46,7 +47,7 @@ export class ServicioComponent {
     undefined,
     undefined,
   );
-  servicio=[];
+  servicio = [];
 
   constructor(private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
@@ -64,6 +65,7 @@ export class ServicioComponent {
 
     this.activatedRoute.params.subscribe(params => {
       console.log(params['id']);
+      this.idServicio = params['id'];
 
       this.pregunta.idServicio = params['id'];
       if (this._sesionService.getSesion() == "usuario") {
@@ -115,6 +117,7 @@ export class ServicioComponent {
       this._preguntaService.crearPregunta(this.pregunta);
       this.pregunta.pregunta = "";
       this.preguntar = false;
+      this.actualizarPreguntas();
     }
   }
   cancelarPregunta() {
@@ -122,22 +125,33 @@ export class ServicioComponent {
     this.preguntar = false;
   }
 
-  responder(index:number){
-    for (let i=0; i<this.preguntass.length; i++){
-      this.preguntass[i].responder = false;
+  responder(index: number) {
+    for (let i = 0; i < this.preguntass.length; i++) {
+      if (this.preguntass[i].responder) {
+        this.preguntass[i].responder = false;
+        this.preguntass[i].respuesta = '';
+      }
       if (i == index)
         this.preguntass[i].responder = true;
     }
   }
 
-  cancelarRespuesta(index:number) {
+  cancelarRespuesta(index: number) {
     this.preguntass[index].responder = false;
     this.preguntass[index].respuesta = '';
   }
 
-  agregarRespuesta(i:number){
+  agregarRespuesta(i: number) {
     this._preguntaService.agregarRespuesta(this.preguntass[i]);
+    this.actualizarPreguntas();
   }
+
+  actualizarPreguntas() {
+    this._preguntaService.getPreguntasServicio(this.idServicio).then(res => {
+      this.preguntass = res;
+    });
+  }
+
 
 
 }

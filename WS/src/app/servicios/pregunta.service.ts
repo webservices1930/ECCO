@@ -61,6 +61,9 @@ export class PreguntaService {
                   pregunta.id = element['s0:id']['#text'];
 
                   pregunta.respuesta = element['s0:repuesta']['#text'];
+                  if (pregunta.respuesta.length>1){
+                  console.log("RESPUESTA" + "--"+pregunta.respuesta+"-");
+                  }
                   pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
 
                   pregunta.responder = false;
