@@ -231,11 +231,12 @@ class SoapService(ServiceBase):
                     if(len(cli.foto)>1):
                         os.remove(CLIENT_IMAGES+cli.foto)
                     ty = cliente.tipo.split("/")[1]
-                    cli.foto=cliente.nombreUsuario+"_profile."+ty
-                    with open(CLIENT_IMAGES+cli.nombreUsuario+"_profile."+ty,"wb") as f:
+                    #os.mkdir(os.path.dirname(CLIENT_IMAGES+cliente.nombreUsuario+"_profile."+ty))
+                    with open(CLIENT_IMAGES+cliente.nombreUsuario+"_profile."+ty,"wb+") as f:
                         for x in cliente.foto:
                             f.write(x)
                         f.close()
+                    cli.foto=cliente.nombreUsuario+"_profile."+ty
                 else:
                     cli.foto=" "
                 cli.descripcion=cliente.descripcion
@@ -299,7 +300,7 @@ class SoapService(ServiceBase):
                 prov= models.Proveedor(nombreUsuario=proveedor.nombreUsuario,nombre=proveedor.nombre,edad=proveedor.edad,contrasena=proveedor.contrasena,descripcion=proveedor.descripcion,telefono=proveedor.telefono,paginaWeb=proveedor.paginaWeb,contactoRS=proveedor.contactoRS)
                 if(len(proveedor.tipo)>2 and len(proveedor.foto[0])>10):
                     ty = proveedor.tipo.split("/")[1]
-                    with open(PROVIDER_IMAGES+proveedor.nombreUsuario+"_profile."+ty,"wb") as f:
+                    with open(PROVIDER_IMAGES+proveedor.nombreUsuario+"_profile."+ty,"wb+") as f:
                         for x in proveedor.foto:
                             f.write(x)
                         f.close()
@@ -359,12 +360,14 @@ class SoapService(ServiceBase):
                     print(len(cli.foto))
                     if(len(cli.foto)>1):
                         os.remove(PROVIDER_IMAGES+cli.foto)
+
                     ty = proveedor.tipo.split("/")[1]
-                    cli.foto=proveedor.nombreUsuario+"_profile."+ty
-                    with open(PROVIDER_IMAGES+cli.nombreUsuario+"_profile."+ty,"wb") as f:
+
+                    with open(PROVIDER_IMAGES+cli.nombreUsuario+"_profile."+ty,"wb+") as f:
                         for x in proveedor.foto:
                             f.write(x)
                         f.close()
+                    cli.foto=proveedor.nombreUsuario+"_profile."+ty
                 else:
                     cli.foto=" "
                 cli.descripcion=proveedor.descripcion
@@ -875,7 +878,7 @@ class SoapService(ServiceBase):
 
             elif (isinstance(ser, models.Alojamiento)):
                 aux = AlojamientoRes()
-                aux.tipo = "Alojamiento"
+                aux.tipoServicio = "Alojamiento"
                 aux.tipoAlojamiento = ser.tipoAlojamiento
                 aux.numeroHabitaciones = ser.numeroHabitaciones
                 aux.numeroBanos = ser.numeroBanos
@@ -884,7 +887,7 @@ class SoapService(ServiceBase):
 
             elif(isinstance(ser, models.Transporte)):
                 aux= TransporteRes()
-                aux.tipo = "Transporte"
+                aux.tipoServicio = "Transporte"
                 aux.empresa = ser.empresa
                 aux.tipoTransporte = ser.tipoTransporte
                 aux.origen = ser.origen
@@ -943,10 +946,24 @@ class SoapService(ServiceBase):
 
             elif (isinstance(ser, models.Alojamiento)):
 
-                aux.tipo = "Alojamiento"
-            elif (isinstance(ser, models.Transporte)):
+                aux = AlojamientoRes()
+                aux.tipoServicio = "Alojamiento"
+                aux.tipoAlojamiento = ser.tipoAlojamiento
+                aux.numeroHabitaciones = ser.numeroHabitaciones
+                aux.numeroBanos = ser.numeroBanos
+                aux.servicioLimpieza = ser.servicioLimpieza
+                aux.servicioWifi = ser.servicioWifi
 
-                aux.tipo = "Transporte"
+            elif (isinstance(ser, models.Transporte)):
+                aux= TransporteRes()
+                aux.tipoServicio = "Transporte"
+                aux.empresa = ser.empresa
+                aux.tipoTransporte = ser.tipoTransporte
+                aux.origen = ser.origen
+                aux.destino = ser.destino
+                aux.horaSalida = ser.horaSalida
+                aux.horaLlegada = ser.horaLlegada
+
 
             aux.id = ser.id
             aux.nombre = ser.nombre
@@ -1010,6 +1027,8 @@ class SoapService(ServiceBase):
                 sc2.carrito.save()
                 sc2.delete()
                 res.resultado = "servicio removido"
+            else:
+                res.resultado = "no existe carrito"
         else:
             res.resultado = "servicio no encontrado"
         return res
@@ -1085,7 +1104,7 @@ class SoapService(ServiceBase):
         serv=models.Servicio.objects.filter(id=pregun.idServicio)
         res=ResponseText()
         if(clien.count() > 0 and serv.count() > 0):
-            pregunta=models.Pregunta(pregunta=pregun.pregunta, fechaPregunta=str(datetime.datetime.now()),  servicio=serv[0] , cliente= clien[0])
+            pregunta=models.Pregunta(pregunta=pregun.pregunta, fechaPregunta=str(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")),  servicio=serv[0] , cliente= clien[0])
             pregunta.save()
             res.resultado="pregunta creada con exito"
         else:
@@ -1099,7 +1118,7 @@ class SoapService(ServiceBase):
         if preg.count() > 0 :
             preg = preg[0]
             preg.respuesta = respuesta
-            preg.fechaRespuesta = str(datetime.datetime.now())
+            preg.fechaRespuesta = str(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
             preg.save()
             res.resultado="respuesta agregada con exito"
         else:
