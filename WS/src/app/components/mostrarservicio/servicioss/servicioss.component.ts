@@ -24,6 +24,12 @@ export class ServiciossComponent implements OnInit {
     undefined,
     undefined,
     undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined
   );
 
   constructor( private _serviciosService:ServicioService,

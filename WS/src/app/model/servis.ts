@@ -6,6 +6,7 @@ export class Servis {
     public nombre: string,
     public pais: string,
     public ciudad:string,
+    public idioma:string,
     public descripcion:string,
     public tipo:string,
     public costo:number,
@@ -16,10 +17,10 @@ export class Servis {
     public numeroPersonas?:number,
 
 
-    //Servicio de alimentación:    
+    //Servicio de alimentación:
     public tipoComida?:string,
     public cantidadPlatos?:number,
-    
+
     //Servicio de paseo ecologico:
     public origen?:string,
     public destino?:string,

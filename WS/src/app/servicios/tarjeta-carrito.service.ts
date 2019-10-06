@@ -19,4 +19,14 @@ export class TarjetaCarritoService {
       console.log(this.carrito);
      });
   }
+
+  public getServicosCarrito(){
+    console.log("=====aquiservicis===");
+    console.log(this.carrito.servicios)
+    return this.carrito.servicios;
+  }
+
+  public getTotal(){
+    return this.carrito.CostoTotal;
+  }
 }

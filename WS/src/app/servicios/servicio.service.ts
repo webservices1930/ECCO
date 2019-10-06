@@ -16,6 +16,12 @@ export class ServicioService {
     undefined,
     undefined,
     undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined
   );
   serviciosCopia:any=[];
   servicios:any=[];
@@ -269,13 +275,18 @@ getServicioId(id){
                       undefined,
                       undefined,
                       undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined
                     );
                     console.log(element['s0:nombre']['#text']);
                     servicio.nombre= element['s0:nombre']['#text'];
                     servicio.descripcion=element['s0:descripcion']['#text'];
                     servicio.costo=+element['s0:costo']['#text'];
                     let inf= element['s0:foto']['#text'];
-                    servicio.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf;
+                    servicio.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
                     servicio.idx=element['s0:id']['#text'];
                     servicio.pais=element['s0:pais']['#text'];
                     servicio.ciudad=element['s0:ciudad']['#text'];
@@ -358,6 +369,11 @@ getServicioId(id){
               }
                   data.forEach(element => {
                     let servicio = new Servis (
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
                       undefined,
                       undefined,
                       undefined,

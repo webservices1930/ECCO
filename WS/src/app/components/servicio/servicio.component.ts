@@ -46,6 +46,12 @@ export class ServicioComponent {
     undefined,
     undefined,
     undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined
   );
   servicio = [];
 

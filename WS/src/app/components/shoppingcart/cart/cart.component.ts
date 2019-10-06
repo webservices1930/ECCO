@@ -22,16 +22,17 @@ export class CartComponent implements OnInit {
   constructor(private _SesionServicio:SesionService, private router: Router, private carritoService: CarritoService, private tarjetaCarrito: TarjetaCarritoService) { }
 
   ngOnInit() {
-     this.total=this._SesionServicio.getTotal();
-     this.servicios=this._SesionServicio.getServicios();
-     /*this.servicios = this.tarjetaCarrito.carrito;
-     this.total = this.tarjetaCarrito.carrito.CostoTotal;*/
+     /*this.total=this._SesionServicio.getTotal();
+     this.servicios=this._SesionServicio.getServicios();*/
+     this.servicios = this.tarjetaCarrito.getServicosCarrito();
+     this.total = this.tarjetaCarrito.getTotal();
 
      console.log(this.servicios);
      console.log(this.total);
+     console.log("Si ejecuta ??????");
   }
   actualizarTotal(){
-    this.total=this._SesionServicio.getTotal();
+    //this.total=this._SesionServicio.getTotal();
   }
   quitarServicio(servicio:Servis){
     this._SesionServicio.quitarServicio(servicio);
