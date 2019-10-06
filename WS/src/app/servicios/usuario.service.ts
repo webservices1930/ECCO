@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {xmlToJson} from './lib';
 import { Usuario } from '../model/usuario';
+import { CompileShallowModuleMetadata } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -122,6 +123,9 @@ getUsuarioByUsernameJSON(usuario){
 }
 
 updateUsuario(usuarioMostrar,base64data, ext){
+        console.log(usuarioMostrar);
+        console.log(base64data);
+        console.log(ext);
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
         let sr= '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
@@ -136,7 +140,6 @@ updateUsuario(usuarioMostrar,base64data, ext){
                  '<ser:contrasena>'+usuarioMostrar.password+'</ser:contrasena>'+
                  '<ser:foto>'+base64data+'</ser:foto>'+
                  '<ser:tipo>'+ext+'</ser:tipo>'+
-                 '<ser:contrasena>'+usuarioMostrar.password+'</ser:contrasena>'+
                  '<ser:descripcion>'+usuarioMostrar.descripcion+'</ser:descripcion>'+
                  '<ser:telefono>'+usuarioMostrar.telefono+'</ser:telefono>'+
                '</djan:cliente>'+
