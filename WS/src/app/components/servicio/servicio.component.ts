@@ -46,7 +46,7 @@ export class ServicioComponent {
     undefined,
     undefined,
   );
-  servicio;
+  servicio=[];
 
   constructor(private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
@@ -71,8 +71,8 @@ export class ServicioComponent {
       }
 
       this._serviciosService.getServicioId(params['id']).then(res => {
-        this.servicio = res[0];
-        console.log(this.servicio);
+        this.servicio[0] = res[0];
+        console.log(this.servicio[0]);
         this.servicioProveedorid = res[0].nombreproveedor;
         this.userid = this._sesionService.id;
         console.log(this.userid + this.servicioProveedorid);
@@ -95,7 +95,7 @@ export class ServicioComponent {
   }
 
   eliminar() {
-    this._serviciosService.eliminarServicio(this.servicio.idx);
+    this._serviciosService.eliminarServicio(this.servicio[0].idx);
     this.router.navigate(['servicioss']);
   }
 

@@ -10,7 +10,7 @@ export class Pregunta {
 
         public idServicio?:any,
         public id?:any,
-        public responder?:boolean           
+        public responder?:boolean
 
     ) {}
 }

@@ -1,100 +1,102 @@
-<h1 class="animated fadeIn">{{ servicio.nombre | uppercase }} <small>({{ servicio.ciudad }})</small></h1>
-<hr>
+<div *ngFor="let item of servicio">
+  <h1 class="animated fadeIn">{{ item.nombre | uppercase }} <small>({{ item.ciudad }})</small></h1>
+  <hr>
 
-<div class="row animated fadeIn fast">
+  <div class="row animated fadeIn fast">
 
-  <div class="col-md-4">
-    <img [src]="getSantizeUrl(servicio.img)" [alt]="servicio.nombre">
-    <br><br>
-  </div>
-
-  <div class="col-md-8">
-    <h3>{{ servicio.nombre }}</h3>
-    <hr>
-    <p>
-      Descripción:
-      {{ servicio.descripcion }}
-    </p>
-    <p>
-      Costo:
-      {{ servicio.costo | number:'.2-2'}} USD
-    </p>
-    <p>
-      Tipo:
-      {{ servicio.tipo }}
-    </p>
-
-    <div *ngIf="servicioProveedorid == userid">
-      <button type="button" class="btn btn-warning" (click)="editar()">Editar</button>
-      <button type="button" class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+    <div class="col-md-4">
+      <img [src]="getSantizeUrl(item.img)" [alt]="item.nombre">
+      <br><br>
     </div>
 
+    <div class="col-md-8">
+      <h3>{{ item.nombre }}</h3>
+      <hr>
+      <p>
+        Descripción:
+        {{ item.descripcion }}
+      </p>
+      <p>
+        Costo:
+        {{ item.costo | number:'.2-2'}} USD
+      </p>
+      <p>
+        Tipo:
+        {{ item.tipo }}
+      </p>
+
+      <div *ngIf="servicioProveedorid == userid">
+        <button type="button" class="btn btn-warning" (click)="editar()">Editar</button>
+        <button type="button" class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+      </div>
+    </div>
   </div>
+
 </div>
-
-<div>
-  <h2> Preguntas </h2>
-  <form (ngSubmit)="hacerPregunta()" #preguntaForm="ngForm">
-    <input class="form-control mr-sm-2" placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true"
-      required name="pregunta" [(ngModel)]="pregunta.pregunta" maxlength="50" #txtPregunta="ngModel" />
-    <div id="botonesPregunta">
-      <button type="submit" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
-      <button type="button" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
-    </div>
-    <div id="errorPregunta" [hidden]="autenticadoComoCliente || !preguntar">
-      Para hacer preguntas a los proveedores debe estar autenticado como un cliente
-    </div>
-  </form>
-  <div id="preguntaRespuesta" *ngFor="let pregunta of preguntass; let i=index">
-    <div id="preguntaCliente">
-      <img id="fotoClientePregunta" [src]="getSantizeUrl(pregunta.cliente.img)" alt="image">
-      <div>
-        <div id="nombreYFechaPregunta">
-          <div class="nombreClientePregunta">{{ pregunta.cliente.nombre }}</div>
-          <div class="fechaPregunta">{{ pregunta.fechaPregunta }} </div>
+  <div>
+    <h2> Preguntas </h2>
+    <form (ngSubmit)="hacerPregunta()" #preguntaForm="ngForm">
+      <input class="form-control mr-sm-2" placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true"
+        required name="pregunta" [(ngModel)]="pregunta.pregunta" maxlength="50" #txtPregunta="ngModel" />
+      <div id="botonesPregunta">
+        <button type="submit" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
+        <button type="button" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
+      </div>
+      <div id="errorPregunta" [hidden]="autenticadoComoCliente || !preguntar">
+        Para hacer preguntas a los proveedores debe estar autenticado como un cliente
+      </div>
+    </form>
+    <div id="preguntaRespuesta" *ngFor="let pregunta of preguntass; let i=index">
+      <div id="preguntaCliente">
+        <img id="fotoClientePregunta" [src]="getSantizeUrl(pregunta.cliente.img)" alt="image">
+        <div>
+          <div id="nombreYFechaPregunta">
+            <div class="nombreClientePregunta">{{ pregunta.cliente.nombre }}</div>
+            <div class="fechaPregunta">{{ pregunta.fechaPregunta }} </div>
+          </div>
+          <div>{{ pregunta.pregunta }}</div>
         </div>
-        <div>{{ pregunta.pregunta }}</div>
+      </div>
+      <div *ngIf="!preguntass[i].respuesta==''" id="respuestaProveedor">
+        <div id="nombreYFechaPregunta">
+          <div class="nombreClientePregunta">Respuesta:</div>
+          <div class="fechaPregunta">{{ pregunta.fechaRespuesta }}</div>
+        </div>
+        <div>{{ pregunta.respuesta }}</div>
+      </div>
+      <div *ngIf="servicioProveedorid == userid && preguntass[i].respuesta=='' && !preguntass[i].responder">
+          <button type="button" (click)="responder(i)">Responder</button>
+      </div>
+      <div [hidden]="!preguntass[i].responder">
+          <form (ngSubmit)="agregarRespuesta(i)" #preguntaForm="ngForm">
+              <input class="form-control mr-sm-2" placeholder="Escribir respuesta..."
+                required name="respuesta" [(ngModel)]="preguntass[i].respuesta" maxlength="80" #txtPregunta="ngModel" />
+              <div id="botonesPregunta">
+                <button type="submit"  [disabled]="!preguntaForm.form.valid">Enviar respuesta</button>
+                <button type="button"  (click)="cancelarRespuesta(i)">Cancelar</button>
+              </div>
+            </form>
       </div>
     </div>
-    <div *ngIf="!preguntass[i].respuesta==''" id="respuestaProveedor">
-      <div id="nombreYFechaPregunta">
-        <div class="nombreClientePregunta">Respuesta:</div>
-        <div class="fechaPregunta">{{ pregunta.fechaRespuesta }}</div>
-      </div>
-      <div>{{ pregunta.respuesta }}</div>
-    </div>
-    <div *ngIf="servicioProveedorid == userid && preguntass[i].respuesta=='' && !preguntass[i].responder">
-        <button type="button" (click)="responder(i)">Responder</button>
-    </div>
-    <div [hidden]="!preguntass[i].responder">
-        <form (ngSubmit)="agregarRespuesta(i)" #preguntaForm="ngForm">
-            <input class="form-control mr-sm-2" placeholder="Escribir respuesta..."
-              required name="respuesta" [(ngModel)]="preguntass[i].respuesta" maxlength="80" #txtPregunta="ngModel" />
-            <div id="botonesPregunta">
-              <button type="submit"  [disabled]="!preguntaForm.form.valid">Enviar respuesta</button>
-              <button type="button"  (click)="cancelarRespuesta(i)">Cancelar</button>
-            </div>
-          </form>
-    </div>
   </div>
-</div>
 
 
 
 
-<!--<h1 class="animated fadeIn"> Opiniones y comentarios </h1>
-<hr>
-<div class="row animated fadeIn fast">
-  <div class="col-md-4" *ngFor="let foo of servicio.opiniones; let i = index">
-    <h2>
-      Nombre: {{ foo.nombre}}
-    </h2>
-    <p>
-      <img src="/open-iconic-master/svg/comment-square.svg">
-      Comentario: {{foo.comentario}}
-      Calificacion: {{foo.calificacion}}
-    </p>
-  </div>
-</div>-->
+  <!--<h1 class="animated fadeIn"> Opiniones y comentarios </h1>
+  <hr>
+  <div class="row animated fadeIn fast">
+    <div class="col-md-4" *ngFor="let foo of servicio.opiniones; let i = index">
+      <h2>
+        Nombre: {{ foo.nombre}}
+      </h2>
+      <p>
+        <img src="/open-iconic-master/svg/comment-square.svg">
+        Comentario: {{foo.comentario}}
+        Calificacion: {{foo.calificacion}}
+      </p>
+    </div>
+  </div>-->
 
-<a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>
+  <a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>
+

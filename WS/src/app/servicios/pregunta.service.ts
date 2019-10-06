@@ -103,7 +103,7 @@ export class PreguntaService {
 
 
 
-  
+
 
   public crearPregunta(pregunta:Pregunta){
     var xmlhttp = new XMLHttpRequest();
@@ -115,7 +115,7 @@ export class PreguntaService {
           '<djan:createPregunta>'+
 
            '<djan:pregun>'+
-  
+
             '<ser:pregunta>'+ pregunta.pregunta+'</ser:pregunta>'+
 
             '<ser:idServicio>'+ pregunta.idServicio+'</ser:idServicio>'+
@@ -145,7 +145,7 @@ export class PreguntaService {
     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
       '<soapenv:Header/>'+
         '<soapenv:Body>'+
-          '<djan:agregarRespuesta>'+  
+          '<djan:agregarRespuesta>'+
             '<djan:respuesta>'+ pregunta.respuesta+'</djan:respuesta>'+
             '<djan:idPregunta>'+ pregunta.id+'</djan:idPregunta>'+
         '</djan:agregarRespuesta>'+
@@ -164,5 +164,5 @@ export class PreguntaService {
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.send(sr);
   }
-  
+
 }
