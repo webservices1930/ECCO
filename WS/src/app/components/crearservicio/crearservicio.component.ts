@@ -25,7 +25,11 @@ export class CrearservicioComponent implements OnInit {
 
   user;
 
-  tipo="";
+  tipoServicio="";
+  tipoTransporte="";
+  tipoAlojamiento="";
+  serviciolimpieza="";
+  serviciowifi="";
   constructor(
       private formBuilder: FormBuilder,
       private router: Router,
@@ -55,6 +59,13 @@ export class CrearservicioComponent implements OnInit {
       destino:[],
       horainicio:[],
       horafin:[],
+      empresa:[],
+      tipotransporte:[],
+      numerohabitaciones: [],
+      numerobanos: [],
+      tipoalojamiento: [],
+      serviciolimpieza: [],
+      serviciowifi: []
   });
     this.user = this.sesionService.id;
     console.log(this.user);
@@ -65,17 +76,18 @@ export class CrearservicioComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    console.log("===========aqui");
     console.log(this.registerForm.value);
     if(this.registerForm.invalid){
       alert("Ingrese todos los campos por favor");
     }else{
-      this.servicioService.crearServicio(this.registerForm,this.base64data,this.ext,this.tipo,this.user);
+      this.servicioService.crearServicio(this.registerForm,this.base64data,this.ext,this.tipoServicio,this.user);
       this.router.navigate(['servicioss']);
     }
   }
 
   cambiar(){
-    console.log(this.tipo);
+    console.log(this.tipoServicio);
   }
 
   onSelectFile(event) { // called each time file input changes

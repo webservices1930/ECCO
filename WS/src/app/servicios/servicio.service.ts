@@ -59,8 +59,59 @@ export class ServicioService {
       '</soapenv:Body>'+
    '</soapenv:Envelope>';
     }else if(tipo === 'Transporte'){
+      sr =  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+              '<soapenv:Header/>'+
+              '<soapenv:Body>'+
+                '<djan:createServicioTransporte>'+
+                  '<djan:servicio>'+
+                    '<ser:nombre>'+registerForm.value.nombres+'</ser:nombre>'+
+                    '<ser:pais>'+registerForm.value.pais+'</ser:pais>'+
+                    '<ser:ciudad>'+registerForm.value.ciudad+'</ser:ciudad>'+
+                    '<ser:idioma>'+registerForm.value.idioma+'</ser:idioma>'+
+                    '<ser:costo>'+registerForm.value.costo+'</ser:costo>'+
+                    '<ser:descripcion>'+registerForm.value.descripcion+'</ser:descripcion>'+
+                    '<ser:foto>'+base64data+'</ser:foto>'+
+                    '<ser:tipo>'+ext+'</ser:tipo>'+
+                    '<ser:numeroPersonas>'+registerForm.value.numeropersonas+'</ser:numeroPersonas>'+
+                    '<ser:nombreProveedor>'+user+'</ser:nombreProveedor>'+
+                    '<ser:empresa>'+registerForm.value.empresa+'</ser:empresa>'+
+                    '<ser:tipoTransporte>'+registerForm.value.tipotransporte+'</ser:tipoTransporte>'+
+                    '<ser:origen>'+registerForm.value.origen+'</ser:origen>'+
+                    '<ser:destino>'+registerForm.value.destino+'</ser:destino>'+
+                    '<ser:horaSalida>'+registerForm.value.horainicio+'</ser:horaSalida>'+
+                    '<ser:horaLlegada>'+registerForm.value.horafin+'</ser:horaLlegada>'+
+                  '</djan:servicio>'+
+                '</djan:createServicioTransporte>'+
+              '</soapenv:Body>'+
+            '</soapenv:Envelope>';
+    console.log(sr);
 
-    }else if(tipo === 'PaseoEcologico'){
+    }else if(tipo === 'Alojamiento'){
+      sr =  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+              '<soapenv:Header/>'+
+              '<soapenv:Body>'+
+                '<djan:createServicioAlojamiento>'+
+                  '<djan:servicio>'+
+                    '<ser:nombre>'+registerForm.value.nombres+'</ser:nombre>'+
+                    '<ser:pais>'+registerForm.value.pais+'</ser:pais>'+
+                    '<ser:ciudad>'+registerForm.value.ciudad+'</ser:ciudad>'+
+                    '<ser:idioma>'+registerForm.value.idioma+'</ser:idioma>'+
+                    '<ser:costo>'+registerForm.value.costo+'</ser:costo>'+
+                    '<ser:descripcion>'+registerForm.value.descripcion+'</ser:descripcion>'+
+                    '<ser:foto>'+base64data+'</ser:foto>'+
+                    '<ser:tipo>'+ext+'</ser:tipo>'+
+                    '<ser:numeroPersonas>'+registerForm.value.numeropersonas+'</ser:numeroPersonas>'+
+                    '<ser:nombreProveedor>'+user+'</ser:nombreProveedor>'+
+                    '<ser:tipoAlojamiento>'+registerForm.value.tipoalojamiento+'</ser:tipoAlojamiento>'+
+                    '<ser:numeroHabitaciones>'+registerForm.value.numerohabitaciones+'</ser:numeroHabitaciones>'+
+                    '<ser:numeroBanos>'+registerForm.value.numerobanos+'</ser:numeroBanos>'+
+                    '<ser:servicioLimpieza>'+registerForm.value.serviciolimpieza+'</ser:servicioLimpieza>'+
+                    '<ser:servicioWifi>'+registerForm.value.serviciowifi+'</ser:servicioWifi>'+
+                  '</djan:servicio>'+
+                '</djan:createServicioAlojamiento>'+
+              '</soapenv:Body>'+
+            '</soapenv:Envelope>';
+    } else if(tipo === 'PaseoEcologico'){
       console.log(registerForm);
       sr =
               '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
@@ -147,7 +198,7 @@ export class ServicioService {
                       servicioAlimentacion.descripcion=element['s0:descripcion']['#text'];
                       servicioAlimentacion.costo=+element['s0:costo']['#text'];
                       let inf= element['s0:foto']['#text'];
-                      servicioAlimentacion.img="data:image/"+element['s0:tipo']['#text']+";base64, "+ inf;
+                      servicioAlimentacion.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
                       servicioAlimentacion.idx=element['s0:id']['#text'];
                       servicioAlimentacion.pais=element['s0:pais']['#text'];
                       servicioAlimentacion.ciudad=element['s0:ciudad']['#text'];
