@@ -1,83 +1,85 @@
-<h1 class="animated fadeIn">{{ servicio.nombre | uppercase }} <small>({{ servicio.ciudad }})</small></h1>
-<hr>
+<div *ngFor="let item of servicio">
+  <h1 class="animated fadeIn">{{ item.nombre | uppercase }} <small>({{ item.ciudad }})</small></h1>
+  <hr>
 
-<div class="row animated fadeIn fast">
+  <div class="row animated fadeIn fast">
 
-  <div class="col-md-4">
-    <img [src]="getSantizeUrl(servicio.img)" [alt]="servicio.nombre">
-    <br><br>
-  </div>
-
-  <div class="col-md-8">
-
-    <div>
-        <label for="nombre">Nombre: </label>
-        <input type="text" class="form-control" id="nombre" [(ngModel)]="servicio.nombre" >
+    <div class="col-md-4">
+      <img [src]="getSantizeUrl(item.img)" [alt]="item.nombre">
+      <br><br>
     </div>
 
-    <div>
-        <label for="descripcion">Descripción: </label>
-        <input type="text" class="form-control" id="descripcion" [(ngModel)]=" servicio.descripcion" >
+    <div class="col-md-8">
+
+      <div>
+          <label for="nombre">Nombre: </label>
+          <input type="text" class="form-control" id="nombre" [(ngModel)]="item.nombre" >
+      </div>
+
+      <div>
+          <label for="descripcion">Descripción: </label>
+          <input type="text" class="form-control" id="descripcion" [(ngModel)]=" item.descripcion" >
+      </div>
+
+      <div>
+          <label for="descripcion">Descripción: </label>
+          <input type="text" class="form-control" id="descripcion" [(ngModel)]="item.costo" >
+      </div>
+
+      <div>
+          <label for="descripcion">Tipo: </label>
+          <input type="text" class="form-control" id="descripcion" [(ngModel)]="item.tipo" readonly>
+      </div>
+
+      <div *ngIf="item.tipo == 'Alimentacion'">
+
+          <div>
+              <label for="cantidadpersonas">Cantidad de personas: </label>
+              <input type="text" class="form-control" id="cantidadpersonas" [(ngModel)]="item.cantidadpersonas" >
+          </div>
+          <div>
+              <label for="tipocomida">Tipo de comida:</label>
+              <input type="text" class="form-control" id="tipocomida" [(ngModel)]="item.tipocomida" >
+          </div>
+          <div>
+              <label for="cantidadplatos">Cantidad de platos:</label>
+              <input type="text" class="form-control" id="cantidadplatos" [(ngModel)]="item.cantidadplatos" >
+          </div>
+      </div>
+
+      <div *ngIf="item.tipo == 'PaseoEcologico'">
+              <div>
+                  <label for="origen">Origen:</label>
+                  <input type="text" class="form-control" id="origen" [(ngModel)]="item.origen" >
+              </div>
+
+              <div>
+                      <label for="destino">Destino:</label>
+                      <input type="text" class="form-control" id="destino" [(ngModel)]="item.destino" >
+              </div>
+
+              <div>
+                      <label for="horainicio">Hora inicio:</label>
+                      <input type="text" class="form-control" id="horainicio" [(ngModel)]="item.horainicio" >
+              </div>
+
+              <div>
+                      <label for="horafin">Hora fin:</label>
+                      <input type="text" class="form-control" id="horafin" [(ngModel)]="item.horafin" >
+              </div>
+
+      </div>
+
+      <div *ngIf="item.tipo == 'Alojamiento'">
+
+      </div>
+
+      <div *ngIf="item.tipo == 'Transporte'">
+
+      </div>
     </div>
-
-    <div>
-        <label for="descripcion">Descripción: </label>
-        <input type="text" class="form-control" id="descripcion" [(ngModel)]="servicio.costo" >
-    </div>
-
-    <div>
-        <label for="descripcion">Tipo: </label>
-        <input type="text" class="form-control" id="descripcion" [(ngModel)]="servicio.tipo" readonly>
-    </div>
-
-    <div *ngIf="servicio.tipo == 'Alimentacion'">
-
-        <div>
-            <label for="cantidadpersonas">Cantidad de personas: </label>
-            <input type="text" class="form-control" id="cantidadpersonas" [(ngModel)]="servicio.cantidadpersonas" >
-        </div>
-        <div>
-            <label for="tipocomida">Tipo de comida:</label>
-            <input type="text" class="form-control" id="tipocomida" [(ngModel)]="servicio.tipocomida" >
-        </div>
-        <div>
-            <label for="cantidadplatos">Cantidad de platos:</label>
-            <input type="text" class="form-control" id="cantidadplatos" [(ngModel)]="servicio.cantidadplatos" >
-        </div>
-     </div>
-
-     <div *ngIf="servicio.tipo == 'PaseoEcologico'">
-            <div>
-                <label for="origen">Origen:</label>
-                <input type="text" class="form-control" id="origen" [(ngModel)]="servicio.origen" >
-            </div>
-
-            <div>
-                    <label for="destino">Destino:</label>
-                    <input type="text" class="form-control" id="destino" [(ngModel)]="servicio.destino" >
-            </div>
-
-            <div>
-                    <label for="horainicio">Hora inicio:</label>
-                    <input type="text" class="form-control" id="horainicio" [(ngModel)]="servicio.horainicio" >
-            </div>
-
-            <div>
-                    <label for="horafin">Hora fin:</label>
-                    <input type="text" class="form-control" id="horafin" [(ngModel)]="servicio.horafin" >
-            </div>
-
-     </div>
-    
-     <div *ngIf="servicio.tipo == Alojamiento">
-         
-    </div>
-
-    <div *ngIf="servicio.tipo == Transporte">
-         
-     </div>
   </div>
 </div>
-<br>
+  <br>
 <button type="button" class="btn btn-success btn-block" (click)="guardar()">Guardar</button>
 <button class="btn btn-outline-danger btn-block" (click)="regresar()">Regresar</button>

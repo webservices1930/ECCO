@@ -10,7 +10,7 @@ import { SesionService } from 'src/app/servicios/sesion.service';
   styleUrls: ['./editarservicio.component.css']
 })
 export class EditarservicioComponent implements OnInit {
-  servicio;
+  servicio=[];
   servicioid;
   userid;
   servicioProveedorid;
@@ -29,8 +29,8 @@ export class EditarservicioComponent implements OnInit {
       console.log(params['id']);
       this.servicioid = params['id'];
       this._serviciosService.getServicioId(params['id']).then(res => {
-          this.servicio=res[0];
-          console.log(this.servicio);
+          this.servicio[0]=res[0];
+          console.log(this.servicio[0]);
           this.servicioProveedorid=res[0].nombreproveedor;
           this.userid = this._sesionService.id;
           console.log(this.userid + this.servicioProveedorid);
