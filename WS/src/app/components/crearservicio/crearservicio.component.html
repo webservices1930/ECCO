@@ -2,113 +2,218 @@
 <div class="formulario">
   <h2>Crear servicio </h2>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-          <label for="nombres">Nombre del servicio</label>
-          <input type="text" formControlName="nombres" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.nombres.errors }"/>
-      </div>
-
-
-      <div class="form-group">
-        <label for="pais">País</label>
-        <input type="text" formControlName="pais" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.pais.errors }"/>
+    <div class="form-group">
+      <label for="nombres">Nombre del servicio</label>
+      <input type="text" formControlName="nombres" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.nombres.errors }" />
     </div>
 
 
-      <div class="form-group">
-          <label for="ciudad">Ciudad</label>
-          <input type="text" formControlName="ciudad" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.ciudad.errors }"/>
-      </div>
-
-
-      <div class="form-group">
-        <label for="idioma">Idioma</label>
-        <input type="text" formControlName="idioma" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.idioma.errors }"/>
-     </div>
-      <!--  -->
-      <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <input type="text" formControlName="descripcion" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }"/>
+    <div class="form-group">
+      <label for="pais">País</label>
+      <input type="text" formControlName="pais" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.pais.errors }" />
     </div>
-      <div class="form-group">
-        <label for="costo">Costo</label>
-        <input type="text" formControlName="costo" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.costo.errors }"/>
+
+
+    <div class="form-group">
+      <label for="ciudad">Ciudad</label>
+      <input type="text" formControlName="ciudad" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.ciudad.errors }" />
+    </div>
+
+
+    <div class="form-group">
+      <label for="idioma">Idioma</label>
+      <input type="text" formControlName="idioma" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.idioma.errors }" />
+    </div>
+    <!--  -->
+    <div class="form-group">
+      <label for="descripcion">Descripción</label>
+      <input type="text" formControlName="descripcion" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }" />
+    </div>
+    <div class="form-group">
+      <label for="costo">Costo</label>
+      <input type="text" formControlName="costo" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.costo.errors }" />
     </div>
 
     <div>
-        <label class="image-upload-container btn btn-bwm">
-            <span>Seleccionar imagen</span>
-            <p></p>
-            <input type='file' (change)="onSelectFile($event)" formControlName="foto"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.foto.errors }">
-          </label>
+      <label class="image-upload-container btn btn-bwm">
+        <span>Seleccionar imagen</span>
+        <p></p>
+        <input type='file' (change)="onSelectFile($event)" formControlName="foto" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.foto.errors }">
+      </label>
     </div>
 
     <div>
       <label for="tipo">Tipo de servicio</label>
-      <select  (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems" formControlName="tipo" class="form-control" >
-          <option value="Alimentacion">Alimentación</option>
-          <option value="Hospejade">Hospedaje</option>
-          <option value="Transporte">Transporte</option>
-          <option value="PaseoEcologico">Paseo ecológico</option>
-        </select>
-  </div>
+      <select (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems"
+        formControlName="tipo" class="form-control">
+        <option value="Alimentacion">Alimentación</option>
+        <option value="Alojamiento">Alojamiento</option>
+        <option value="Transporte">Transporte</option>
+        <option value="PaseoEcologico">Paseo ecológico</option>
+      </select>
+    </div>
 
     <div *ngIf="this.tipo == 'Alimentacion'">
+      <div class="form-group">
+        <label for="numeropersonas">Número de personas</label>
+        <input type="text" formControlName="numeropersonas" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }" />
+      </div>
+
+      <div class="form-group">
+        <label for="tipocomida">Tipo de comida</label>
+        <input type="text" formControlName="tipocomida" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }" />
+      </div>
+
+      <div class="form-group">
+        <label for="cantidadplatos">Cantidad de platos</label>
+        <input type="text" formControlName="cantidadplatos" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.cantidadplatos.errors }" />
+      </div>
+    </div>
+
+    <div *ngIf="this.tipo == 'Alojamiento'">
         <div class="form-group">
             <label for="numeropersonas">Número de personas</label>
-            <input type="text" formControlName="numeropersonas" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }"/>
-        </div>
-
-        <div class="form-group">
-            <label for="tipocomida">Tipo de comida</label>
-            <input type="text" formControlName="tipocomida" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }"/>
-        </div>
-
-        <div class="form-group">
-            <label for="cantidadplatos">Cantidad de platos</label>
-            <input type="text" formControlName="cantidadplatos" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.cantidadplatos.errors }"/>
-        </div>
-    </div>
-
-    <div *ngIf="this.tipo == 'Hospedaje'">
-
-    </div>
-
-      <div *ngIf="this.tipo == 'Transporte'">
-
-        </div>
-
-        <div *ngIf="this.tipo == 'PaseoEcologico'">
+            <input type="number" formControlName="numeropersonas" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }" />
+          </div>
+    
           <div class="form-group">
-            <label for="numeropersonas">Número de personas</label>
-            <input type="text" formControlName="numeropersonas" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }"/>
+              <label for="tipoAlojamiento">Tipo de alojamiento</label>
+              <select (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems"
+                formControlName="tipo" class="form-control">
+                <option value="Hotel">Hotel</option>
+                <option value="Casa">Casa</option>
+                <option value="Albergue">Albergue</option>
+                <option value="Camping">Camping</option>
+                <option value="Apartahotel">Apartahotel</option>
+                <option value="Crucero">Crucero</option>
+                <option value="Motel">Motel</option>
+                <option value="Apartamento">Apartamento</option>
+              </select>
+          </div>
+    
+          <div class="form-group">
+            <label for="numeroHabitaciones">Número de habitaciones</label>
+            <input type="number" formControlName="cantidadplatos" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.cantidadplatos.errors }" />
           </div>
 
           <div class="form-group">
-            <label for="origen">Origen</label>
-            <input type="text" formControlName="origen" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.origen.errors }"/>
-        </div>
+              <label for="numeroBaños">Número de baños</label>
+              <input type="number" formControlName="cantidadplatos" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.cantidadplatos.errors }" />
+          </div>
 
+          <div class="form-group">
+              <label for="servicioLimpieza">Servicio de limpieza</label>
+              <select (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems"
+                formControlName="tipo" class="form-control">
+                <option value="Si">Sí</option>
+                <option value="No">No</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+              <label for="servicioWifi">Servicio de Wi-Fi</label>
+              <select (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems"
+                formControlName="tipo" class="form-control">
+                <option value="Si">Sí</option>
+                <option value="No">No</option>
+              </select>
+          </div>
+    </div>
+
+    <div *ngIf="this.tipo == 'Transporte'">
         <div class="form-group">
-          <label for="destino">Destino</label>
-          <input type="text" formControlName="destino" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.destino.errors }"/>
-        </div>
+            <label for="numeropersonas">Número de personas</label>
+            <input type="number" formControlName="numeropersonas" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }" />
+          </div>
+    
+          <div class="form-group">
+              <label for="tipoTransporte">Tipo de transporte</label>
+              <select (change)=cambiar() [(ngModel)]="this.tipo" name="combo" id="combo" ng-model="listItems"
+                formControlName="tipo" class="form-control">
+                <option value="Terrestre">Terrestre</option>
+                <option value="Aereo">Aéreo</option>
+                <option value="Maritimo">Marítimo</option>
+              </select>
+          </div>
+    
+          <div class="form-group">
+              <label for="origen">Origen</label>
+              <input type="text" formControlName="origen" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }" />
+          </div>
 
+          <div class="form-group">
+              <label for="destino">Destino</label>
+              <input type="text" formControlName="destino" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }" />
+          </div>
 
-        <div class="form-group">
-          <label for="horainicio">Hora inicio</label>
-          <input type="time" formControlName="horainicio" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.horainicio.errors }"/>
-        </div>
+          <div class="form-group">
+              <label for="horainicio">Hora salida</label>
+              <input type="time" formControlName="horainicio" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.horainicio.errors }" />
+          </div>
 
-        <div class="form-group">
-          <label for="horafin">Hora Fin</label>
-          <input type="time" formControlName="horafin" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.horafin.errors }"/>
-        </div>
+          <div class="form-group">
+              <label for="horainicio">Hora llegada</label>
+              <input type="time" formControlName="horainicio" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.horainicio.errors }" />
+          </div>
 
-        </div>
+          
+    </div>
+
+    <div *ngIf="this.tipo == 'PaseoEcologico'">
+      <div class="form-group">
+        <label for="numeropersonas">Número de personas</label>
+        <input type="text" formControlName="numeropersonas" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }" />
+      </div>
+
+      <div class="form-group">
+        <label for="origen">Origen</label>
+        <input type="text" formControlName="origen" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.origen.errors }" />
+      </div>
+
+      <div class="form-group">
+        <label for="destino">Destino</label>
+        <input type="text" formControlName="destino" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.destino.errors }" />
+      </div>
 
 
       <div class="form-group">
-          <button class="btn btn-outline-success mx-auto d-block">Crear servicio</button>
+        <label for="horainicio">Hora inicio</label>
+        <input type="time" formControlName="horainicio" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.horainicio.errors }" />
       </div>
+
+      <div class="form-group">
+        <label for="horafin">Hora Fin</label>
+        <input type="time" formControlName="horafin" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.horafin.errors }" />
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+      <button class="btn btn-outline-success mx-auto d-block">Crear servicio</button>
+    </div>
   </form>
 </div>
