@@ -23,6 +23,7 @@ export class ServicioComponent {
     undefined
   );
   preguntar: boolean = false;
+  reponder: boolean = false;
   autenticadoComoCliente: boolean = true;
 
 
@@ -119,6 +120,23 @@ export class ServicioComponent {
   cancelarPregunta() {
     this.pregunta.pregunta = "";
     this.preguntar = false;
+  }
+
+  responder(index:number){
+    for (let i=0; i<this.preguntass.length; i++){
+      this.preguntass[i].responder = false;
+      if (i == index)
+        this.preguntass[i].responder = true;
+    }
+  }
+
+  cancelarRespuesta(index:number) {
+    this.preguntass[index].responder = false;
+    this.preguntass[index].respuesta = '';
+  }
+
+  agregarRespuesta(i:number){
+    this._preguntaService.agregarRespuesta(this.preguntass[i]);
   }
 
 

@@ -58,11 +58,14 @@ export class PreguntaService {
                   pregunta.pregunta = element['s0:pregunta']['#text'];
                   pregunta.fechaPregunta = element['s0:fechaPregunta']['#text'];
 
-                  pregunta.respuesta="prueba";
-                  pregunta.fechaRespuesta="15-20-2019 15:33"
+                  pregunta.id = element['s0:id']['#text'];
 
-                  //pregunta.respuesta = element['s0:respuesta']['#text'];
-                  //pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
+                  pregunta.respuesta = element['s0:repuesta']['#text'];
+                  pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
+
+                  pregunta.responder = false;
+
+                  console.log("respuestaaaa"+pregunta.respuesta);
 
                   let cliente = new Usuario(
                     undefined,
@@ -122,6 +125,33 @@ export class PreguntaService {
         '</djan:createPregunta>'+
       '</soapenv:Body>'+
     '</soapenv:Envelope>';
+    xmlhttp.onreadystatechange = function () {
+      console.log(xmlhttp.readyState +" YY "+ xmlhttp.status);
+      if (xmlhttp.readyState == 4) {
+          if (xmlhttp.status == 200) {
+              console.log("Se creó la pregunta");
+            }
+      }
+    }
+    // Send the POST request
+    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+    xmlhttp.send(sr);
+  }
+
+  public agregarRespuesta(pregunta:Pregunta){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
+    let sr=
+    '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
+      '<soapenv:Header/>'+
+        '<soapenv:Body>'+
+          '<djan:agregarRespuesta>'+  
+            '<djan:respuesta>'+ pregunta.respuesta+'</djan:respuesta>'+
+            '<djan:idPregunta>'+ pregunta.id+'</djan:idPregunta>'+
+        '</djan:agregarRespuesta>'+
+      '</soapenv:Body>'+
+    '</soapenv:Envelope>';
+    console.log(sr);
     xmlhttp.onreadystatechange = function () {
       console.log(xmlhttp.readyState +" YY "+ xmlhttp.status);
       if (xmlhttp.readyState == 4) {
