@@ -63,8 +63,88 @@ export class ServicioService {
       '</soapenv:Body>'+
    '</soapenv:Envelope>';
     }else if(servicio.tipo=== 'Transporte'){
+      sr='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+      '<soapenv:Header/>'+
+     '<soapenv:Body>'+
+         '<djan:updateServicioTransporte>'+
+         '<djan:idServicio>'+servicio.idx+'</djan:idServicio>'+
+              '<djan:servicio>'+
+               '<ser:nombre>'+servicio.nombre+'</ser:nombre>'+
+               '<ser:pais>'+servicio.pais+'</ser:pais>'+
+               '<ser:ciudad>'+servicio.ciudad+'</ser:ciudad>'+
+               '<ser:idioma>'+servicio.idioma+'</ser:idioma>'+
+               '<ser:costo>'+servicio.costo+'</ser:costo>'+
+               '<ser:descripcion>'+servicio.descripcion+'</ser:descripcion>'+
+               '<ser:foto>'+servicio.img.split(" ",2)[1]+'</ser:foto>'+
+               '<ser:tipo>'+servicio.img.split(";",1)[0]+'</ser:tipo>'+
+               '<ser:numeroPersonas>'+servicio.numeroPersonas+'</ser:numeroPersonas>'+
+               '<ser:nombreProveedor>'+servicio.nombreproveedor+'</ser:nombreProveedor>'+
+               '<ser:empresa>'+servicio.empresa+'</ser:empresa>'+
+               '<ser:tipoTransporte>'+ servicio.tipoTransporte+'</ser:tipoTransporte>'+
+               '<ser:origen>'+ servicio.origen+'</ser:origen>'+
+               '<ser:destino>'+ servicio.destino+'</ser:destino>'+
+               '<ser:horaSalida>'+ servicio.horaSalida+'</ser:horaSalida>'+
+               '<ser:horaLlegada>'+ servicio.horaLlegada+'</ser:horaLlegada>'+
+            '</djan:servicio>'+
+         '</djan:updateServicioTransporte>'+
+      '</soapenv:Body>'+
+   '</soapenv:Envelope>';
+    }else if(servicio.tipo=== 'PaseoEcologico'){
+      sr='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+      '<soapenv:Header/>'+
+     '<soapenv:Body>'+
+         '<djan:updateServicioPaseoEcologico>'+
+         '<djan:idServicio>'+servicio.idx+'</djan:idServicio>'+
+            '<djan:serv>'+
+               '<ser:nombre>'+servicio.nombre+'</ser:nombre>'+
+               '<ser:pais>'+servicio.pais+'</ser:pais>'+
+               '<ser:ciudad>'+servicio.ciudad+'</ser:ciudad>'+
+               '<ser:idioma>'+servicio.idioma+'</ser:idioma>'+
+               '<ser:costo>'+servicio.costo+'</ser:costo>'+
+               '<ser:descripcion>'+servicio.descripcion+'</ser:descripcion>'+
+               '<ser:foto>'+servicio.img.split(" ",2)[1]+'</ser:foto>'+
+               '<ser:tipo>'+servicio.img.split(";",1)[0]+'</ser:tipo>'+
+               '<ser:numeroPersonas>'+servicio.numeroPersonas+'</ser:numeroPersonas>'+
+               '<ser:nombreProveedor>'+servicio.nombreproveedor+'</ser:nombreProveedor>'+
+               '<ser:origen>'+ servicio.origen+'</ser:origen>'+
+               '<ser:destino>'+ servicio.destino+'</ser:destino>'+
+               '<ser:horaInicio>'+ servicio.horaInicio+'</ser:horaInicio>'+
+               '<ser:horaFin>'+ servicio.horaFinal+'</ser:horaFin>'+
+            '</djan:serv>'+
+         '</djan:updateServicioPaseoEcologico>'+
+      '</soapenv:Body>'+
+   '</soapenv:Envelope>';
+    }else if(servicio.tipo=== 'Alojamiento'){
+      sr='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
+      '<soapenv:Header/>'+
+     '<soapenv:Body>'+
+         '<djan:updateServicioAlojamiento>'+
+         '<djan:idServicio>'+servicio.idx+'</djan:idServicio>'+
+            '<djan:serv>'+
+               '<ser:nombre>'+servicio.nombre+'</ser:nombre>'+
+               '<ser:pais>'+servicio.pais+'</ser:pais>'+
+               '<ser:ciudad>'+servicio.ciudad+'</ser:ciudad>'+
+               '<ser:idioma>'+servicio.idioma+'</ser:idioma>'+
+               '<ser:costo>'+servicio.costo+'</ser:costo>'+
+               '<ser:descripcion>'+servicio.descripcion+'</ser:descripcion>'+
+               '<ser:foto>'+servicio.img.split(" ",2)[1]+'</ser:foto>'+
+               '<ser:tipo>'+servicio.img.split(";",1)[0]+'</ser:tipo>'+
+               '<ser:numeroPersonas>'+servicio.numeroPersonas+'</ser:numeroPersonas>'+
+               '<ser:nombreProveedor>'+servicio.nombreproveedor+'</ser:nombreProveedor>'+
+               '<ser:tipoAlojamiento>'+ servicio.tipoAlojamiento +'</ser:tipoAlojamiento>'+
+               '<ser:numeroHabitaciones>'+ servicio.numeroHabitaciones +'</ser:numeroHabitaciones>'+
+               '<ser:numeroBanos>'+ servicio.numeroBanos +'</ser:numeroBanos>'+
+               '<ser:servicioLimpieza>'+ servicio.servicioLimpieza+'</ser:servicioLimpieza>'+
+               '<ser:servicioWifi>'+ servicio.servicioWifi+'</ser:servicioWifi>'+
+            '</djan:serv>'+
+         '</djan:updateServicioAlojamiento>'+
+      '</soapenv:Body>'+
+   '</soapenv:Envelope>';
+    }
 
-    }xmlhttp.onreadystatechange = function () {
+    console.log(sr);
+    
+    xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
               alert("Se actualizó el servicio correctamente");
