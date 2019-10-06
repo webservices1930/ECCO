@@ -14,9 +14,16 @@ export class NavbarComponent implements OnInit {
               private sesionService:SesionService
     ) {
       this.sesion = sesionService.sesion;
+      //this.sesion=sesionService.getUserLoggedIn();
       this._subscription = sesionService.sesionCambio.subscribe((value)=>{
           this.sesion = value;
+          if(this.sesion===null){
+            this.sesion = 'sininiciar';
+          }
       })
+
+      console.log(this.sesion);
+
     }
 
   ngOnInit() {
@@ -29,8 +36,9 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(){
-    this.sesionService.sesion = 'sininiciar';
-    this.sesionService.sesionCambio.next('sininiciar');
+    //this.sesionService.sesion = 'sininiciar';
+    //this.sesionService.sesionCambio.next('sininiciar');
+    this.sesionService.loginSatisfactorio('','sininiciar');
     console.log(this.sesion);
 
   }

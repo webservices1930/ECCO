@@ -7,16 +7,20 @@ import { Subject } from 'rxjs';
 export class SesionService {
     private servicios:Servis[] =[];
     private total:number[] = [];
-    id="";
-    sesion ="";
+
+    id = this.getUserLoggedIn();
+    sesion = this.getUserTypeLoggedIn();
+
     sesionCambio: Subject<string> = new Subject<string>();
     idCambio: Subject<string> = new Subject<string>();
-    constructor(){
-        this.sesion = "sininiciar";
-        this.sesionCambio.next(this.sesion);
 
-        this.id = "";
-        this.idCambio.next(this.id);
+    constructor(){
+
+        //this.sesion;
+        //this.sesionCambio.next(this.sesion);
+
+        //this.id = "";
+        //this.idCambio.next(this.id);
     }
 
 
@@ -42,6 +46,7 @@ export class SesionService {
             if(this.servicios[i].nombre === servicio.nombre){
                 this.servicios.splice(i, 1);
                 this.total[0]-=servicio.costo;
+                break;
             }
         }
     }
@@ -103,4 +108,18 @@ export class SesionService {
           },100);
       });
     }
+
+  loginSatisfactorio(email,tipo){
+    this.id = email;
+    this.sesion =  tipo;
+    localStorage.setItem('currentUser', email);
+    localStorage.setItem('currentType', tipo);
+
+  }
+  getUserLoggedIn() {
+      return localStorage.getItem('currentUser')||'';
+  }
+  getUserTypeLoggedIn() {
+    return localStorage.getItem('currentType')||'sininiciar';
+  }
 }

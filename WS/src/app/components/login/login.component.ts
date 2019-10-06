@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
         this.sesionService.sesionCambio.next('usuario');
         this.sesionService.id = this.loginForm.value.email ;
         this.sesionService.idCambio.next(this.loginForm.value.email);
+        this.sesionService.loginSatisfactorio(this.loginForm.value.email,'usuario');
         console.log(this.sesionService.id);
         this.router.navigate(['home']);
       }else if(res === 'proveedor'){
@@ -53,6 +54,7 @@ export class LoginComponent implements OnInit {
           this.sesionService.sesionCambio.next('proveedor');
           this.sesionService.id = this.loginForm.value.email ;
           this.sesionService.idCambio.next(this.loginForm.value.email);
+          this.sesionService.loginSatisfactorio(this.loginForm.value.email,'proveedor');
       }else{
         alert('Usuario incorrecto');
       }

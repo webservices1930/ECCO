@@ -18,6 +18,7 @@ export class CarritoService {
    }
 
    public agregarAlCarrito(cliente: Usuario, servicio: Servis) {
+     console.log(cliente);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
     let sr=

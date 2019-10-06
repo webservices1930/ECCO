@@ -15,7 +15,9 @@ export class ProfileComponent implements OnInit {
   user;
   usuarios;
   usuariosCopia:Usuario[]=[];
-  usuarioMostrar;
+
+  usuarioMostrar=[];
+
   _subscription: any;
   cambio=false;
 
@@ -32,30 +34,30 @@ export class ProfileComponent implements OnInit {
     private sesionService:SesionService,
     private proveedorService:ProveedorService
     ) {
-     
+
     }
 
   ngOnInit() {
     this.user = this.sesionService.id;
     if(this.sesionService.sesion === 'usuario'){
       this.usuarioService.getUsuarioByUsernameJSON(this.user).then( res => {
-        this.usuarioMostrar = res;
-        this.base64data=this.usuarioMostrar.foto;
-        this.ext=this.usuarioMostrar.tipo;
+        this.usuarioMostrar[0] = res;
+        this.base64data=this.usuarioMostrar[0].foto;
+        this.ext=this.usuarioMostrar[0].tipo;
         console.log(this.usuarioMostrar);
       });
     }else{
       this.proveedorService.getProveedorByUsernameJSON(this.user).then( res => {
-        this.usuarioMostrar = res;
-        this.base64data=this.usuarioMostrar.foto;
-        this.ext=this.usuarioMostrar.tipo;
+        this.usuarioMostrar[0] = res;
+        this.base64data=this.usuarioMostrar[0].foto;
+        this.ext=this.usuarioMostrar[0].tipo;
         console.log(this.usuarioMostrar);
       });
     }
 
   }
   public getSantizeUrl() {
-    this.image = "data:image/"+this.usuarioMostrar.tipo+";base64, "+this.usuarioMostrar.img;
+    this.image = "data:image/"+this.usuarioMostrar[0].tipo+";base64, "+this.usuarioMostrar[0].img;
     return this.sanitization.bypassSecurityTrustUrl(this.image);
  }
 
@@ -78,21 +80,21 @@ export class ProfileComponent implements OnInit {
   actualizar(){
     if(this.sesionService.sesion === 'usuario'){
         this.usuarioService.updateUsuario(this.usuarioMostrar,this.base64data,this.ext);
-          
+
     }else{
-      this.usuarioMostrar.password =(<HTMLInputElement>document.getElementById("password")).value;
+      this.usuarioMostrar[0].password =(<HTMLInputElement>document.getElementById("password")).value;
       this.proveedorService.updateProveedor(this.usuarioMostrar,this.base64data,this.ext);
-          
+
     }
   }
 
   eliminar(){
     if(this.sesionService.sesion === 'usuario'){
-           this.usuarioService.borrarUsuario(this.usuarioMostrar.email);
+           this.usuarioService.borrarUsuario(this.usuarioMostrar[0].email);
                 this.router.navigate(['login']);
 
     }else{
-     this.proveedorService.borrarProveedor(this.usuarioMostrar.email);
+     this.proveedorService.borrarProveedor(this.usuarioMostrar[0].email);
      this.router.navigate(['login']);
     }
   }
