@@ -12,23 +12,16 @@ export class TarjetaCarritoService {
 
   servicios;
   total;
+
   constructor(private carritoService: CarritoService, private _SesionServicio: SesionService) { }
 
   public actualizarCarrito() {
     this.carritoService.getCarritoCostoByUsernameJSON(this._SesionServicio.id).then(res =>{
       //Object.assign(this.carrito, res);
       this.total = res;
-      console.log('=========================');
       console.log(this.total);
      });
 
-     this.carritoService.getCarritoServiciosByUsernameJSON(this._SesionServicio.id).then(res =>{
-      //Object.assign(this.carrito, res);
-      this.servicios= res;
-      console.log('=========================');
-      console.log(this.servicios);
-     });
-     //this.servicios = this.getServicosCarrito();
   }
 
   public getServicios(){

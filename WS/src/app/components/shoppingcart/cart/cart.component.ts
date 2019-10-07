@@ -15,9 +15,9 @@ import { TarjetaCarritoService } from '../../../servicios/tarjeta-carrito.servic
 export class CartComponent implements OnInit {
 
   //servicios:Servis[]=[];
-  servicios: Servis[] ;
+  servicios;
   //total:number[]=[];
-  total: string;
+  total;
   carrito: CarritoCompras;
   // tslint:disable-next-line: max-line-length
   _subscripcion: any;
@@ -29,20 +29,34 @@ export class CartComponent implements OnInit {
      /*this._subscripcion = this.tarjetaCarrito.servicios.subscribe((servicioss) => {
        this.servicios = servicioss;
      });*/
-    /* this._subscripcion = this.tarjetaCarrito.total.subscribe((totall) => {
-      this.total = totall;
-    });*/
-     this.servicios = this.tarjetaCarrito.getServicios();
-     this.total = this.tarjetaCarrito.getTotal();
+
+     this.servicios = this.carritoService.getCarritoServiciosByUsernameJSON(this._SesionServicio.id).then(res =>{
+        this.servicios = res;
+        console.log(this.servicios);
+        this.total = this.carritoService.getCarritoCostoByUsernameJSON(this._SesionServicio.id).then(res2 =>{
+            this.total=res2;
+            console.log(this.total);
+        });
+    });
+     
   }
   actualizarTotal(){
     //this.total=this._SesionServicio.getTotal();
   }
   quitarServicio(servicio:Servis){
-    this._SesionServicio.quitarServicio(servicio);
+    //this._SesionServicio.quitarServicio(servicio);
     //this.total=this._SesionServicio.getTotal();
+
     this.carritoService.removerDelCarrito(this._SesionServicio.id, servicio);
-    location.reload();
+    var tot = +this.total;
+    for(var i=0;i<this.servicios.length;i++) {
+          if(this.servicios[i].nombre === servicio.nombre){
+              this.servicios.splice(i, 1);
+              tot-=servicio.costo;
+              break;
+          }
+      }
+    this.total = String(tot);
   }
 
   pago() {
