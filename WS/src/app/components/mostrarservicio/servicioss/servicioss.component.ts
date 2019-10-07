@@ -3,6 +3,7 @@ import { ServicioService } from '../../../servicios/servicio.service';
 import { Router } from '@angular/router';
 import {xmlToJson} from '../../../servicios/lib';
 import { Servis } from '../../../model/servis';
+import { TarjetaCarritoService } from '../../../servicios/tarjeta-carrito.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class ServiciossComponent implements OnInit {
   );
 
   constructor( private _serviciosService:ServicioService,
-               private router:Router
+               private router:Router,
+               private tarjetaCarritoService: TarjetaCarritoService
                 ) {
   }
 
@@ -42,6 +44,7 @@ export class ServiciossComponent implements OnInit {
       this.serviciosCopia= res;
       this.servicios=res;
      });
+     this.tarjetaCarritoService.actualizarCarrito();
   }
 
   verServicio( idx:number ){
