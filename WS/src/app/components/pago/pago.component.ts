@@ -4,6 +4,8 @@ import { isUndefined } from 'util';
 import { Servis } from '../../model/servis';
 import { SesionService } from 'src/app/servicios/sesion.service';
 import { PagoService } from '../../servicios/pago.service';
+import { ServicioTarjetaComponent } from '../mostrarservicio/servicio-tarjeta/servicio-tarjeta.component';
+import { TarjetaCarritoService } from '../../servicios/tarjeta-carrito.service';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class PagoComponent implements OnInit {
   total:number[]=[];
 
   // tslint:disable-next-line: max-line-length
-  constructor(private router: Router, private route: ActivatedRoute,private _SesionServicio:SesionService, private pagoservice: PagoService) { }
+  constructor(private router: Router, private route: ActivatedRoute,private _SesionServicio:SesionService, private pagoservice: PagoService, private tarjetaCarritoService: TarjetaCarritoService) { }
 
   ngOnInit() {
     /*this.route.queryParams
@@ -37,8 +39,8 @@ export class PagoComponent implements OnInit {
     //buscarLaOrden
     //lleanr tabla
     */
-   this.total=this._SesionServicio.getTotal();
-    this.servicios=this._SesionServicio.getServicios();
+    this.servicios = this.tarjetaCarritoService.getServicios();
+    this.total = this.tarjetaCarritoService.getTotal();
     console.log(this.servicios);
     console.log(this.total);
   }
@@ -53,6 +55,7 @@ export class PagoComponent implements OnInit {
     } else {
       alert('El pago se realizara bajo el numero de tarjeta ' + this.numTarjeta);
       this.pagoservice.pago(this._SesionServicio.id);
+      this.tarjetaCarritoService.actualizarCarrito();
       this.router.navigate([`/home`]);
     }
   }
