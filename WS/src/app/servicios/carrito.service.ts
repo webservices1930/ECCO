@@ -64,12 +64,13 @@ export class CarritoService {
                 console.log(doc);
                  let data=doc['soap11env:Envelope']['soap11env:Body']['tns:getCarritoResponse']['tns:getCarritoResult0'];
                 console.log(data);
-                let costoTotal="";
+                let costoTotal="0";
                 if(data['#text']==="true"){
                   data = doc['soap11env:Envelope']['soap11env:Body']['tns:getCarritoResponse']['tns:getCarritoResult1'];
                   costoTotal = data['s0:costoTotal']['#text'];
                   resolve(costoTotal);
                 } else {
+                  resolve(costoTotal);
                   console.log('noo');
                 }
             }
@@ -109,7 +110,7 @@ export class CarritoService {
                     data = [];
                     data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:getCarritoServiciosResponse']['tns:getCarritoServiciosResult1']['s0:ServicioRes']);
                   }
-                  
+
                   data.forEach(element => {
                     let servicio = new Servis (
                       undefined,

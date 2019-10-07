@@ -42,6 +42,7 @@ export class CartComponent implements OnInit {
     this._SesionServicio.quitarServicio(servicio);
     //this.total=this._SesionServicio.getTotal();
     this.carritoService.removerDelCarrito(this._SesionServicio.id, servicio);
+    location.reload();
   }
 
   pago() {
