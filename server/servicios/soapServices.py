@@ -83,8 +83,6 @@ class ServicioRes(ComplexModel):
 class CarritoCompras(ComplexModel):
     numServicios = Integer
     costoTotal = Float
-    cliente = ClientRes
-    servicios= Array(ServicioRes)
 
 class Alimentacion(Servicio):
     tipoComida = String
@@ -674,7 +672,7 @@ class SoapService(ServiceBase):
     @rpc(Integer(), Alojamiento, _returns=ResponseText)
     def updateServicioAlojamiento(ctx, idServicio, serv):
         res = ResponseText()
-        sc = models.PaseoEcologico.objects.filter(id=idServicio)
+        sc = models.Alojamiento.objects.filter(id=idServicio)
         if sc.count() > 0:
             ser = sc[0]
             ser.nombre = serv.nombre
@@ -781,7 +779,7 @@ class SoapService(ServiceBase):
     @rpc(Integer(), Transporte, _returns=ResponseText)
     def updateServicioTransporte(ctx, idServicio, servicio):
         res = ResponseText()
-        sc = models.Alimentacion.objects.filter(id=idServicio)
+        sc = models.Transporte.objects.filter(id=idServicio)
         if sc.count() > 0:
             ser = sc[0]
             ser.nombre = servicio.nombre
@@ -816,7 +814,7 @@ class SoapService(ServiceBase):
             ser.horaLlegada = servicio.horaLlegada
             res.resultado = "encontrado"
             ser.save()
-            return res
+        return res
 
     @rpc(_returns=[Boolean, Array(TransporteRes)])
     def getServiciosTransporte(ctx):
@@ -859,6 +857,73 @@ class SoapService(ServiceBase):
     @rpc(_returns=[Boolean, Array(ServicioRes)])
     def getServicios(ctx):
         list = models.Servicio.objects.all()
+        res = []
+        for ser in list:
+            aux = None
+            if (isinstance(ser, models.Alimentacion)):
+                aux=AlimentacionRes()
+                aux.tipoServicio = "Alimentacion"
+                aux.tipoComida = ser.tipoComida
+                aux.cantidadPlatos = ser.cantidadPlatos
+
+            elif (isinstance(ser, models.PaseoEcologico)):
+                aux=PaseoEcologicoRes()
+                aux.origen = ser.origen
+                aux.destino = ser.destino
+                aux.horaInicio = ser.horaInicio
+                aux.horaFin = ser.horaFin
+                aux.tipoServicio = "PaseoEcologico"
+
+            elif (isinstance(ser, models.Alojamiento)):
+                aux = AlojamientoRes()
+                aux.tipoServicio = "Alojamiento"
+                aux.tipoAlojamiento = ser.tipoAlojamiento
+                aux.numeroHabitaciones = ser.numeroHabitaciones
+                aux.numeroBanos = ser.numeroBanos
+                aux.servicioLimpieza = ser.servicioLimpieza
+                aux.servicioWifi = ser.servicioWifi
+
+            elif(isinstance(ser, models.Transporte)):
+                aux= TransporteRes()
+                aux.tipoServicio = "Transporte"
+                aux.empresa = ser.empresa
+                aux.tipoTransporte = ser.tipoTransporte
+                aux.origen = ser.origen
+                aux.destino = ser.destino
+                aux.horaSalida = ser.horaSalida
+                aux.horaLlegada = ser.horaLlegada
+
+
+            aux.id = ser.id
+            aux.nombre = ser.nombre
+            aux.pais = ser.pais
+            aux.ciudad = ser.ciudad
+            aux.idioma = ser.idioma
+            aux.costo = ser.costo
+            aux.descripcion = ser.descripcion
+            if (len(ser.foto) > 3):
+                in_file = open(SERVICE_IMAGES + ser.foto, "rb")
+                d = in_file.read()
+                fo = base64.b64encode(d)
+                aux.foto = fo.decode('ascii')
+                in_file.close()
+                aux.tipo = ser.foto.split(".")
+                aux.tipo = aux.tipo[len(aux.tipo) - 1]
+            else:
+                aux.foto = "*"
+
+            aux.numeroPersonas = ser.numeroPersonas
+            aux.nombreProveedor = ser.proveedor.nombreUsuario
+
+            res.append(aux)
+        p = True
+        if (len(res) == 0):
+            p = False
+        return [p, res]
+
+    @rpc(String ,_returns=[Boolean, Array(ServicioRes)])
+    def getServiciosProveedor(ctx, nombreUsuario):
+        list = models.Servicio.objects.filter(proveedor__nombreUsuario = nombreUsuario)
         res = []
         for ser in list:
             aux = None
@@ -1027,21 +1092,25 @@ class SoapService(ServiceBase):
                 sc2.carrito.save()
                 sc2.delete()
                 res.resultado = "servicio removido"
-            else:
-                res.resultado = "no existe carrito"
         else:
             res.resultado = "servicio no encontrado"
         return res
 
-    @rpc(String,_returns=CarritoCompras)
+    @rpc(String,_returns=[Boolean,CarritoCompras])
     def getCarrito(ctx, nomUsuario):
         sc = models.CarritoCompras.objects.filter(cliente__nombreUsuario=nomUsuario)
         if(sc.count() > 0):
             car=CarritoCompras()
             car.costoTotal=sc[0].costoTotal
             car.numServicios=sc[0].numServicios
-            car.cliente=sc[0].cliente
-            car.servicios = []
+            return [True,car]
+        return [False,None]
+
+    @rpc(String,_returns=[Boolean,Array(ServicioRes)])
+    def getCarritoServicios(ctx, nomUsuario):
+        sc = models.CarritoCompras.objects.filter(cliente__nombreUsuario=nomUsuario)
+        if(sc.count() > 0):
+            car=[]
             for s in sc[0].servicios.all():
                 aux=ServicioRes()
                 aux.nombreProveedor=s.proveedor.nombreUsuario
@@ -1052,20 +1121,13 @@ class SoapService(ServiceBase):
                 aux.idioma=s.idioma
                 aux.id=s.id
                 aux.ciudad=s.ciudad
-                if (len(s.foto) > 3):
-                    in_file = open(SERVICE_IMAGES + s.foto, "rb")
-                    d = in_file.read()
-                    fo = base64.b64encode(d)
-                    aux.foto = fo.decode('ascii')
-                    in_file.close()
-                    aux.tipo = s.foto.split(".")
-                    aux.tipo = aux.tipo[len(aux.tipo)-1]
-                else:
-                    aux.foto = " "
                 aux.pais=s.pais
-                car.servicios.append(aux)
-            return car
-        return None
+                car.append(aux)
+            p=True
+            if(sc[0].servicios.all().count()==0):
+                p=False
+            return [p,car]
+        return [False,[]]
 
     @rpc(String,_returns=ResponseText)
     def pagarCarrito ( ctx, nomUsuario ):
