@@ -14,6 +14,9 @@ export class EditarservicioComponent implements OnInit {
   servicioid;
   userid;
   servicioProveedorid;
+  base64data: string;
+  ext : string;
+  image :string;
 
   constructor( private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
@@ -50,6 +53,19 @@ public getSantizeUrl(img) {
     console.log(this.servicio[0]);
     console.log(this.servicio[0].img.split(";",1)[0]);
     console.log(this.servicio[0].img.split(" ",2)[1]);
-    this._serviciosService.updateServicio(this.servicio[0]);
+    this._serviciosService.updateServicio(this.servicio[0], this.base64data, this.ext);
+  }
+  onSelectFile(event) { // called each time file input changes
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsBinaryString(event.target.files[0]);
+
+      this.ext=event.target.files[0].type;
+      reader.onload = (event) => { // called once readAsDataURL is completed
+            this.base64data=btoa(reader.result as string);
+            console.log(this.base64data);
+      }
+    }
   }
 }
