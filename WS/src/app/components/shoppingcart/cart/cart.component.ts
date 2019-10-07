@@ -19,24 +19,29 @@ export class CartComponent implements OnInit {
   //total: number;
   carrito: CarritoCompras;
   // tslint:disable-next-line: max-line-length
+  _subscripcion: any;
   constructor(private _SesionServicio:SesionService, private router: Router, private carritoService: CarritoService, private tarjetaCarrito: TarjetaCarritoService) { }
 
   ngOnInit() {
-     /*this.total=this._SesionServicio.getTotal();
-     this.servicios=this._SesionServicio.getServicios();*/
-     this.servicios = this.tarjetaCarrito.getServicosCarrito();
-     this.total = this.tarjetaCarrito.getTotal();
+     this.total=this._SesionServicio.getTotal();
+     this.servicios=this._SesionServicio.getServicios();
+     /*this._subscripcion = this.tarjetaCarrito.serviciossubject.subscribe((servicio)=>{
+       this.servicios = servicio;
+     });
+    this.servicios = this.tarjetaCarrito.getServicosCarrito();
+     this.total = this.tarjetaCarrito.getTotal();*/
 
      console.log(this.servicios);
      console.log(this.total);
      console.log("Si ejecuta ??????");
   }
   actualizarTotal(){
-    //this.total=this._SesionServicio.getTotal();
+    this.total=this._SesionServicio.getTotal();
   }
   quitarServicio(servicio:Servis){
     this._SesionServicio.quitarServicio(servicio);
     this.total=this._SesionServicio.getTotal();
+    this.carritoService.removerDelCarrito(this._SesionServicio.id, servicio);
   }
 
   pago() {
