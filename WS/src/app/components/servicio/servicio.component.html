@@ -137,10 +137,10 @@
     <input class="form-control mr-sm-2" placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true"
       required name="pregunta" [(ngModel)]="pregunta.pregunta" maxlength="50" #txtPregunta="ngModel" />
     <div id="botonesPregunta">
-      <button type="submit" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
-      <button type="button" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
+      <button type="submit" class="btn btn-success" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
+      <button type="button" class="btn btn-danger" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
     </div>
-    <div id="errorPregunta" [hidden]="autenticadoComoCliente || !preguntar">
+    <div class="alert alert-danger" id="errorPregunta" [hidden]="autenticadoComoCliente || !preguntar">
       Para hacer preguntas a los proveedores debe estar autenticado como un cliente
     </div>
   </form>
@@ -163,16 +163,16 @@
       <div>{{ pregunta.respuesta }}</div>
     </div>
     <div *ngIf="servicioProveedorid == userid && !(preguntass[i].respuesta.length>1) && !preguntass[i].responder">
-      <button type="button" (click)="responder(i)">Responder</button>
+      <button type="button" class="btn btn-success" (click)="responder(i)">Responder</button>
     </div>
     <div [hidden]="!preguntass[i].responder">
       <form (ngSubmit)="agregarRespuesta(i)" #preguntaForm="ngForm">
         <input class="form-control mr-sm-2" placeholder="Escribir respuesta..." required name="respuesta"
           [(ngModel)]="preguntass[i].respuesta" maxlength="80" #txtPregunta="ngModel" />
         <div id="botonesPregunta">
-          <button type="submit" [disabled]="!preguntaForm.form.valid || !(preguntass[i].respuesta.length>1)">Enviar
+          <button type="submit" class="btn btn-success" [disabled]="!preguntaForm.form.valid || !(preguntass[i].respuesta.length>1)">Enviar
             respuesta</button>
-          <button type="button" (click)="cancelarRespuesta(i)">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="cancelarRespuesta(i)">Cancelar</button>
         </div>
       </form>
     </div>
