@@ -25,6 +25,7 @@ export class ServicioComponent {
   preguntar: boolean = false;
   reponder: boolean = false;
   autenticadoComoCliente: boolean = true;
+  preguntasCargadas: boolean;
 
 
 
@@ -66,6 +67,8 @@ export class ServicioComponent {
   }
 
   ngOnInit() {
+    this.preguntasCargadas = false;
+    
 
 
 
@@ -82,9 +85,13 @@ export class ServicioComponent {
         this.servicioProveedorid = res[0].nombreproveedor;
         this.userid = this._sesionService.id;
 
+        
+        
 
-        this._preguntaService.getPreguntasServicio(params['id']).then(res => {
-          this.preguntass = res;
+
+        this._preguntaService.getPreguntasServicio(params['id']).then(res => {        
+          this.preguntasCargadas = true;   
+          this.preguntass = res;                   
         });
 
       });

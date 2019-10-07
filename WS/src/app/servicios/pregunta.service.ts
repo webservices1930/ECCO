@@ -36,6 +36,7 @@ export class PreguntaService {
               var doc = xmlToJson(xmlhttp.responseXML);
               data = doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult0'];
               let preguntas = [];
+              resolve(preguntas);
               if (data['#text'] === "true") {
                 data = doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult1']['s0:PreguntaRes'];
                 if (data.length === undefined) {
@@ -56,12 +57,9 @@ export class PreguntaService {
                   pregunta.id = element['s0:id']['#text'];
 
                   pregunta.respuesta = element['s0:repuesta']['#text'];
-                  if (pregunta.respuesta.length>1){
-                  }
                   pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
 
                   pregunta.responder = false;
-
 
                   let cliente = new Usuario(
                     undefined,

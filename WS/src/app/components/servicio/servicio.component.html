@@ -177,6 +177,9 @@
       </form>
     </div>
   </div>
+  <div *ngIf="preguntass.length==0 && preguntasCargadas">
+    <p>No hay preguntas en este servicio, sé el primero en hacer una pregunta al proveedor</p>
+  </div>
 </div>
 
 
