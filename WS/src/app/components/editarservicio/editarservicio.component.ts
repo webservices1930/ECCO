@@ -53,7 +53,7 @@ public getSantizeUrl(img) {
     console.log(this.servicio[0]);
     console.log(this.servicio[0].img.split(";",1)[0]);
     console.log(this.servicio[0].img.split(" ",2)[1]);
-    this._serviciosService.updateServicio(this.servicio[0], this.base64data, this.ext);
+    this._serviciosService.updateServicio(this.servicio[0]);
   }
   onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {

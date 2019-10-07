@@ -39,6 +39,7 @@ export class PreguntaService {
               data = doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult0'];
               console.log(data);
               let preguntas = [];
+              resolve(preguntas);
               if (data['#text'] === "true") {
                 data = doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult1']['s0:PreguntaRes'];
                 console.log(data);
@@ -61,14 +62,14 @@ export class PreguntaService {
                   pregunta.id = element['s0:id']['#text'];
 
                   pregunta.respuesta = element['s0:repuesta']['#text'];
-                  if (pregunta.respuesta.length>1){
-                  console.log("RESPUESTA" + "--"+pregunta.respuesta+"-");
+                  if (pregunta.respuesta.length > 1) {
+                    console.log("RESPUESTA" + "--" + pregunta.respuesta + "-");
                   }
                   pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
 
                   pregunta.responder = false;
 
-                  console.log("respuestaaaa"+pregunta.respuesta);
+                  console.log("respuestaaaa" + pregunta.respuesta);
 
                   let cliente = new Usuario(
                     undefined,
