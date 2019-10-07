@@ -103,8 +103,13 @@ export class CarritoService {
                 console.log(data);
                 let serviciosCopia=[];
                 if(data['#text']==="true"){
-                  data = doc['soap11env:Envelope']['soap11env:Body']['tns:getCarritoServiciosResponse']['tns:getCarritoServiciosResult1'];
+                  data = doc['soap11env:Envelope']['soap11env:Body']['tns:getCarritoServiciosResponse']['tns:getCarritoServiciosResult1']['s0:ServicioRes'];
                   // ===================Para servicios===============================
+                  if(data.length === undefined ){
+                    data = [];
+                    data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:getCarritoServiciosResponse']['tns:getCarritoServiciosResult1']['s0:ServicioRes']);
+                  }
+                  
                   data.forEach(element => {
                     let servicio = new Servis (
                       undefined,
