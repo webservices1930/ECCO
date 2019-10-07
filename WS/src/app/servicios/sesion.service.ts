@@ -32,8 +32,6 @@ export class SesionService {
             this.total[0]+=servicio.costo;
         }
 
-        console.log(this.servicios);
-        console.log(this.total);
     }
     getServicios():Servis[]{
         return this.servicios;
@@ -69,11 +67,9 @@ export class SesionService {
     }
 
     async login(usuario,contrasena){
-      console.log(usuario + contrasena);
         return new Promise(resolve => {
           setTimeout(() => {
             var xmlhttp = new XMLHttpRequest();
-            console.log(usuario + contrasena);
             xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
             let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">' +
                       '<soapenv:Header/>' +
@@ -92,9 +88,7 @@ export class SesionService {
                 if (xmlhttp.readyState == 4) {
                     if (xmlhttp.status == 200) {
                         var doc =  xmlToJson(xmlhttp.responseXML);
-                        console.log(doc);
                         data=doc['soap11env:Envelope']['soap11env:Body']['tns:LogInResponse']['tns:LogInResult1'];
-                        console.log(data);
                         if(data['s0:tipoUsuaro'] !== undefined){
                           resolve(data['s0:tipoUsuaro']['#text']);
                         }else{

@@ -14,6 +14,9 @@ export class EditarservicioComponent implements OnInit {
   servicioid;
   userid;
   servicioProveedorid;
+  base64data: string;
+  ext : string;
+  image :string;
 
   constructor( private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
@@ -26,30 +29,38 @@ export class EditarservicioComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe( params =>{
-      console.log(params['id']);
       this.servicioid = params['id'];
       this._serviciosService.getServicioId(params['id']).then(res => {
           this.servicio[0]=res[0];
           console.log(this.servicio[0]);
+          this.image=this.servicio[0].img;
+          this.base64data = this.servicio[0].img.split(" ",2)[1];
+          this.ext = this.servicio[0].img.split(";",1)[0];
           this.servicioProveedorid=res[0].nombreproveedor;
           this.userid = this._sesionService.id;
-          console.log(this.userid + this.servicioProveedorid);
        });
     });
   }
-public getSantizeUrl(img) {
-  //console.log(img);
-  //console.log(this.sanitization.bypassSecurityTrustUrl(img));
-  return this.sanitization.bypassSecurityTrustUrl(img);
-}
+
   regresar(){
     this.router.navigate( ['/servicio', this.servicioid] );
   }
 
+  public getSantizeUrl() {
+    return this.sanitization.bypassSecurityTrustUrl(this.image);
+ }
+ onSelectFile(event) { // called each time file input changes
+  if (event.target.files && event.target.files[0]) {
+    var reader = new FileReader();
+    reader.readAsBinaryString(event.target.files[0]);
+    this.ext=event.target.files[0].type;
+    reader.onload = (event) => { // called once readAsDataURL is completed
+          this.base64data=btoa(reader.result as string);
+      }
+    }
+  }
   guardar(){
-    console.log(this.servicio[0]);
-    console.log(this.servicio[0].img.split(";",1)[0]);
-    console.log(this.servicio[0].img.split(" ",2)[1]);
-    this._serviciosService.updateServicio(this.servicio[0]);
+ 
+    this._serviciosService.updateServicio(this.servicio[0],this.base64data,this.ext);
   }
 }

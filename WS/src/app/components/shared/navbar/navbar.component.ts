@@ -19,7 +19,6 @@ export class NavbarComponent implements OnInit {
           this.sesion = value;
       })
 
-      console.log(this.sesion);
 
     }
 
@@ -36,7 +35,6 @@ export class NavbarComponent implements OnInit {
     //this.sesionService.sesion = 'sininiciar';
     //this.sesionService.sesionCambio.next('sininiciar');
     this.sesionService.loginSatisfactorio('','sininiciar');
-    console.log(this.sesion);
     this.sesion='sininiciar';
 
   }

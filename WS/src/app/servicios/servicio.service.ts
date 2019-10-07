@@ -33,15 +33,10 @@ export class ServicioService {
     this.getTodosServicios().then(res => {
       this.serviciosCopia = res;
       this.servicios = res;
-      console.log(this.servicios);
     });
   }
 
-  updateServicio(servicio) {
-    console.log(servicio);
-    console.log(servicio.img.split(";",1)[0]);
-    console.log(servicio.img.split(" ",2)[1]);
-
+  updateServicio(servicio, base64data, tipo) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
     let sr='';
@@ -58,8 +53,8 @@ export class ServicioService {
                '<ser:idioma>'+servicio.idioma+'</ser:idioma>'+
                '<ser:costo>'+servicio.costo+'</ser:costo>'+
                '<ser:descripcion>'+servicio.descripcion+'</ser:descripcion>'+
-               '<ser:foto>'+servicio.img.split(" ",2)[1]+'</ser:foto>'+
-               '<ser:tipo>'+servicio.img.split(";",1)[0]+'</ser:tipo>'+
+               '<ser:foto>'+base64data+'</ser:foto>'+
+               '<ser:tipo>'+tipo+'</ser:tipo>'+
                '<ser:numeroPersonas>'+servicio.numeroPersonas+'</ser:numeroPersonas>'+
                '<ser:nombreProveedor>'+servicio.nombreproveedor+'</ser:nombreProveedor>'+
                '<ser:tipoComida>'+servicio.tipoComida+'</ser:tipoComida>'+
@@ -81,8 +76,8 @@ export class ServicioService {
                '<ser:idioma>'+servicio.idioma+'</ser:idioma>'+
                '<ser:costo>'+servicio.costo+'</ser:costo>'+
                '<ser:descripcion>'+servicio.descripcion+'</ser:descripcion>'+
-               '<ser:foto>'+servicio.img.split(" ",2)[1]+'</ser:foto>'+
-               '<ser:tipo>'+servicio.img.split(";",1)[0]+'</ser:tipo>'+
+               '<ser:foto>'+base64data+'</ser:foto>'+
+               '<ser:tipo>'+tipo+'</ser:tipo>'+
                '<ser:numeroPersonas>'+servicio.numeroPersonas+'</ser:numeroPersonas>'+
                '<ser:nombreProveedor>'+servicio.nombreproveedor+'</ser:nombreProveedor>'+
                '<ser:empresa>'+servicio.empresa+'</ser:empresa>'+
@@ -108,8 +103,8 @@ export class ServicioService {
                '<ser:idioma>'+servicio.idioma+'</ser:idioma>'+
                '<ser:costo>'+servicio.costo+'</ser:costo>'+
                '<ser:descripcion>'+servicio.descripcion+'</ser:descripcion>'+
-               '<ser:foto>'+servicio.img.split(" ",2)[1]+'</ser:foto>'+
-               '<ser:tipo>'+servicio.img.split(";",1)[0]+'</ser:tipo>'+
+               '<ser:foto>'+base64data+'</ser:foto>'+
+               '<ser:tipo>'+tipo+'</ser:tipo>'+
                '<ser:numeroPersonas>'+servicio.numeroPersonas+'</ser:numeroPersonas>'+
                '<ser:nombreProveedor>'+servicio.nombreproveedor+'</ser:nombreProveedor>'+
                '<ser:origen>'+ servicio.origen+'</ser:origen>'+
@@ -133,8 +128,8 @@ export class ServicioService {
                '<ser:idioma>'+servicio.idioma+'</ser:idioma>'+
                '<ser:costo>'+servicio.costo+'</ser:costo>'+
                '<ser:descripcion>'+servicio.descripcion+'</ser:descripcion>'+
-               '<ser:foto>'+servicio.img.split(" ",2)[1]+'</ser:foto>'+
-               '<ser:tipo>'+servicio.img.split(";",1)[0]+'</ser:tipo>'+
+               '<ser:foto>'+base64data+'</ser:foto>'+
+               '<ser:tipo>'+tipo+'</ser:tipo>'+
                '<ser:numeroPersonas>'+servicio.numeroPersonas+'</ser:numeroPersonas>'+
                '<ser:nombreProveedor>'+servicio.nombreproveedor+'</ser:nombreProveedor>'+
                '<ser:tipoAlojamiento>'+ servicio.tipoAlojamiento +'</ser:tipoAlojamiento>'+
@@ -148,7 +143,6 @@ export class ServicioService {
    '</soapenv:Envelope>';
     }
 
-    console.log(sr);
     
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState == 4) {
@@ -169,7 +163,6 @@ export class ServicioService {
     xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
     let sr='';
     if(tipo === 'Alimentacion'){
-      console.log("si");
       sr='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
       '<soapenv:Header/>'+
      '<soapenv:Body>'+
@@ -218,7 +211,6 @@ export class ServicioService {
                 '</djan:createServicioTransporte>'+
               '</soapenv:Body>'+
             '</soapenv:Envelope>';
-    console.log(sr);
 
     }else if(tipo === 'Alojamiento'){
       sr =  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
@@ -246,7 +238,6 @@ export class ServicioService {
               '</soapenv:Body>'+
             '</soapenv:Envelope>';
     } else if(tipo === 'PaseoEcologico'){
-      console.log(registerForm);
       sr =
               '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
           '<soapenv:Header/>'+
@@ -302,13 +293,10 @@ export class ServicioService {
         if (xmlhttp.readyState == 4) {
             if (xmlhttp.status == 200) {
                 var doc =  xmlToJson(xmlhttp.responseXML);
-                console.log(doc);
                 data=doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult0'];
-                console.log(data);
                 let serviciosCopia=[];
                 if(data['#text']==="true"){
                 data = doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult1']['s0:AlimentacionRes'];
-                console.log(data);
                 if(data.length === undefined ){
                       data = [];
                       data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosAlimentaiconResponse']['tns:getServiciosAlimentaiconResult1']['s0:AlimentacionRes']);
@@ -327,7 +315,6 @@ export class ServicioService {
                         undefined,
                         undefined
                       );
-                      console.log(element['s0:nombre']['#text']);
                       servicioAlimentacion.nombre= element['s0:nombre']['#text'];
                       servicioAlimentacion.descripcion=element['s0:descripcion']['#text'];
                       servicioAlimentacion.costo=+element['s0:costo']['#text'];
@@ -362,7 +349,6 @@ getServicioId(id){
   return new Promise(resolve => {
     setTimeout(() => {
       var xmlhttp = new XMLHttpRequest();
-      console.log('hola');
       xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
       let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
                   '<soapenv:Header/>'+
@@ -374,19 +360,14 @@ getServicioId(id){
              '</soapenv:Envelope>';
       var y = this;
       let data;
-      console.log('dd');
       xmlhttp.onreadystatechange =  function () {
-        console.log('xd');
       if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
               var doc =  xmlToJson(xmlhttp.responseXML);
-              console.log(doc);
               data=doc['soap11env:Envelope']['soap11env:Body']['tns:readServicioResponse']['tns:readServicioResult0'];
-              console.log(data);
               let serviciosCopia=[];
               if(data['s0:resultado']['#text']==="encontrado"){
               data = doc['soap11env:Envelope']['soap11env:Body']['tns:readServicioResponse']['tns:readServicioResult1'];
-              console.log(data);
               if(data.length === undefined ){
                     data = [];
                     data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:readServicioResponse']['tns:readServicioResult1']);
@@ -409,7 +390,6 @@ getServicioId(id){
                       undefined,
                       undefined
                     );
-                    console.log(element['s0:nombre']['#text']);
                     servicio.nombre= element['s0:nombre']['#text'];
                     servicio.descripcion=element['s0:descripcion']['#text'];
                     servicio.costo=+element['s0:costo']['#text'];
@@ -455,8 +435,6 @@ getServicioId(id){
                     serviciosCopia.push(servicio);
                     resolve(serviciosCopia);
               });
-            }else{
-              console.log('noo');
             }
           }
     }
@@ -484,13 +462,10 @@ getServicioId(id){
       if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
               var doc =  xmlToJson(xmlhttp.responseXML);
-              console.log(doc);
               data=doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosResponse']['tns:getServiciosResult0'];
-              console.log(data);
               let serviciosCopia=[];
               if(data['#text']==="true"){
               data = doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosResponse']['tns:getServiciosResult1']['s0:ServicioRes'];
-              console.log(data);
               if(data.length === undefined ){
                     data = [];
                     data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:getServiciosResponse']['tns:getServiciosResult1']['s0:ServicioRes']);
@@ -512,7 +487,6 @@ getServicioId(id){
                       undefined,
                       undefined
                     );
-                    console.log(element['s0:nombre']['#text']);
                     servicio.nombre= element['s0:nombre']['#text'];
                     servicio.descripcion=element['s0:descripcion']['#text'];
                     servicio.costo=+element['s0:costo']['#text'];

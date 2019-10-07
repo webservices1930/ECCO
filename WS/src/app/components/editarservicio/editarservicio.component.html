@@ -4,12 +4,14 @@
 
   <div class="row animated fadeIn fast">
 
-    <div class="col-md-4">
-      <img [src]="getSantizeUrl(item.img)" [alt]="item.nombre">
-      <br><br>
-    </div>
+    
 
     <div class="col-md-8">
+      
+        <div class="col-md-4">
+            <img [src]="getSantizeUrl()" [alt]="item.nombre">
+            <br><br>
+          </div>
 
       <div>
           <label for="nombre">Nombre: </label>
@@ -20,6 +22,14 @@
           <label for="descripcion">Descripción: </label>
           <input type="text" class="form-control" id="descripcion" [(ngModel)]=" item.descripcion" >
       </div>
+
+      <div class="imagen">
+          <label class="image-upload-container btn btn-bwm">
+              <span>Seleccionar imagen</span>
+              <p></p>
+              <input type='file' (change)="onSelectFile($event)"  class="form-control">
+            </label>
+        </div>
 
       <div>
           <label for="descripcion">Costo: </label>

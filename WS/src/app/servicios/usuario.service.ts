@@ -45,9 +45,7 @@ export class UsuarioService {
           if (xmlhttp.readyState == 4) {
               if (xmlhttp.status == 200) {
                   var doc =  xmlToJson(xmlhttp.responseXML);
-                  console.log(doc);
                   let data=doc['soap11env:Envelope']['soap11env:Body']['tns:getAllUsuariosResponse']['tns:getAllUsuariosResult']['s0:ClientRes'];
-                  console.log(data);
                   resolve(data);
               }
           }
@@ -63,7 +61,6 @@ getUsuarioByUsernameJSON(usuario){
   return new Promise(resolve => {
     setTimeout(() => {
       var xmlhttp = new XMLHttpRequest();
-      console.log('hola');
       xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
       let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
                 '<soapenv:Header/>'+
@@ -79,12 +76,9 @@ getUsuarioByUsernameJSON(usuario){
           if (xmlhttp.readyState == 4) {
               if (xmlhttp.status == 200) {
                   var doc =  xmlToJson(xmlhttp.responseXML);
-                  console.log(doc);
                   data=doc['soap11env:Envelope']['soap11env:Body']['tns:readUsuarioResponse']['tns:readUsuarioResult0'];
-                  console.log(data);
                   if(data['s0:resultado']['#text']==="usuario leido con exito"){
                     data=doc['soap11env:Envelope']['soap11env:Body']['tns:readUsuarioResponse']['tns:readUsuarioResult1'];
-                    console.log(data);
                   if(data.length === undefined ){
                         data = [];
                         data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:readUsuarioResponse']['tns:readUsuarioResult1']);
@@ -100,7 +94,6 @@ getUsuarioByUsernameJSON(usuario){
                       undefined,
                       undefined,
                     );
-                    console.log(element['s0:nombre']['#text']);
                     usuario.nombre= element['s0:nombre']['#text'];
                     usuario.descripcion=element['s0:descripcion']['#text'];
                     usuario.edad=+element['s0:edad']['#text'];
@@ -110,8 +103,6 @@ getUsuarioByUsernameJSON(usuario){
                     usuario.tipo = element['s0:tipo']['#text'];
                     resolve(usuario);
                   });
-                }else{
-                  console.log('noo');
                 }
               }
         }
@@ -123,9 +114,7 @@ getUsuarioByUsernameJSON(usuario){
 }
 
 updateUsuario(usuarioMostrar,base64data, ext){
-        console.log(usuarioMostrar);
-        console.log(base64data);
-        console.log(ext);
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
         let sr= '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+

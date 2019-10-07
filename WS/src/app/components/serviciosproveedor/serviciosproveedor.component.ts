@@ -18,7 +18,6 @@ export class ServiciosproveedorComponent implements OnInit {
     this.user = this.sesionService.id;
     this._serviciosService.getTodosServicios().then(res =>{
       this.serviciosCopia= res;
-      console.log(this.serviciosCopia);
       this.serviciosCopia.forEach(element => {
           if(element.nombreproveedor === this.user){
             this.servicios.push(element);

@@ -68,7 +68,6 @@ export class CrearservicioComponent implements OnInit {
       serviciowifi: []
   });
     this.user = this.sesionService.id;
-    console.log(this.user);
   }
 
   // convenience getter for easy access to form fields
@@ -76,8 +75,7 @@ export class CrearservicioComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log("===========aqui");
-    console.log(this.registerForm.value);
+
     if(this.registerForm.invalid){
       alert("Ingrese todos los campos por favor");
     }else{
@@ -87,7 +85,7 @@ export class CrearservicioComponent implements OnInit {
   }
 
   cambiar(){
-    console.log(this.tipoServicio);
+    //console.log(this.tipoServicio);
   }
 
   onSelectFile(event) { // called each time file input changes
@@ -99,7 +97,6 @@ export class CrearservicioComponent implements OnInit {
       this.ext=event.target.files[0].type;
       reader.onload = (event) => { // called once readAsDataURL is completed
             this.base64data=btoa(reader.result as string);
-            console.log(this.base64data);
       }
     }
   }

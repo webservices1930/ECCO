@@ -41,7 +41,6 @@ export class ServiciossComponent implements OnInit {
      this._serviciosService.getTodosServicios().then(res =>{
       this.serviciosCopia= res;
       this.servicios=res;
-      console.log(this.serviciosCopia);
      });
   }
 
@@ -55,10 +54,8 @@ export class ServiciossComponent implements OnInit {
 
 
   filtrarServicio( termino:string ){
-     console.log(termino);
         var i=0;
         this.serviciosCopia=[];
-        console.log(this.servicios);
         this.servicios.forEach(element => {
           if(element.tipo.toLocaleLowerCase() === termino.toLocaleLowerCase() || termino===""){
             this.serviciosCopia.push(element);
@@ -68,7 +65,6 @@ export class ServiciossComponent implements OnInit {
     }
 
     buscarServicio( termino:string ){
-      console.log(termino);
       this.router.navigate( ['/buscar',termino] );
     }
 

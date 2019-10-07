@@ -70,7 +70,6 @@ export class ServicioComponent {
 
 
     this.activatedRoute.params.subscribe(params => {
-      console.log(params['id']);
       this.idServicio = params['id'];
 
       this.pregunta.idServicio = params['id'];
@@ -80,10 +79,8 @@ export class ServicioComponent {
 
       this._serviciosService.getServicioId(params['id']).then(res => {
         this.servicio[0] = res[0];
-        console.log(this.servicio[0]);
         this.servicioProveedorid = res[0].nombreproveedor;
         this.userid = this._sesionService.id;
-        console.log(this.userid + this.servicioProveedorid);
 
 
         this._preguntaService.getPreguntasServicio(params['id']).then(res => {
@@ -115,7 +112,6 @@ export class ServicioComponent {
 
   hacerPregunta() {
     //Aquí se debe enviar la pregunta al servicio
-    console.log(this.pregunta.pregunta);
     if (this.pregunta.cliente.email == undefined) {
       this.autenticadoComoCliente = false;
     }

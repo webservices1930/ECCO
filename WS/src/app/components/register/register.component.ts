@@ -71,7 +71,6 @@ export class RegisterComponent implements OnInit {
   }
 
   cambiar(){
-    console.log(this.tipo);
   }
 
   onSelectFile(event) { // called each time file input changes
@@ -81,7 +80,6 @@ export class RegisterComponent implements OnInit {
       this.ext=event.target.files[0].type;
       reader.onload = (event) => { // called once readAsDataURL is completed
             this.base64data=btoa(reader.result as string);
-            console.log(this.base64data);
       }
     }
   }

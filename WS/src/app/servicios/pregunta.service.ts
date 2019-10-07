@@ -31,17 +31,13 @@ export class PreguntaService {
         xmlhttp.onreadystatechange = function () {
           if (xmlhttp.readyState == 4) {
             if (xmlhttp.status == 200) {
-              console.log("Se cargaron las preguntas del servicio");
               //falta pasarlas a las preguntas
 
               var doc = xmlToJson(xmlhttp.responseXML);
-              console.log(doc);
               data = doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult0'];
-              console.log(data);
               let preguntas = [];
               if (data['#text'] === "true") {
                 data = doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult1']['s0:PreguntaRes'];
-                console.log(data);
                 if (data.length === undefined) {
                   data = [];
                   data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:getPreguntasServicioResponse']['tns:getPreguntasServicioResult1']['s0:PreguntaRes']);
@@ -54,7 +50,6 @@ export class PreguntaService {
                     undefined,
                     undefined
                   );
-                  console.log(element['s0:id']['#text']);
                   pregunta.pregunta = element['s0:pregunta']['#text'];
                   pregunta.fechaPregunta = element['s0:fechaPregunta']['#text'];
 
@@ -62,13 +57,11 @@ export class PreguntaService {
 
                   pregunta.respuesta = element['s0:repuesta']['#text'];
                   if (pregunta.respuesta.length>1){
-                  console.log("RESPUESTA" + "--"+pregunta.respuesta+"-");
                   }
                   pregunta.fechaRespuesta = element['s0:fechaRespuesta']['#text'];
 
                   pregunta.responder = false;
 
-                  console.log("respuestaaaa"+pregunta.respuesta);
 
                   let cliente = new Usuario(
                     undefined,
@@ -89,7 +82,6 @@ export class PreguntaService {
 
 
                   preguntas.push(pregunta);
-                  console.log(pregunta);
                   resolve(preguntas);
                 });
               }
@@ -129,7 +121,6 @@ export class PreguntaService {
       '</soapenv:Body>'+
     '</soapenv:Envelope>';
     xmlhttp.onreadystatechange = function () {
-      console.log(xmlhttp.readyState +" YY "+ xmlhttp.status);
       if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
               console.log("Se creó la pregunta");
@@ -154,9 +145,7 @@ export class PreguntaService {
         '</djan:agregarRespuesta>'+
       '</soapenv:Body>'+
     '</soapenv:Envelope>';
-    console.log(sr);
     xmlhttp.onreadystatechange = function () {
-      console.log(xmlhttp.readyState +" YY "+ xmlhttp.status);
       if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
               console.log("Se creó la pregunta");

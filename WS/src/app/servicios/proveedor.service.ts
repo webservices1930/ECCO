@@ -110,7 +110,6 @@ borrarProveedor(usuarioProveedor){
               if (xmlhttp.status == 200) {
                       var doc =  xmlToJson(xmlhttp.responseXML);
                       let data=doc['soap11env:Envelope']['soap11env:Body']['tns:getAllProveedoresResponse']['tns:getAllProveedoresResult']['s0:ProveedorRes'];
-                      console.log(data);
                       resolve(data);
                   }
               }
@@ -123,7 +122,6 @@ borrarProveedor(usuarioProveedor){
             }
 
             updateProveedor(proveedorMostrar,base64data, ext){
-              console.log(proveedorMostrar);
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
                 let sr= '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
@@ -162,7 +160,6 @@ borrarProveedor(usuarioProveedor){
 
 
     async getProveedorByUsernameJSON(user){
-      console.log('hola');
       return new Promise(resolve => {
         setTimeout(() => {
           var xmlhttp = new XMLHttpRequest();
@@ -181,9 +178,7 @@ borrarProveedor(usuarioProveedor){
           if (xmlhttp.readyState == 4) {
               if (xmlhttp.status == 200) {
                   var doc =  xmlToJson(xmlhttp.responseXML);
-                  console.log(doc);
                   let data=doc['soap11env:Envelope']['soap11env:Body']['tns:readProveedorResponse']['tns:readProveedorResult1'];
-                  console.log(data);
                   let proveedor = new Proveedor (
                       undefined,
                       undefined,

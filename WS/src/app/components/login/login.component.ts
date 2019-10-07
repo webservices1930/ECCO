@@ -36,9 +36,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
 
     this.submitted = true;
-    console.log(this.loginForm.value);
     this.sesionService.login(this.loginForm.value.email,this.loginForm.value.password).then( res => {
-      console.log(res);
       this.sesionService.reiniciarCarrito();
       if(res === 'usuario'){
         this.sesionService.sesion = 'usuario' ;
@@ -46,7 +44,6 @@ export class LoginComponent implements OnInit {
         this.sesionService.id = this.loginForm.value.email ;
         this.sesionService.idCambio.next(this.loginForm.value.email);
         this.sesionService.loginSatisfactorio(this.loginForm.value.email,'usuario');
-        console.log(this.sesionService.id);
         this.router.navigate(['servicioss']);
       }else if(res === 'proveedor'){
         this.sesionService.sesion = 'proveedor';
