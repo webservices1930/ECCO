@@ -11,7 +11,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class TarjetaCarritoService {
 
   servicios;
-  total : Subject<string> = new Subject<string>();
+  total;
   constructor(private carritoService: CarritoService, private _SesionServicio: SesionService) { }
 
   public actualizarCarrito() {
@@ -29,5 +29,12 @@ export class TarjetaCarritoService {
       console.log(this.servicios);
      });
      //this.servicios = this.getServicosCarrito();
+  }
+
+  public getServicios(){
+    return this.servicios;
+  }
+  public getTotal(){
+    return this.total;
   }
 }

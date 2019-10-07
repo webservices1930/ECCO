@@ -14,7 +14,8 @@ import { TarjetaCarritoService } from '../../../servicios/tarjeta-carrito.servic
 })
 export class CartComponent implements OnInit {
 
-  servicios:Servis[]=[];
+  //servicios:Servis[]=[];
+  servicios: Servis[] ;
   //total:number[]=[];
   total: string;
   carrito: CarritoCompras;
@@ -31,16 +32,16 @@ export class CartComponent implements OnInit {
     /* this._subscripcion = this.tarjetaCarrito.total.subscribe((totall) => {
       this.total = totall;
     });*/
-     /*this.servicios = this.tarjetaCarrito.getServicosCarrito();
-     this.total = this.tarjetaCarrito.getTotal();*/
+     this.servicios = this.tarjetaCarrito.getServicios();
+     this.total = this.tarjetaCarrito.getTotal();
   }
   actualizarTotal(){
     //this.total=this._SesionServicio.getTotal();
   }
   quitarServicio(servicio:Servis){
-    //this._SesionServicio.quitarServicio(servicio);
-   // this.total=this._SesionServicio.getTotal();
-   // this.carritoService.removerDelCarrito(this._SesionServicio.id, servicio);
+    this._SesionServicio.quitarServicio(servicio);
+    //this.total=this._SesionServicio.getTotal();
+    this.carritoService.removerDelCarrito(this._SesionServicio.id, servicio);
   }
 
   pago() {
