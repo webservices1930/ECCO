@@ -30,6 +30,7 @@ import { ServiciossComponent } from './components/mostrarservicio/servicioss/ser
 import { PagoComponent } from './components/pago/pago.component';
 import { EditarservicioComponent } from './components/editarservicio/editarservicio.component';
 import { ServiciosproveedorComponent } from './components/serviciosproveedor/serviciosproveedor.component';
+import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { ServiciosproveedorComponent } from './components/serviciosproveedor/ser
     PagoComponent,
     EditarservicioComponent,
     ServiciosproveedorComponent,
+    MostrarcarritoComponent,
 
   ],
   imports: [

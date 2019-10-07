@@ -10,31 +10,24 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class TarjetaCarritoService {
 
-  carrito;
-  carritoe: CarritoCompras;
-  servicios = [];
-  serviciossubject = new BehaviorSubject<undefined[]>(this.servicios);
+  servicios;
+  total : Subject<string> = new Subject<string>();
   constructor(private carritoService: CarritoService, private _SesionServicio: SesionService) { }
 
   public actualizarCarrito() {
-    this.carritoService.getCarritoByUsernameJSON(this._SesionServicio.id).then(res =>{
+    this.carritoService.getCarritoCostoByUsernameJSON(this._SesionServicio.id).then(res =>{
       //Object.assign(this.carrito, res);
-      this.carrito= res;
+      this.total = res;
       console.log('=========================');
-      console.log(this.carrito);
+      console.log(this.total);
      });
-     this.carritoe = this.carrito;
+
+     this.carritoService.getCarritoServiciosByUsernameJSON(this._SesionServicio.id).then(res =>{
+      //Object.assign(this.carrito, res);
+      this.servicios= res;
+      console.log('=========================');
+      console.log(this.servicios);
+     });
      //this.servicios = this.getServicosCarrito();
-  }
-
-  public getServicosCarrito(){
-    console.log("=====aquiservicis===");
-    //console.log(this.carrito.servicios);
-    console.log(this.carritoe);
-      return this.carritoe.servicios;
-  }
-
-  public getTotal(){
-    return this.carrito.CostoTotal;
   }
 }
