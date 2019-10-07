@@ -33,7 +33,7 @@
 
       <div>
           <label for="descripcion">Costo: </label>
-          <input type="text" class="form-control" id="descripcion" [(ngModel)]="item.costo" >
+          <input type="number" class="form-control" id="descripcion" [(ngModel)]="item.costo" >
       </div>
 
       <div>
@@ -54,7 +54,7 @@
           </div>
           <div>
               <label for="cantidadPlatos">Cantidad de platos:</label>
-              <input type="text" class="form-control" id="cantidadPlatos" [(ngModel)]="item.cantidadPlatos" >
+              <input type="number" class="form-control" id="cantidadPlatos" [(ngModel)]="item.cantidadPlatos" >
           </div>
       </div>
 
@@ -62,7 +62,7 @@
 
           <div>
               <label for="numeroPersonas">Número de personas:</label>
-              <input type="text" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
+              <input type="number" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
           </div>
 
               <div>
@@ -77,12 +77,12 @@
 
               <div>
                       <label for="horainicio">Hora inicio:</label>
-                      <input type="text" class="form-control" id="horainicio" [(ngModel)]="item.horaInicio" >
+                      <input type="time" class="form-control" id="horainicio" [(ngModel)]="item.horaInicio" >
               </div>
 
               <div>
                       <label for="horafin">Hora final:</label>
-                      <input type="text" class="form-control" id="horafin" [(ngModel)]="item.horaFinal" >
+                      <input type="time" class="form-control" id="horafin" [(ngModel)]="item.horaFinal" >
               </div>
 
       </div>
@@ -91,33 +91,44 @@
 
           <div>
               <label for="numeroPersonas">Número de personas:</label>
-              <input type="text" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
+              <input type="number" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
           </div>
 
-          <div>
-              <label for="tipoAlojamiento">Tipo de alojamiento:</label>
-              <input type="text" class="form-control" id="tipoAlojamiento" [(ngModel)]="item.tipoAlojamiento" >
+          <div class="form-group">
+            <label for="tipoalojamiento">Tipo de alojamiento</label>
+            <select [(ngModel)]="item.tipoAlojamiento" name="tipoalojamiento" id="tipoalojamiento" ng-model="listItems" class="form-control">
+              <option value="HOTEL">Hotel</option>
+              <option value="CASA">Casa</option>
+              <option value="CAMPING">Camping</option>
+              <option value="MOTEL">Motel</option>
+            </select>
           </div>
-
           <div>
               <label for="numeroHabitaciones">Número de habitaciones:</label>
-              <input type="text" class="form-control" id="numeroHabitaciones" [(ngModel)]="item.numeroHabitaciones" >
+              <input type="number" class="form-control" id="numeroHabitaciones" [(ngModel)]="item.numeroHabitaciones" >
           </div>
 
           <div>
               <label for="numeroBanos">Número de baños:</label>
-              <input type="text" class="form-control" id="numeroBanos" [(ngModel)]="item.numeroBanos" >
+              <input type="number" class="form-control" id="numeroBanos" [(ngModel)]="item.numeroBanos" >
           </div>
 
-          <div>
-              <label for="servicioLimpieza">Servicio de limpieza:</label>
-              <input type="text" class="form-control" id="servicioLimpieza" [(ngModel)]="item.servicioLimpieza" >
-          </div>
+          <div class="form-group">
+            <label for="serviciolimpieza">Servicio de limpieza</label>
+            <select [(ngModel)]="item.servicioLimpieza" name="serviciolimpieza" id="serviciolimpieza" ng-model="listItems"
+              class="form-control">
+              <option value="Si">Si</option>
+              <option value="No">No</option>
+            </select>
+         </div>
 
-          <div>
-              <label for="servicioWifi">Servicio de Wifi:</label>
-              <input type="text" class="form-control" id="servicioWifi" [(ngModel)]="item.servicioWifi" >
-          </div>
+         <div class="form-group">
+            <label for="servicioWifi">Servicio de Wifi</label>
+            <select [(ngModel)]="item.servicioWifi" name="servicioWifi" id="servicioWifi" ng-model="listItems" class="form-control">
+              <option value="Si">Si</option>
+              <option value="No">No</option>
+            </select>
+        </div>
 
       </div>
 
@@ -125,7 +136,7 @@
 
           <div>
               <label for="numeroPersonas">Número de personas:</label>
-              <input type="text" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
+              <input type="number" class="form-control" id="numeroPersonas" [(ngModel)]="item.numeroPersonas" >
           </div>
 
           <div>
@@ -133,10 +144,15 @@
               <input type="text" class="form-control" id="empresa" [(ngModel)]="item.empresa" >
           </div>
 
-          <div>
-              <label for="tipoTransporte">Tipo de transporte:</label>
-              <input type="text" class="form-control" id="tipoTransporte" [(ngModel)]="item.tipoTransporte" >
-          </div>
+          <div class="form-group">
+            <label for="tipotransporte">Tipo de transporte</label>
+            <select [(ngModel)]="item.tipoTransporte" name="tipotransporte" id="tipotransporte" ng-model="listItems"
+              class="form-control">
+              <option value="TERRESTRE">Terrestre</option>
+              <option value="AEREO">Aéreo</option>
+              <option value="MARITIMO">Marítimo</option>
+            </select>
+            </div>
 
           <div>
               <label for="origen">Origen:</label>
@@ -150,12 +166,12 @@
 
           <div>
                   <label for="horaSalida">Hora Salida:</label>
-                  <input type="text" class="form-control" id="horaSalida" [(ngModel)]="item.horaSalida" >
+                  <input type="time" class="form-control" id="horaSalida" [(ngModel)]="item.horaSalida" >
           </div>
 
           <div>
                   <label for="horaLlegada">Hora llegada:</label>
-                  <input type="text" class="form-control" id="horaLlegada" [(ngModel)]="item.horaLlegada" >
+                  <input type="time" class="form-control" id="horaLlegada" [(ngModel)]="item.horaLlegada" >
           </div>
 
       </div>
