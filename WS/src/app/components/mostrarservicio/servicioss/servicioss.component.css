@@ -1,0 +1,47 @@
+.container{
+    margin: 10px;
+}
+
+.combo{
+    margin: 15px;
+}
+
+.filtrar select option {
+  display:inline-block;
+}
+
+#logoECCO{
+  height:150px;
+  width: auto;
+
+  display:block;
+  margin:auto;
+}
+
+.filtrar{
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+.filtrar select{
+  margin-left: 15px;
+  margin-right: 25px;
+  width: 250px;
+}
+
+
+#buscadorForm{
+  margin:auto;
+}
+
+#buscadorBuscar{
+  display:block;
+  margin:auto;
+  margin-bottom: 5px;
+}
+
+#campoBusqueda{
+  width:400px;
+}
+

@@ -1,0 +1,82 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <a class="navbar-brand" [routerLink]="['servicioss']">
+    <img id="logoECCO" src="assets/img/logo_ecco.png" [routerLink]="['servicioss']" alt="">
+  </a>
+
+  <div class="collapse navbar-collapse" *ngIf="this.sesion == 'sininiciar'" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <!-- active -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['servicioss']">Servicios</a>
+      </li>
+
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['about']">About</a>
+      </li>
+
+    </ul>
+
+    <button class="botonNavBar" type="button"  routerLinkActive="active" [routerLink]="['login']">Iniciar sesión</button>
+    <button class="botonNavBar" type="button"  routerLinkActive="active" [routerLink]="['register']">Registrarse</button>
+
+  </div>
+
+  <div class="collapse navbar-collapse" *ngIf="this.sesion == 'usuario'" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!-- active -->
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['servicioss']">Servicios</a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['mostrarcarrito']">Mi carrito</a>
+          </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['profile']">Perfil</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['about']">About</a>
+        </li>
+      </ul>
+
+
+      <button class="botonNavBar" type="button" (click)="logout()"  routerLinkActive="active" [routerLink]="['login']">Cerrar sesión</button>
+
+    </div>
+
+    <div class="collapse navbar-collapse" *ngIf="this.sesion == 'proveedor'" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <!-- active -->
+
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['servicioss']">Servicios</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['crearservicio']">Crear servicio</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['serviciosproveedor']">Mis servicios</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" [routerLink]="['profile']">Perfil</a>
+            </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['about']">About</a>
+          </li>
+        </ul>
+
+
+                <button class="botonNavBar" type="button" (click)="logout()"  routerLinkActive="active" [routerLink]="['login']">Cerrar sesión</button>
+
+      </div>
+
+
+
+
+</nav>

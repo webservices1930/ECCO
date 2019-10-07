@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-md-12">
+      <app-shoppingcart></app-shoppingcart>
+    </div>
+  </div>
+  
+<div class="formulario">
+  <h2>Información para realizar pago</h2>
+  <form (ngSubmit)="pago()">
+    <div class="form-group">
+      <label for="numTarjeta">Numero tarjeta</label>
+      <input type="number" required id="numTarjeta" name="numTarjeta" class="form-control" [(ngModel)]="numTarjeta"/>
+    </div>
+
+    <div class="form-group">
+      <label for="numCuotas">Numero de cuotas</label>
+      <input type="number" required id="numCuotas" name="cuotas" class="form-control" [(ngModel)]="cuotas"/>
+    </div>
+
+
+    <div class="form-group">
+      <label for="txtCvs">CVS</label>
+      <input type="password" id="txtCvs" name="cvs" class="form-control" required [(ngModel)]="cvs"/>
+    </div>
+      <!--  -->
+    <div class="form-group">
+      <label for="fechavencimiento">Fecha de vencimiento</label>
+      <input type="date" id="fechavencimiento" name="fecha" class="form-control" [(ngModel)]="fechavencimiento" required/>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-outline-success mx-auto d-block" type="submit">Pagar</button>
+    </div>
+  </form>
+</div>

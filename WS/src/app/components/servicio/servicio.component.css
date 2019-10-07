@@ -1,0 +1,69 @@
+#Info{
+    margin: 15px;
+}
+.carousel-indicators {
+    display: none;
+  }
+
+img{
+  width: 250px;
+  height: 220px;
+}
+
+#fotoClientePregunta{
+  width:70px;
+  height:70px;
+  margin-right: 20px;
+  border: 2px solid green;
+}
+
+#preguntaCliente{
+  display : flex;
+}
+
+#fechaPregunta{
+  color:gray;
+}
+
+.nombreClientePregunta{
+  font-weight: bold;
+  text-decoration: underline black;
+  width:800px;
+  margin-right: 5px;
+}
+
+
+#respuestaProveedor{
+  margin-left: 90px;
+}
+#respuestaLabel{
+  font-weight: bold;
+}
+
+#preguntaRespuesta{
+  border: 0.1px solid black;
+  margin-bottom: 2px;
+  background-color: #FAFAFA;
+}
+
+#nombreYFechaPregunta{
+  display : flex;
+}
+
+#errorPregunta{
+  color: red;
+}
+
+.subtitulo{
+  font-weight: bold;
+}
+
+#responderBtn{
+  width:200px;
+  margin-left: 90px;
+  margin-right: auto;
+}
+
+#preguntarForm{
+  margin-bottom: 10px;
+}
