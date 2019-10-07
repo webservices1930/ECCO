@@ -142,6 +142,7 @@ export class CarritoService {
                   });
                   resolve(serviciosCopia);
                 } else {
+                  resolve(serviciosCopia);
                   console.log('noo');
                 }
             }
