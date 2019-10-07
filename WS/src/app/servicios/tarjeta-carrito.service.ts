@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { CarritoCompras } from '../model/carrito-compras';
 import { CarritoService } from './carrito.service';
 import { SesionService } from './sesion.service';
+import { Servis } from '../model/servis';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,9 @@ import { SesionService } from './sesion.service';
 export class TarjetaCarritoService {
 
   carrito;
+  carritoe: CarritoCompras;
+  servicios = [];
+  serviciossubject = new BehaviorSubject<undefined[]>(this.servicios);
   constructor(private carritoService: CarritoService, private _SesionServicio: SesionService) { }
 
   public actualizarCarrito() {
@@ -18,12 +23,15 @@ export class TarjetaCarritoService {
       console.log('=========================');
       console.log(this.carrito);
      });
+     this.carritoe = this.carrito;
+     //this.servicios = this.getServicosCarrito();
   }
 
   public getServicosCarrito(){
     console.log("=====aquiservicis===");
-    console.log(this.carrito.servicios)
-    return this.carrito.servicios;
+    //console.log(this.carrito.servicios);
+    console.log(this.carritoe);
+      return this.carritoe.servicios;
   }
 
   public getTotal(){

@@ -115,7 +115,7 @@ export class CarritoService {
                     servicio.descripcion=element['s0:descripcion']['#text'];
                     servicio.costo=+element['s0:costo']['#text'];
                     let inf= element['s0:foto']['#text'];
-                    servicio.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf.slice(2,inf.length-1);
+                    servicio.img="data:image/"+element['s0:tipo']['#text']+";base64, "+inf;
                     servicio.idx=element['s0:id']['#text'];
                     servicio.pais=element['s0:pais']['#text'];
                     servicio.ciudad=element['s0:ciudad']['#text'];

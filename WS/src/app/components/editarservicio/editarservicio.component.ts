@@ -60,7 +60,7 @@ export class EditarservicioComponent implements OnInit {
     }
   }
   guardar(){
- 
-    this._serviciosService.updateServicio(this.servicio[0],this.base64data,this.ext);
+    this._serviciosService.updateServicio(this.servicio[0], this.base64data, this.ext);
   }
+  
 }
