@@ -57,3 +57,13 @@ img{
 .subtitulo{
   font-weight: bold;
 }
+
+#responderBtn{
+  width:200px;
+  margin-left: 90px;
+  margin-right: auto;
+}
+
+#preguntarForm{
+  margin-bottom: 10px;
+}
