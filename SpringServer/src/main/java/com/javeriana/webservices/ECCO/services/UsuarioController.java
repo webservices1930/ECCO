@@ -109,7 +109,7 @@ public class UsuarioController {
         System.out.println(x.size());
         JSONArray res = new JSONArray();
         for(Proveedor p : x){
-            res.put(new JSONObject(p.getJsonString()));
+            res.put(new JSONObject(p.toJsonString()));
         }
         return ResponseEntity.ok().body(res.toList());
         

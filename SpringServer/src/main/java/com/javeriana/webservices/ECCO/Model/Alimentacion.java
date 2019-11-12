@@ -21,7 +21,7 @@ public class Alimentacion extends Servicio{
     public String toJsonString() {
         String f = ((this.getFoto() == null) ? "null" :Base64.getMimeEncoder().encodeToString(this.getFoto()));
         String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
-           +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().getJsonString() 
+           +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
            +",tipoComida:"+this.tipoComida+",cantidadPlatos :"+this.cantidadPlatos+"}";
         return s;
     }
