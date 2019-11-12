@@ -69,7 +69,7 @@ public class ServicioController {
         JSONArray res = new JSONArray();
         List<Servicio> x =this.servicioRepository.findAll();
         for (Servicio aux : x){
-            res.put(new JSONObject(aux.getJsonString()));
+            res.put(new JSONObject(aux.toJsonString()));
         }
         return ResponseEntity.ok(res.toList());
     }
@@ -79,7 +79,7 @@ public class ServicioController {
         
         Optional<Servicio> x = this.servicioRepository.findById(servicioId);
         if(x.isPresent()){
-            return ResponseEntity.ok(x.get().getJsonString());
+            return ResponseEntity.ok(x.get().toJsonString());
         }
         return (ResponseEntity) ResponseEntity.notFound();
     }

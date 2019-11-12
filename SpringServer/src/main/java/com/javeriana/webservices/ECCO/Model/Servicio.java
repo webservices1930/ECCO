@@ -47,7 +47,7 @@ public abstract class Servicio {
     @JoinColumn(name = "proveedor_id",nullable = false)
     private Proveedor proveedor;
 
-    public abstract String getJsonString();
+    public abstract String toJsonString();
     
     public Long getId() {
         return Id;
