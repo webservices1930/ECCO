@@ -1,14 +1,17 @@
-export class Proveedor {
+import { Usuario } from './usuario';
+export class Proveedor extends Usuario{
   constructor(
     public nombre: string,
-    public email: string,
+    public nombreUsuario: string,
     public edad:number,
-    public password:string,
-    public tipo:string,
+    public contrasena:string,
     public descripcion:number,
-    public img: string,
+    public foto: string,
     public telefono: number,
-    public paginaweb: string,
-    public contacto: string
-  ) {}
+    public paginaWeb: string,
+    public contactoRS: string,
+    public Id?:number
+  ) {
+    super(nombre,nombreUsuario,edad,contrasena,descripcion,foto,telefono);
+  }
 }

@@ -1,12 +1,12 @@
 export class Usuario {
   constructor(
     public nombre: string,
-    public email: string,
+    public nombreUsuario: string,
     public edad:number,
-    public password:string,
-    public tipo:string,
+    public contrasena:string,
     public descripcion:number,
-    public img: string,
+    public foto: string,
     public telefono: number,
+    public Id?:number
   ) {}
 }

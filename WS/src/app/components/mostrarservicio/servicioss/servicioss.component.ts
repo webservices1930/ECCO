@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import {xmlToJson} from '../../../servicios/lib';
 import { Servis } from '../../../model/servis';
 import { TarjetaCarritoService } from '../../../servicios/tarjeta-carrito.service';
+import { RequestService } from '../../../Request/request.service';
+import { Usuario } from '../../../model/usuario';
 
 
 @Component({
@@ -35,16 +37,21 @@ export class ServiciossComponent implements OnInit {
 
   constructor( private _serviciosService:ServicioService,
                private router:Router,
-               private tarjetaCarritoService: TarjetaCarritoService
-                ) {
+               private tarjetaCarritoService: TarjetaCarritoService,
+               private request: RequestService) {
   }
 
    ngOnInit() {
-     this._serviciosService.getTodosServicios().then(res =>{
+     this._serviciosService.getTodosServicios().subscribe(res =>{
       this.serviciosCopia= res;
       this.servicios=res;
      });
      this.tarjetaCarritoService.actualizarCarrito();
+
+     const url = `localhost:8081/usuario/cliente`;
+     this.request.get<Usuario[]>('http://localhost:8081/usuario/cliente').subscribe(results =>{
+       console.log(results);
+     })
   }
 
   verServicio( idx:number ){

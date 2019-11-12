@@ -16,6 +16,6 @@ export class ServicioAlimentacion extends Servis {
     public idx?: number,
   ) {
     // tslint:disable-next-line: max-line-length
-    super(nombre, pais, ciudad, undefined, descripcion, tipo, costo, img, nombreproveedor, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    super(nombre, pais, ciudad, undefined, descripcion, tipo, costo, img, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
   }
 }

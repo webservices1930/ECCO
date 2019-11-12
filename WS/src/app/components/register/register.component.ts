@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProveedorService } from '../../servicios/proveedor.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { Usuario } from '../../model/usuario';
+import { Proveedor } from '../../model/proveedor';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +28,31 @@ export class RegisterComponent implements OnInit {
 
 
   tipo="";
+
+  usuario: Usuario = new Usuario (
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  );
+
+  proveedor: Proveedor = new Proveedor (
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined
+  );
+
   constructor(
       private formBuilder: FormBuilder,
       private router: Router,
@@ -62,11 +89,47 @@ export class RegisterComponent implements OnInit {
     if(this.registerForm.invalid){
       alert("Ingrese todos los campos por favor");
     }else if(this.tipo === 'Proveedor'){
-        this.proveedorService.registrarProveedor(this.registerForm,this.base64data,this.ext);
-        this.router.navigate(['login']);
+       this.proveedor.nombre = this.registerForm.value.nombres;
+        this.proveedor.nombreUsuario = this.registerForm.value.email;
+        this.proveedor.edad = this.registerForm.value.edad;
+        this.proveedor.descripcion = this.registerForm.value.descripcion;
+        this.proveedor.telefono = this.registerForm.value.telefono;
+        this.proveedor.contrasena = this.registerForm.value.password;
+        this.proveedor.paginaWeb =this.registerForm.value.paginaweb;
+        this.proveedor.contactoRS =this.registerForm.value.contacto;
+        this.proveedor.foto = this.base64data;
+        this.proveedorService.registrarProveedor(this.proveedor).subscribe(
+          results => {
+            console.log(results);
+            this.router.navigate(['login']);
+            alert("Se creó el usuario satisfactoriamente");
+
+          },
+          error => {
+            console.error(error);
+            alert("No se creó el usuario. Por favor intente nuevamente");
+          }
+        )
       }else{
-        this.usuarioService.registrarUsuario(this.registerForm,this.base64data,this.ext);
-        this.router.navigate(['login']);
+        this.usuario.nombre = this.registerForm.value.nombres;
+        this.usuario.nombreUsuario = this.registerForm.value.email;
+        this.usuario.edad = this.registerForm.value.edad;
+        this.usuario.descripcion = this.registerForm.value.descripcion;
+        this.usuario.telefono = this.registerForm.value.telefono;
+        this.usuario.contrasena = this.registerForm.value.password;
+        this.usuario.foto = this.base64data;
+        this.usuarioService.registrarUsuario(this.usuario).subscribe(
+          results => {
+            console.log(results);
+            this.router.navigate(['login']);
+            alert("Se creó el proveedor satisfactoriamente");
+
+          },
+          error => {
+            console.error(error);
+            alert("No se creó el proveedor. Por favor intente nuevamente");
+          }
+        )
       }
   }
 

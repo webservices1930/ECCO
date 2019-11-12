@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {xmlToJson} from './lib';
 import { Usuario } from '../model/usuario';
 import { CompileShallowModuleMetadata } from '@angular/compiler';
+import { environment } from 'src/environments/environment';
+import { RequestService } from '../Request/request.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,188 +25,39 @@ export class UsuarioService {
     undefined,
     undefined,
   );
-  constructor() {
+  constructor(private request: RequestService) {
     this.base64data = " ";
     this.ext = " ";
    }
 
   async getUsuariosJSON(){
-    return new Promise(resolve => {
-      setTimeout(() => {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-        let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
-        '<soapenv:Header/>' +
-        '<soapenv:Body>' +
-        '<djan:getAllUsuarios/>' +
-        '</soapenv:Body>' +
-        '</soapenv:Envelope>';
+      const url = `${environment.baseUrl}/usuarios`;
+      return this.request.get<Usuario[]>(url);
+    }
 
-        var y = this;
-        xmlhttp.onreadystatechange = function () {
-          if (xmlhttp.readyState == 4) {
-              if (xmlhttp.status == 200) {
-                  var doc =  xmlToJson(xmlhttp.responseXML);
-                  let data=doc['soap11env:Envelope']['soap11env:Body']['tns:getAllUsuariosResponse']['tns:getAllUsuariosResult']['s0:ClientRes'];
-                  resolve(data);
-              }
-          }
-        }
-        // Send the POST request
-        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-        xmlhttp.send(sr);
-            }, 500);
-          });
-      }
+  getUsuarioByUsernameJSON(usuario){
 
-getUsuarioByUsernameJSON(usuario){
-  return new Promise(resolve => {
-    setTimeout(() => {
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-      let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
-                '<soapenv:Header/>'+
-                '<soapenv:Body>'+
-                '<djan:readUsuario>'+
-                  '<djan:userName>'+usuario+'</djan:userName>'+
-                '</djan:readUsuario>'+
-            '</soapenv:Body>'+
-          '</soapenv:Envelope>';
-          var y = this;
-          let data;
-          xmlhttp.onreadystatechange =  function () {
-          if (xmlhttp.readyState == 4) {
-              if (xmlhttp.status == 200) {
-                  var doc =  xmlToJson(xmlhttp.responseXML);
-                  data=doc['soap11env:Envelope']['soap11env:Body']['tns:readUsuarioResponse']['tns:readUsuarioResult0'];
-                  if(data['s0:resultado']['#text']==="usuario leido con exito"){
-                    data=doc['soap11env:Envelope']['soap11env:Body']['tns:readUsuarioResponse']['tns:readUsuarioResult1'];
-                  if(data.length === undefined ){
-                        data = [];
-                        data.push(doc['soap11env:Envelope']['soap11env:Body']['tns:readUsuarioResponse']['tns:readUsuarioResult1']);
-                  }
-                  data.forEach(element => {
-                    let usuario = new Usuario (
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                      undefined,
-                    );
-                    usuario.nombre= element['s0:nombre']['#text'];
-                    usuario.descripcion=element['s0:descripcion']['#text'];
-                    usuario.edad=+element['s0:edad']['#text'];
-                    usuario.img=element['s0:foto']['#text'];
-                    usuario.telefono=+element['s0:telefono']['#text'];
-                    usuario.email=element['s0:nombreUsuario']['#text'];
-                    usuario.tipo = element['s0:tipo']['#text'];
-                    resolve(usuario);
-                  });
-                }
-              }
-        }
-      }
-      xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-      xmlhttp.send(sr);
-          }, 1500);
-        });
-}
+  }
 
 updateUsuario(usuarioMostrar,base64data, ext){
 
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-        let sr= '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
-        '<soapenv:Header/>'+
-         '<soapenv:Body>'+
-           '<djan:updateUsuario>'+
-           '<djan:nomUsuCli>'+usuarioMostrar.email+'</djan:nomUsuCli>'+
-               '<djan:cliente>'+
-                 '<ser:nombreUsuario>'+usuarioMostrar.email+'</ser:nombreUsuario>'+
-                 '<ser:nombre>'+usuarioMostrar.nombre+'</ser:nombre>'+
-                 '<ser:edad>'+usuarioMostrar.edad+'</ser:edad>'+
-                 '<ser:contrasena>'+usuarioMostrar.password+'</ser:contrasena>'+
-                 '<ser:foto>'+base64data+'</ser:foto>'+
-                 '<ser:tipo>'+ext+'</ser:tipo>'+
-                 '<ser:descripcion>'+usuarioMostrar.descripcion+'</ser:descripcion>'+
-                 '<ser:telefono>'+usuarioMostrar.telefono+'</ser:telefono>'+
-               '</djan:cliente>'+
-           '</djan:updateUsuario>'+
-         '</soapenv:Body>'+
-     '</soapenv:Envelope>';
-
-        xmlhttp.onreadystatechange = function () {
-          if (xmlhttp.readyState == 4) {
-              if (xmlhttp.status == 200) {
-                  alert("Se actualizó el usuario correctamente");
-                }
-          }
-        }
-        // Send the POST request
-        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-        xmlhttp.send(sr);
 
   }
 
 borrarUsuario(usuario){
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-  let sr=
-        '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
-        '<soapenv:Header/>'+
-        '<soapenv:Body>'+
-            '<djan:deleteUsuario>'+
-              '<djan:nombreUsuario>'+usuario+'</djan:nombreUsuario>'+
-            '</djan:deleteUsuario>'+
-        '</soapenv:Body>'+
-      '</soapenv:Envelope>';
-      xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4) {
-            if (xmlhttp.status == 200) {
-                alert("Se borró el usuario correctamente");
-              }
-        }
-      }
-      // Send the POST request
-      xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-      xmlhttp.send(sr);
+
 }
 
-      registrarUsuario(registerForm, base64data, ext){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-        let sr=
-        '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">'+
-        '<soapenv:Header/>'+
-         '<soapenv:Body>'+
-           '<djan:createUsuario>'+
-               '<djan:cliente>'+
-                 '<ser:nombreUsuario>'+registerForm.value.email+'</ser:nombreUsuario>'+
-                 '<ser:nombre>'+registerForm.value.nombres+'</ser:nombre>'+
-                 '<ser:edad>'+registerForm.value.edad+'</ser:edad>'+
-                 '<ser:contrasena>'+registerForm.value.password+'</ser:contrasena>'+
-                 '<ser:foto>'+base64data+'</ser:foto>'+
-                 '<ser:tipo>'+ext+'</ser:tipo>'+
-                 '<ser:descripcion>'+registerForm.value.descripcion+'</ser:descripcion>'+
-                 '<ser:telefono>'+registerForm.value.telefono+'</ser:telefono>'+
-               '</djan:cliente>'+
-           '</djan:createUsuario>'+
-         '</soapenv:Body>'+
-     '</soapenv:Envelope>';
-
-        xmlhttp.onreadystatechange = function () {
-          if (xmlhttp.readyState == 4) {
-              if (xmlhttp.status == 200) {
-                  alert("Se creó el usuario correctamente");
-                }
-          }
-        }
-        // Send the POST request
-        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-        xmlhttp.send(sr);
-
+      registrarUsuario(usuario:Usuario){
+        const url = `${environment.baseUrl}/usuario/cliente`;
+        return this.request.post(url, {
+          nombre: usuario.nombre,
+          nombreUsuario: usuario.nombreUsuario,
+          edad:usuario.edad,
+          contrasena:usuario.contrasena,
+          descripcion:usuario.descripcion,
+          foto:usuario.foto,
+          telefono:usuario.telefono
+        });
       }
-}
+  }

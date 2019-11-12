@@ -54,7 +54,7 @@ export class ServicioComponent {
     undefined,
     undefined
   );
-  servicio = [];
+  servicio;
 
   constructor(private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
@@ -68,7 +68,7 @@ export class ServicioComponent {
 
   ngOnInit() {
     this.preguntasCargadas = false;
-    
+
 
 
 
@@ -77,21 +77,21 @@ export class ServicioComponent {
 
       this.pregunta.idServicio = params['id'];
       if (this._sesionService.getSesion() == "usuario") {
-        this.pregunta.cliente.email = this._sesionService.id;
+        this.pregunta.cliente.nombreUsuario = this._sesionService.id;
       }
 
-      this._serviciosService.getServicioId(params['id']).then(res => {
-        this.servicio[0] = res[0];
-        this.servicioProveedorid = res[0].nombreproveedor;
+      this._serviciosService.getServicioId(params['id']).subscribe(res => {
+        this.servicio = res;
+        this.servicioProveedorid = res.proveedor;
         this.userid = this._sesionService.id;
 
-        
-        
 
 
-        this._preguntaService.getPreguntasServicio(params['id']).then(res => {        
-          this.preguntasCargadas = true;   
-          this.preguntass = res;                   
+
+
+        this._preguntaService.getPreguntasServicio(params['id']).then(res => {
+          this.preguntasCargadas = true;
+          this.preguntass = res;
         });
 
       });
@@ -119,7 +119,7 @@ export class ServicioComponent {
 
   hacerPregunta() {
     //Aquí se debe enviar la pregunta al servicio
-    if (this.pregunta.cliente.email == undefined) {
+    if (this.pregunta.cliente.nombreUsuario == undefined) {
       this.autenticadoComoCliente = false;
     }
     else {

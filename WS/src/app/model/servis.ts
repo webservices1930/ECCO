@@ -1,5 +1,6 @@
 import { Pregunta } from './pregunta';
 import { NumberSymbol } from '@angular/common';
+import { Proveedor } from './proveedor';
 
 export class Servis {
   constructor(
@@ -10,9 +11,9 @@ export class Servis {
     public descripcion:string,
     public tipo:string,
     public costo:number,
-    public img: string,
-    public nombreproveedor:string,
-    public idx?: number,
+    public foto: string,
+    public proveedor:Proveedor,
+    public Id?: number,
 
     public numeroPersonas?:number,
 

@@ -1,125 +1,124 @@
-<div *ngFor="let item of servicio">
-  <h1 class="animated fadeIn">{{ item.nombre | uppercase }} <small>({{ item.ciudad }})</small></h1>
+  <h1 class="animated fadeIn">{{ servicio.nombre | uppercase }} <small>({{ servicio.ciudad }})</small></h1>
   <hr>
 
   <div class="row animated fadeIn fast">
 
     <div id="imagenServicio" class="col-md-4">
-      <img [src]="getSantizeUrl(item.img)" [alt]="item.nombre">
+      <img [src]="getSantizeUrl(servicio.img)" [alt]="servicio.nombre">
       <br><br>
     </div>
 
     <div class="col-md-8">
-      <h3>{{ item.nombre }}</h3>
+      <h3>{{ servicio.nombre }}</h3>
       <hr>
       <p>
-        <span class="subtitulo">Descripción:</span> 
-        {{ item.descripcion }}
+        <span class="subtitulo">Descripción:</span>
+        {{ servicio.descripcion }}
       </p>
       <p>
           <span class="subtitulo">Costo:</span>
-        {{ item.costo | number:'.2-2'}} USD
+        {{ servicio.costo | number:'.2-2'}} USD
       </p>
       <p>
           <span class="subtitulo">Tipo:</span>
-        {{ item.tipo }}
+        {{ servicio.tipo }}
       </p>
 
       <hr>
-      <div *ngIf="item.tipo=='Alimentacion'">
+      <div *ngIf="servicio.tipo=='Alimentacion'">
         <p>
             <span class="subtitulo">Número de personas:</span>
-          {{ item.numeroPersonas }}
+          {{ servicio.numeroPersonas }}
         </p>
         <p>
             <span class="subtitulo">Tipo de comida:</span>
-          {{ item.tipoComida }}
+          {{ servicio.tipoComida }}
         </p>
         <p>
             <span class="subtitulo">Cantidad de platos:</span>
-          {{ item.cantidadPlatos }}
+          {{ servicio.cantidadPlatos }}
         </p>
       </div>
 
 
-      <div *ngIf="item.tipo=='PaseoEcologico'">
+      <div *ngIf="servicio.tipo=='PaseoEcologico'">
         <p>
             <span class="subtitulo">Número de personas:</span>
-          {{ item.numeroPersonas }}
+          {{ servicio.numeroPersonas }}
         </p>
         <p>
             <span class="subtitulo">Orígen:</span>
-          {{ item.origen }}
+          {{ servicio.origen }}
         </p>
         <p>
             <span class="subtitulo">Destino:</span>
-          {{ item.destino }}
+          {{ servicio.destino }}
         </p>
         <p>
             <span class="subtitulo">Hora Inicio:</span>
-          {{ item.horaInicio }}
+          {{ servicio.horaInicio }}
         </p>
         <p>
             <span class="subtitulo">Hora Final:</span>
-          {{ item.horaFinal }}
+          {{ servicio.horaFinal }}
         </p>
       </div>
 
-      <div *ngIf="item.tipo=='Transporte'">
+      <div *ngIf="servicio.tipo=='Transporte'">
         <p>
             <span class="subtitulo">Número de personas:</span>
-          {{ item.numeroPersonas }}
+          {{ servicio.numeroPersonas }}
         </p>
         <p>
             <span class="subtitulo">Empresa transportadora:</span>
-          {{ item.empresa }}
+          {{ servicio.empresa }}
         </p>
         <p>
             <span class="subtitulo">Tipo de transporte:</span>
-          {{ item.tipoTransporte }}
+          {{ servicio.tipoTransporte }}
         </p>
         <p>
             <span class="subtitulo">Orígen:</span>
-          {{ item.origen }}
+          {{ servicio.origen }}
         </p>
         <p>
             <span class="subtitulo">Destino:</span>
-          {{ item.destino }}
+          {{ servicio.destino }}
         </p>
         <p>
             <span class="subtitulo">Hora Salida:</span>
-          {{ item.horaSalida }}
+          {{ servicio.horaSalida }}
         </p>
         <p>
             <span class="subtitulo">Hora Llegada:</span>
-          {{ item.horaLlegada }}
+          {{ servicio.horaLlegada }}
         </p>
       </div>
 
-      <div *ngIf="item.tipo=='Alojamiento'">
+      <div *ngIf="servicio.tipo=='Alojamiento'">
         <p>
             <span class="subtitulo">Número de personas:</span>
-          {{ item.numeroPersonas }}
+          {{ servicio.numeroPersonas }}
         </p>
         <p>
             <span class="subtitulo">Tipo de alojamiento:</span>
-          {{ item.tipoAlojamiento }}
+          {{ servicio.tipoAlojamiento }}
         </p>
         <p>
             <span class="subtitulo">Número de habitaciones:</span>
-          {{ item.numeroHabitaciones }}
+          {{ servicio.numeroHabitaciones }}
         </p>
         <p>
             <span class="subtitulo">Número de baños:</span>
-          {{ item.numeroBanos }}
+          {{ servicio.numeroBanos }}
         </p>
         <p>
             <span class="subtitulo">Servicio de Limpieza:</span>
-          {{ item.servicioLimpieza }}
+          {{ servicio.servicioLimpieza }}
         </p>
         <p>
             <span class="subtitulo">Servicio de Wi-Fi:</span>
-          {{ item.servicioWifi }}
+          {{ servicio.servicioWifi }}
         </p>
       </div>
 
@@ -130,7 +129,6 @@
     </div>
   </div>
 
-</div>
 <div>
   <h2> Preguntas </h2>
   <form id="preguntarForm" (ngSubmit)="hacerPregunta()" #preguntaForm="ngForm">
