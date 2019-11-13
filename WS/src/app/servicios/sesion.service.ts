@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Servis } from '../model/servis';
 import {xmlToJson} from './lib';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { RequestService } from '../Request/request.service';
 
 @Injectable()
 export class SesionService {
@@ -14,7 +16,7 @@ export class SesionService {
     sesionCambio: Subject<string> = new Subject<string>();
     idCambio: Subject<string> = new Subject<string>();
 
-    constructor(){
+    constructor(private request:RequestService){
 
         //this.sesion;
         //this.sesionCambio.next(this.sesion);
@@ -66,47 +68,18 @@ export class SesionService {
       this.total[0] = 0;
     }
 
-    async login(usuario,contrasena){
-        return new Promise(resolve => {
-          setTimeout(() => {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-            let sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service" xmlns:ser="servicios.soapServices">' +
-                      '<soapenv:Header/>' +
-                      '<soapenv:Body>' +
-                      '<djan:LogIn>' +
-                      '<djan:request>' +
-                      '<ser:nombreUsuario>' + usuario + '</ser:nombreUsuario>' +
-                        '<ser:contrasena>' + contrasena + '</ser:contrasena>' +
-                        '</djan:request>' +
-                        '</djan:LogIn>' +
-                      '</soapenv:Body>' +
-                    '</soapenv:Envelope>';
-              var y = this;
-              let data;
-              xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4) {
-                    if (xmlhttp.status == 200) {
-                        var doc =  xmlToJson(xmlhttp.responseXML);
-                        data=doc['soap11env:Envelope']['soap11env:Body']['tns:LogInResponse']['tns:LogInResult1'];
-                        if(data['s0:tipoUsuaro'] !== undefined){
-                          resolve(data['s0:tipoUsuaro']['#text']);
-                        }else{
-                          resolve('');
-                        }
-                    }
-                }
-              }
-               xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-               xmlhttp.send(sr);
-          },100);
-      });
+    login(usuario,contrasena){
+       const url = `${environment.baseUrl}/usuario/login`;
+        return this.request.post<any>(url, {
+          nombreUsuario: usuario,
+          contrasena:contrasena,
+        });
     }
 
-  loginSatisfactorio(email,tipo){
-    this.id = email;
+  loginSatisfactorio(id,tipo){
+    this.id = id;
     this.sesion =  tipo;
-    localStorage.setItem('currentUser', email);
+    localStorage.setItem('currentUser', id);
     localStorage.setItem('currentType', tipo);
 
   }

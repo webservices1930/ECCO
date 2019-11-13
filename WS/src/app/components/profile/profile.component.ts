@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
         console.log(this.usuarioMostrar);
       });
     }else{
-      this.proveedorService.getProveedorByUsernameJSON(this.user).then( res => {
+      this.proveedorService.getProveedorByUsernameJSON(this.user).subscribe( res => {
         this.usuarioMostrar[0] = res;
         this.base64data=this.usuarioMostrar[0].img;
         this.ext="data:image/"+this.usuarioMostrar[0].tipo;

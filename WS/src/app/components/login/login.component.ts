@@ -36,25 +36,27 @@ export class LoginComponent implements OnInit {
   onSubmit() {
 
     this.submitted = true;
-    this.sesionService.login(this.loginForm.value.email,this.loginForm.value.password).then( res => {
+    this.sesionService.login(this.loginForm.value.email,this.loginForm.value.password).subscribe( res => {
       this.sesionService.reiniciarCarrito();
-      if(res === 'usuario'){
+      console.log(res);
+      if(res.tipo === 'cliente'){
         this.sesionService.sesion = 'usuario' ;
         this.sesionService.sesionCambio.next('usuario');
-        this.sesionService.id = this.loginForm.value.email ;
-        this.sesionService.idCambio.next(this.loginForm.value.email);
-        this.sesionService.loginSatisfactorio(this.loginForm.value.email,'usuario');
+        this.sesionService.id = res.idUsuario ;
+        this.sesionService.idCambio.next(res.idUsuario);
+        this.sesionService.loginSatisfactorio(res.idUsuario,'usuario');
         this.router.navigate(['servicioss']);
-      }else if(res === 'proveedor'){
+      }else if(res.tipo === 'proveedor'){
         this.sesionService.sesion = 'proveedor';
           this.router.navigate(['servicioss']);
           this.sesionService.sesionCambio.next('proveedor');
-          this.sesionService.id = this.loginForm.value.email ;
-          this.sesionService.idCambio.next(this.loginForm.value.email);
-          this.sesionService.loginSatisfactorio(this.loginForm.value.email,'proveedor');
+          this.sesionService.id = res.idUsuario ;
+          this.sesionService.idCambio.next(res.idUsuario);
+          this.sesionService.loginSatisfactorio(res.idUsuario,'proveedor');
       }else{
         alert('Usuario incorrecto');
       }
+
   })
   }
 

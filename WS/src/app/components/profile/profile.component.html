@@ -14,7 +14,7 @@
     </div>
     <div>
         <label for="username">Email: </label>
-        <input type="text" class="form-control" id="username" [(ngModel)]="item.email" readonly>
+        <input type="text" class="form-control" id="username" [(ngModel)]="item.nombreUsuario" readonly>
 
       </div>
       <div>
@@ -51,13 +51,13 @@
 
       <div *ngIf="this.sesionService.sesion == 'proveedor'">
           <label for="paginaweb">Página web: </label>
-          <input type="text" class="form-control" id="paginaweb" [(ngModel)]="item.paginaweb">
+          <input type="text" class="form-control" id="paginaweb" [(ngModel)]="item.paginaWeb">
 
       </div>
 
       <div *ngIf="this.sesionService.sesion == 'proveedor'">
           <label for="contacto">Contacto: </label>
-          <input type="text" class="form-control" id="contacto" [(ngModel)]="item.contacto">
+          <input type="text" class="form-control" id="contacto" [(ngModel)]="item.contactoRS">
         </div>
 
         <div class="row">

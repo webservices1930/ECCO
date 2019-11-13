@@ -48,10 +48,6 @@ export class ServiciossComponent implements OnInit {
      });
      this.tarjetaCarritoService.actualizarCarrito();
 
-     const url = `localhost:8081/usuario/cliente`;
-     this.request.get<Usuario[]>('http://localhost:8081/usuario/cliente').subscribe(results =>{
-       console.log(results);
-     })
   }
 
   verServicio( idx:number ){

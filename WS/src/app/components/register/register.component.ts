@@ -102,12 +102,12 @@ export class RegisterComponent implements OnInit {
           results => {
             console.log(results);
             this.router.navigate(['login']);
-            alert("Se creó el usuario satisfactoriamente");
+            alert("Se creó el proveedor satisfactoriamente");
 
           },
           error => {
             console.error(error);
-            alert("No se creó el usuario. Por favor intente nuevamente");
+            alert("No se creó el proveedor. Por favor intente nuevamente");
           }
         )
       }else{
@@ -122,12 +122,12 @@ export class RegisterComponent implements OnInit {
           results => {
             console.log(results);
             this.router.navigate(['login']);
-            alert("Se creó el proveedor satisfactoriamente");
+            alert("Se creó el usuario satisfactoriamente");
 
           },
           error => {
             console.error(error);
-            alert("No se creó el proveedor. Por favor intente nuevamente");
+            alert("No se creó el usuario. Por favor intente nuevamente");
           }
         )
       }

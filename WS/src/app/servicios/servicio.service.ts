@@ -43,8 +43,19 @@ export class ServicioService {
   }
 
 
-  crearServicio(registerForm,base64data,ext,tipo,user){
+  crearServicio(servicio,base64data,ext,tipo,user){
+      if(tipo=="Alimentacion"){
+        const url = `${environment.baseUrl}/usuario/cliente`;
+        return this.request.post(url, {
 
+        });
+      }else if(tipo=="Transporte"){
+
+      }else if(tipo=="PaseoEcologico"){
+
+      }else if(tipo=="Alojamiento"){
+
+      }
   }
 
 
@@ -57,6 +68,7 @@ export class ServicioService {
 //Busca en TODOS los servicios
 getServicioId(id){
     const url = `${environment.baseUrl}/servicio/${id}`;
+    console.log('xddd');
       return this.request.get<Servis>(url);
 }
 

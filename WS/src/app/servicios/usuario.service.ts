@@ -31,12 +31,12 @@ export class UsuarioService {
    }
 
   async getUsuariosJSON(){
-      const url = `${environment.baseUrl}/usuarios`;
+      const url = `${environment.baseUrl}/usuario/cliente`;
       return this.request.get<Usuario[]>(url);
     }
 
-  getUsuarioByUsernameJSON(usuario){
-    const url = `${environment.baseUrl}/usuarios/${usuario}`;
+  getUsuarioByUsernameJSON(idusuario){
+    const url = `${environment.baseUrl}/usuario/cliente/${idusuario}`;
     return this.request.get<Usuario[]>(url);
   }
 

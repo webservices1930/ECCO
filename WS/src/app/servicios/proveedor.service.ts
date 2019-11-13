@@ -57,12 +57,15 @@ export class ProveedorService {
   }
 
 
+
   async getProveedoresJSON(){
-
-          }
-
-
-    async getProveedorByUsernameJSON(user){
-
+    const url = `${environment.baseUrl}/usuario/proveedor`;
+    return this.request.get<Proveedor[]>(url);
   }
+
+  getProveedorByUsernameJSON(idusuario){
+  const url = `${environment.baseUrl}/usuario/proveedor/${idusuario}`;
+  return this.request.get<Proveedor[]>(url);
+}
+
 }

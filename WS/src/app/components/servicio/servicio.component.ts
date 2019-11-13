@@ -54,7 +54,7 @@ export class ServicioComponent {
     undefined,
     undefined
   );
-  servicio;
+  servicio=[];
 
   constructor(private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
@@ -68,20 +68,17 @@ export class ServicioComponent {
 
   ngOnInit() {
     this.preguntasCargadas = false;
-
-
-
-
     this.activatedRoute.params.subscribe(params => {
       this.idServicio = params['id'];
-
       this.pregunta.idServicio = params['id'];
       if (this._sesionService.getSesion() == "usuario") {
         this.pregunta.cliente.nombreUsuario = this._sesionService.id;
       }
-
+      console.log("holita "+params['id']);
       this._serviciosService.getServicioId(params['id']).subscribe(res => {
-        this.servicio = res;
+        console.log("entro");
+        console.log(res);
+        this.servicio[0] = res;
         this.servicioProveedorid = res.proveedor;
         this.userid = this._sesionService.id;
 
