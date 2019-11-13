@@ -79,9 +79,9 @@ public class ServicioController {
         
         Optional<Servicio> x = this.servicioRepository.findById(servicioId);
         if(x.isPresent()){
-            return ResponseEntity.ok(x.get().toJsonString());
+            return ResponseEntity.ok(new JSONObject(x.get().toJsonString()).toMap());
         }
-        return (ResponseEntity) ResponseEntity.notFound();
+        return ResponseEntity.ok(new JSONObject("{ message : no hay servicio con ese id}").toMap());
     }
     
     @GetMapping("/alojamiento")
