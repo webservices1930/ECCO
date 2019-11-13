@@ -170,6 +170,42 @@ public class UsuarioController {
         return (ResponseEntity) ResponseEntity.badRequest();
     }
     
+    @PostMapping("/login")
+    public ResponseEntity logIn(@Valid @RequestBody String body ){
+        JSONObject credentials = new JSONObject(body);
+        JSONObject response = new JSONObject();
+        Cliente cliente = clienteRepository.searchByUsername(String.valueOf(credentials.get("nombreUsuario")));
+        Proveedor proveedor = proveedorRepository.searchByUsername(String.valueOf(credentials.get("nombreUsuario")));
+        if(cliente == null){
+            if(proveedor == null){
+                response.put("message", "Credenciales invalidas");
+                return ResponseEntity.ok(response.toMap());
+            }else{
+                if(credentials.get("contrasena").equals(proveedor.getContrasena())){
+                    response.put("message", "inicio de sesion completo");
+                    response.put("idUsuario",proveedor.getId());
+                    response.put("tipo", "proveedor");
+                    return ResponseEntity.ok(response.toMap());   
+                }else{
+                    response.put("message", "Credenciales invalidas");
+                    return ResponseEntity.ok(response.toMap());
+                }
+                
+            }
+        }else{
+            if(credentials.get("contrasena").equals(cliente.getContrasena())){
+                response.put("message", "inicio de sesion completo");
+                response.put("idUsuario",cliente.getId());
+                response.put("tipo", "cliente");
+                return ResponseEntity.ok(response.toMap());   
+            }else{
+                response.put("message", "Credenciales invalidas");
+                return ResponseEntity.ok(response.toMap());
+            }
+        }
+        
+    }
+    
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Error message")
     public void handleError() {
