@@ -36,13 +36,14 @@ export class UsuarioService {
     }
 
   getUsuarioByUsernameJSON(usuario){
-
+    const url = `${environment.baseUrl}/usuarios/${usuario}`;
+    return this.request.get<Usuario[]>(url);
   }
 
-updateUsuario(usuarioMostrar,base64data, ext){
+  updateUsuario(usuarioMostrar,base64data, ext){
 
 
-  }
+    }
 
 borrarUsuario(usuario){
 

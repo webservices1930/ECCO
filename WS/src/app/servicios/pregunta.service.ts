@@ -74,7 +74,7 @@ export class PreguntaService {
 
                   cliente.nombre = element['s0:cliente']['s0:nombre']['#text'];
                   let inf = element['s0:cliente']['s0:foto']['#text'];
-                  cliente.img = "data:image/" + element['s0:cliente']['s0:tipo']['#text'] + ";base64, " + inf;
+                  cliente.foto = "data:image/" + element['s0:cliente']['s0:tipo']['#text'] + ";base64, " + inf;
 
                   pregunta.cliente = cliente;
 
@@ -113,7 +113,7 @@ export class PreguntaService {
 
             '<ser:idServicio>'+ pregunta.idServicio+'</ser:idServicio>'+
 
-            '<ser:nombreUsuario>'+pregunta.cliente.email+'</ser:nombreUsuario>'+
+            '<ser:nombreUsuario>'+pregunta.cliente.nombreUsuario+'</ser:nombreUsuario>'+
            '</djan:pregun>'+
         '</djan:createPregunta>'+
       '</soapenv:Body>'+

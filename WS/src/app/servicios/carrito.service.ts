@@ -26,8 +26,8 @@ export class CarritoService {
       '<soapenv:Header/>'+
         '<soapenv:Body>'+
           '<djan:agregarAlCarrito>'+
-            '<djan:nomUsuario>' + cliente.email + '</djan:nomUsuario>'+
-            '<djan:idServicio>' + servicio.idx + '</djan:idServicio>'+
+            '<djan:nomUsuario>' + cliente.nombreUsuario + '</djan:nomUsuario>'+
+            '<djan:idServicio>' + servicio.Id+ '</djan:idServicio>'+
           '</djan:agregarAlCarrito>'+
         '</soapenv:Body>'+
     '</soapenv:Envelope>';
@@ -132,11 +132,11 @@ export class CarritoService {
                     servicio.nombre= element['s0:nombre']['#text'];
                     servicio.descripcion=element['s0:descripcion']['#text'];
                     servicio.costo=+element['s0:costo']['#text'];
-                    servicio.idx=element['s0:id']['#text'];
+                    servicio.Id=element['s0:id']['#text'];
                     servicio.pais=element['s0:pais']['#text'];
                     servicio.ciudad=element['s0:ciudad']['#text'];
                     servicio.idioma=element['s0:idioma']['#text'];
-                    servicio.nombreproveedor=element['s0:nombreProveedor']['#text'];
+                    servicio.proveedor=element['s0:nombreProveedor']['#text'];
                     servicio.numeroPersonas = element['s0:numeroPersonas']['#text'];
                     serviciosCopia.push(servicio);
                   });
@@ -163,7 +163,7 @@ export class CarritoService {
     '<soapenv:Body>'+
       '<djan:removerDelCarrito>'+
          '<djan:nomUsuario>'+userNameCliente+'</djan:nomUsuario>'+
-         '<djan:idServicio>'+servicio.idx+'</djan:idServicio>'+
+         '<djan:idServicio>'+servicio.Id+'</djan:idServicio>'+
       '</djan:removerDelCarrito>'+
    '</soapenv:Body>'+
   '</soapenv:Envelope>';

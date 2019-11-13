@@ -16,7 +16,7 @@ export class ServiciosproveedorComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.sesionService.id;
-    this._serviciosService.getTodosServicios().then(res =>{
+    this._serviciosService.getTodosServicios().subscribe(res =>{
       this.serviciosCopia= res;
       this.serviciosCopia.forEach(element => {
           if(element.nombreproveedor === this.user){

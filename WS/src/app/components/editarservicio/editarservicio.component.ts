@@ -30,7 +30,7 @@ export class EditarservicioComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe( params =>{
       this.servicioid = params['id'];
-      this._serviciosService.getServicioId(params['id']).then(res => {
+      this._serviciosService.getServicioId(params['id']).subscribe(res => {
           this.servicio[0]=res[0];
           console.log(this.servicio[0]);
           this.image=this.servicio[0].img;
@@ -62,5 +62,5 @@ export class EditarservicioComponent implements OnInit {
   guardar(){
     this._serviciosService.updateServicio(this.servicio[0], this.base64data, this.ext);
   }
-  
+
 }

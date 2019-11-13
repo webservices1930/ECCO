@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.user = this.sesionService.id;
     if(this.sesionService.sesion === 'usuario'){
-      this.usuarioService.getUsuarioByUsernameJSON(this.user).then( res => {
+      this.usuarioService.getUsuarioByUsernameJSON(this.user).subscribe( res => {
         this.usuarioMostrar[0] = res;
         this.base64data=this.usuarioMostrar[0].img;
         this.ext="data:image/"+this.usuarioMostrar[0].tipo;

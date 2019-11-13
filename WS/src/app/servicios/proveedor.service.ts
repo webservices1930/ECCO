@@ -9,6 +9,9 @@ import { RequestService } from '../Request/request.service';
   providedIn: 'root'
 })
 export class ProveedorService {
+  updateProveedor(arg0: any, base64data: string, ext: string) {
+    throw new Error("Method not implemented.");
+  }
   ext: string;
   base64data: string;
 

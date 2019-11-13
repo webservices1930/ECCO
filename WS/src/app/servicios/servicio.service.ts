@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import {xmlToJson} from './lib';
 import { Servis } from '../model/servis';
-import { ServicioAlimentacion } from '../model/servicioAlimentacion';
 import { resolve } from 'url';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../Request/request.service';
