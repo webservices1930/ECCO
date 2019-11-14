@@ -45,9 +45,18 @@ export class UsuarioService {
 
     }
 
-borrarUsuario(usuario){
-
-}
+  borrarUsuario(usuario){
+    const url = `${environment.baseUrl}/usuario/cliente/${usuario.id}`;
+    return this.request.delete(url, {
+      nombre: usuario.nombre,
+      nombreUsuario: usuario.nombreUsuario,
+      edad:usuario.edad,
+      contrasena:usuario.contrasena,
+      descripcion:usuario.descripcion,
+      foto:usuario.foto,
+      telefono:usuario.telefono
+    });
+  }
 
       registrarUsuario(usuario:Usuario){
         const url = `${environment.baseUrl}/usuario/cliente`;

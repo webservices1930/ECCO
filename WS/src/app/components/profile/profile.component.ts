@@ -90,12 +90,30 @@ export class ProfileComponent implements OnInit {
 
   eliminar(){
     if(this.sesionService.sesion === 'usuario'){
-           this.usuarioService.borrarUsuario(this.usuarioMostrar[0].email);
-                this.router.navigate(['login']);
+           this.usuarioService.borrarUsuario(this.usuarioMostrar[0]).subscribe(
+             result =>{
+              alert("Se eliminó el usuario satisfactoriamente");
+              this.router.navigate(['login']);
+
+             },
+             error => {
+              alert("No se eliminó el usuario");
+
+             }
+           )
 
     }else{
-     this.proveedorService.borrarProveedor(this.usuarioMostrar[0].email);
-     this.router.navigate(['login']);
+     this.proveedorService.borrarProveedor(this.usuarioMostrar[0]).subscribe(
+      result =>{
+       alert("Se eliminó el proveedor satisfactoriamente");
+       this.router.navigate(['login']);
+
+      },
+      error => {
+       alert("No se eliminó el proveedor");
+
+      }
+    )
     }
   }
 }

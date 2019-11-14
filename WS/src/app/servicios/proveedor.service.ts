@@ -37,8 +37,20 @@ export class ProveedorService {
    proveedoresCopia: Proveedor[] = [];
 
 
-  borrarProveedor(usuarioProveedor){
-
+  borrarProveedor(proveedor){
+    console.log("ssss "+proveedor.id);
+    const url = `${environment.baseUrl}/usuario/proveedor/${proveedor.id}`;
+    return this.request.delete(url, {
+      nombre: proveedor.nombre,
+      nombreUsuario: proveedor.nombreUsuario,
+      edad:proveedor.edad,
+      contrasena:proveedor.contrasena,
+      descripcion:proveedor.descripcion,
+      foto:proveedor.foto,
+      telefono:proveedor.telefono,
+      paginaWeb:proveedor.paginaWeb,
+      contactoRS:proveedor.contactoRS
+    });
   }
 
   registrarProveedor(proveedor:Proveedor){
