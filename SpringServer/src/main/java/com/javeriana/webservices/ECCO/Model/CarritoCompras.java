@@ -37,4 +37,56 @@ public class CarritoCompras {
     @JoinTable(name="carrito_servicio", joinColumns=@JoinColumn(name="carrito_id"), inverseJoinColumns=@JoinColumn(name="servicio_id"))  
     private List<Servicio> servicios;
     
+    public String toJsonString(){
+        StringBuilder sb = new StringBuilder();
+        for(Servicio s : this.servicios){
+            sb.append(s.toJsonString());
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        String s = "{ Id:"+this.Id+",numServicios : "+this.numServicios+",costoTotal :"+this.costoTotal+",servicios : ["+sb.toString()+"]}";
+        return s;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public int getNumServicios() {
+        return numServicios;
+    }
+
+    public float getCostoTotal() {
+        return costoTotal;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public List<Servicio> getServicios() {
+        return servicios;
+    }
+
+    public void setId(Long Id) {
+        this.Id = Id;
+    }
+
+    public void setNumServicios(int numServicios) {
+        this.numServicios = numServicios;
+    }
+
+    public void setCostoTotal(float costoTotal) {
+        this.costoTotal = costoTotal;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setServicios(List<Servicio> servicios) {
+        this.servicios = servicios;
+    }
+    
+    
 }

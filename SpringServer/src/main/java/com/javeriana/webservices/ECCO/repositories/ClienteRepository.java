@@ -7,6 +7,7 @@ package com.javeriana.webservices.ECCO.repositories;
 
 import com.javeriana.webservices.ECCO.Model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
@@ -14,4 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     
+    @Query("SELECT u from Cliente u where u.nombreUsuario = ?1")
+    Cliente searchByUsername(String userName);
 }

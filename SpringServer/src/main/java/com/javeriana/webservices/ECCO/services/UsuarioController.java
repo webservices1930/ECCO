@@ -7,6 +7,7 @@ package com.javeriana.webservices.ECCO.services;
 
 import com.javeriana.webservices.ECCO.Model.Cliente;
 import com.javeriana.webservices.ECCO.Model.Proveedor;
+import com.javeriana.webservices.ECCO.Model.Servicio;
 import com.javeriana.webservices.ECCO.repositories.ClienteRepository;
 import com.javeriana.webservices.ECCO.repositories.ProveedorRepository;
 import java.util.ArrayList;
@@ -168,6 +169,55 @@ public class UsuarioController {
         }
         
         return (ResponseEntity) ResponseEntity.badRequest();
+    }
+    
+    @GetMapping("/proveedor/{id}/services")
+    public ResponseEntity getServiciosProveedor(@PathVariable(value = "id") Long proveedorId){
+        JSONArray res = new JSONArray();
+        Optional<Proveedor> proveedor = this.proveedorRepository.findById(proveedorId);
+        if(proveedor.isPresent()){
+            List<Servicio> x =proveedor.get().getServicios();
+            for (Servicio aux : x){
+                res.put(new JSONObject(aux.toJsonString()));
+            }
+        }
+        
+        return ResponseEntity.ok(res.toList());
+    }
+    @PostMapping("/login")
+    public ResponseEntity logIn(@Valid @RequestBody String body ){
+        JSONObject credentials = new JSONObject(body);
+        JSONObject response = new JSONObject();
+        Cliente cliente = clienteRepository.searchByUsername(String.valueOf(credentials.get("nombreUsuario")));
+        Proveedor proveedor = proveedorRepository.searchByUsername(String.valueOf(credentials.get("nombreUsuario")));
+        if(cliente == null){
+            if(proveedor == null){
+                response.put("message", "Credenciales invalidas");
+                return ResponseEntity.ok(response.toMap());
+            }else{
+                if(credentials.get("contrasena").equals(proveedor.getContrasena())){
+                    response.put("message", "inicio de sesion completo");
+                    response.put("idUsuario",proveedor.getId());
+                    response.put("tipo", "proveedor");
+                    return ResponseEntity.ok(response.toMap());   
+                }else{
+                    response.put("message", "Credenciales invalidas");
+                    return ResponseEntity.ok(response.toMap());
+                }
+                
+            }
+        }else{
+            if(credentials.get("contrasena").equals(cliente.getContrasena())){
+                response.put("message", "inicio de sesion completo");
+                response.put("idUsuario",cliente.getId());
+                response.put("tipo", "cliente");
+                return ResponseEntity.ok(response.toMap());   
+            }else{
+                response.put("message", "Credenciales invalidas");
+                return ResponseEntity.ok(response.toMap());
+            }
+        }
+        
     }
     
     @ExceptionHandler(Exception.class)

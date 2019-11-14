@@ -7,6 +7,7 @@ package com.javeriana.webservices.ECCO.repositories;
 
 import com.javeriana.webservices.ECCO.Model.CarritoCompras;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
@@ -14,4 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CarritoRepository extends JpaRepository<CarritoCompras, Long> {
     
+    @Query("SELECT u from CarritoCompras u where u.cliente.Id = ?1")
+    CarritoCompras searchByClientId(Long idusuario);
 }

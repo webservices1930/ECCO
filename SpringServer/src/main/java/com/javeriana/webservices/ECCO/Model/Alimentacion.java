@@ -22,7 +22,7 @@ public class Alimentacion extends Servicio{
         String f = ((this.getFoto() == null) ? "null" :Base64.getMimeEncoder().encodeToString(this.getFoto()));
         String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
            +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
-           +",tipoComida:"+this.tipoComida+",cantidadPlatos :"+this.cantidadPlatos+"}";
+           +",tipoComida:"+this.tipoComida+",cantidadPlatos :"+this.cantidadPlatos+",tipo: alimentacion}";
         return s;
     }
     public String getTipoComida() {
