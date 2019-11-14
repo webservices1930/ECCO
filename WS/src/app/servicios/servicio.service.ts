@@ -5,6 +5,7 @@ import { Servis } from '../model/servis';
 import { resolve } from 'url';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../Request/request.service';
+import { UsuarioService } from './usuario.service';
 
 @Injectable()
 export class ServicioService {
@@ -30,7 +31,7 @@ export class ServicioService {
 
   serviciosAux:any=[];
 
-  constructor(private request: RequestService) {
+  constructor(private request: RequestService,    private usuarioService:UsuarioService) {
     this.getTodosServicios().subscribe(res => {
       this.serviciosCopia = res;
       this.servicios = res;
@@ -43,18 +44,26 @@ export class ServicioService {
   }
 
 
-  crearServicio(servicio,base64data,ext,tipo,user){
+  crearServicio(registerForm,tipo,iduser){
       if(tipo=="Alimentacion"){
-        const url = `${environment.baseUrl}/usuario/cliente`;
+        const url = `${environment.baseUrl}/servicio/alimentacion/${iduser}`;
         return this.request.post(url, {
-
+          nombre : registerForm.value.nombres,
+          pais : registerForm.value.pais,
+          ciudad : registerForm.value.ciudad,
+          costo : registerForm.value.costo,
+          idioma : registerForm.value.idioma,
+          descripcion : registerForm.value.foto,
+          numeroPersonas : registerForm.value.numeropersonas,
+          tipoComida : registerForm.value.tipocomida,
+          cantidadPlatos : registerForm.value.cantidadplatos,
         });
       }else if(tipo=="Transporte"){
-
+        return this.request.post('', {});
       }else if(tipo=="PaseoEcologico"){
-
+        return this.request.post('', {});
       }else if(tipo=="Alojamiento"){
-
+        return this.request.post('', {});
       }
   }
 

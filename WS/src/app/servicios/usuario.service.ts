@@ -37,7 +37,7 @@ export class UsuarioService {
 
   getUsuarioByUsernameJSON(idusuario){
     const url = `${environment.baseUrl}/usuario/cliente/${idusuario}`;
-    return this.request.get<Usuario[]>(url);
+    return this.request.get<Usuario>(url);
   }
 
   updateUsuario(usuarioMostrar,base64data, ext){

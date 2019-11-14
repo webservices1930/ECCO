@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ServicioService } from '../../servicios/servicio.service';
 import { SesionService } from '../../servicios/sesion.service';
+import { Servis } from '../../model/servis';
 
 @Component({
   selector: 'app-crearservicio',
@@ -11,6 +12,7 @@ import { SesionService } from '../../servicios/sesion.service';
   styleUrls: ['./crearservicio.component.css']
 })
 export class CrearservicioComponent implements OnInit {
+
   registerForm: FormGroup;
   loading = false;
   submitted = false;
@@ -79,8 +81,18 @@ export class CrearservicioComponent implements OnInit {
     if(this.registerForm.invalid){
       alert("Ingrese todos los campos por favor");
     }else{
-      this.servicioService.crearServicio(this.registerForm,this.base64data,this.ext,this.tipoServicio,this.user);
-      this.router.navigate(['servicioss']);
+      this.servicioService.crearServicio(this.registerForm,this.tipoServicio,this.user).subscribe(
+        results => {
+          console.log(results);
+          this.router.navigate(['servicioss']);
+          alert("Se creó el servicio satisfactoriamente");
+
+        },
+        error => {
+          console.error(error);
+          alert("No se creó el servicio. Por favor intente nuevamente");
+        }
+      )
     }
   }
 
