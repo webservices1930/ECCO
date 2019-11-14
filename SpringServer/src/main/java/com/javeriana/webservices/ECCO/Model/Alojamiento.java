@@ -42,7 +42,7 @@ public class Alojamiento extends Servicio {
         String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
            +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
            +",tipoAlojamiento : "+this.tipoAlojamiento.name()+",numeroHabitaciones : "+this.numeroHabitaciones + ",numeroBanos : "+this.numeroBanos
-           +",servicioLimpieza : "+this.servicioLimpieza.name()+",servicioWifi:"+this.servicioWifi.name()+"tipo: alojamiento}";
+           +",servicioLimpieza : "+this.servicioLimpieza.name()+",servicioWifi:"+this.servicioWifi.name()+",tipo: alojamiento}";
         return s;
     }
     

@@ -34,7 +34,7 @@ public class Transporte extends Servicio{
         String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
            +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
            +",empresa :"+this.empresa+",tipoTransporte:"+this.tipoTransporte+",origen:"+this.origen+",destino :"+this.destino+",horaSalida :"+this.horaSalida
-           +",horaLlegada :"+this.horaLlegada +"tipo: transporte}";
+           +",horaLlegada :"+this.horaLlegada +",tipo: transporte}";
         return s;
     }
     
