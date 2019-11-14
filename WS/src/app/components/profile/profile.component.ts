@@ -94,6 +94,9 @@ export class ProfileComponent implements OnInit {
              result =>{
               alert("Se eliminó el usuario satisfactoriamente");
               this.router.navigate(['login']);
+              this.sesionService.loginSatisfactorio('','sininiciar');
+              this.sesionService.sesionCambio.next('sininiciar');
+
 
              },
              error => {
@@ -107,7 +110,8 @@ export class ProfileComponent implements OnInit {
       result =>{
        alert("Se eliminó el proveedor satisfactoriamente");
        this.router.navigate(['login']);
-
+       this.sesionService.loginSatisfactorio('','sininiciar');
+       this.sesionService.sesionCambio.next('sininiciar');
       },
       error => {
        alert("No se eliminó el proveedor");
