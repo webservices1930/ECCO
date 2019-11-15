@@ -2,13 +2,22 @@ import { Servis } from './servis';
 import { Usuario } from './usuario';
 export class CarritoCompras {
 
-  public cliente;
-  public servicios: Servis[];
-  public CostoTotal: number;
+  public Id: number;
   public numServicios: number;
+  public costoTotal: number;
+  public cliente: Usuario;
+  public servicios: Servis[] = [];
 
   constructor(
   ) {}
+
+  public getId(){
+    return this.Id;
+  }
+
+  public setId(id){
+    this.Id = id;
+  }
 
   public getCliente() {
     return this.cliente;
@@ -24,22 +33,6 @@ export class CarritoCompras {
 
   public setServicios(servicios: Servis[]) {
      this.servicios = servicios;
-  }
-
-  public getCostoTotal(){
-    return this.CostoTotal;
-  }
-
-  public setCostoTotal(costo: number){
-     this.CostoTotal = costo;
-  }
-
-  public getNumPlanes(){
-    return this.numServicios;
-  }
-
-  public setNumServicios(num: number){
-     this.numServicios = num;
   }
 
   public calcularCostoTotal(){

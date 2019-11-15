@@ -29,16 +29,15 @@ export class CartComponent implements OnInit {
      /*this._subscripcion = this.tarjetaCarrito.servicios.subscribe((servicioss) => {
        this.servicios = servicioss;
      });*/
-
-     this.servicios = this.carritoService.getCarritoServiciosByUsernameJSON(this._SesionServicio.id).then(res =>{
-        this.servicios = res;
-        console.log(this.servicios);
-        this.total = this.carritoService.getCarritoCostoByUsernameJSON(this._SesionServicio.id).then(res2 =>{
-            this.total=res2;
-            console.log(this.total);
-        });
+    //this.carrito = new CarritoCompras();
+    this.servicios =[];
+    this.total = 0;
+    this.carritoService.getCarritoServicios(this._SesionServicio.id).subscribe(result => {
+      this.carrito = result;
+      this.servicios = this.carrito.servicios;
+      this.total =  this.carrito.costoTotal;
+      console.log(this.carrito);
     });
-     
   }
   actualizarTotal(){
     //this.total=this._SesionServicio.getTotal();
@@ -48,7 +47,7 @@ export class CartComponent implements OnInit {
     //this.total=this._SesionServicio.getTotal();
 
     this.carritoService.removerDelCarrito(this._SesionServicio.id, servicio);
-    var tot = +this.total;
+    /*var tot = +this.total;
     for(var i=0;i<this.servicios.length;i++) {
           if(this.servicios[i].nombre === servicio.nombre){
               this.servicios.splice(i, 1);
@@ -56,7 +55,7 @@ export class CartComponent implements OnInit {
               break;
           }
       }
-    this.total = String(tot);
+    this.total = String(tot);*/
   }
 
   pago() {

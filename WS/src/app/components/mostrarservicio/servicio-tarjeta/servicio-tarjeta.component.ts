@@ -34,11 +34,10 @@ export class ServicioTarjetaComponent implements OnInit {
   ngOnInit() {
     this.sesion = this.sesionService.sesion;
     const idUsuario = this._servicioSesion.id;
-      /*this.usuarioservice.getUsuarioByUsernameJSON(idUsuario).subscribe( res => {
+      this.usuarioservice.getUsuarioByUsernameJSON(idUsuario).subscribe( res => {
         this.usuario = res;
         console.log(this.usuario);
       });
-      */
     // this.carrito.setCliente(this.usuario);
   }
 
@@ -47,9 +46,13 @@ export class ServicioTarjetaComponent implements OnInit {
   }
 
   agregarServicio(servicio : Servis){
-    this.carritoService.agregarAlCarrito(this.usuario, servicio);
+    this.carritoService.agregarAlCarrito(this._servicioSesion.id, servicio).subscribe(
+      res => {
+        console.log("Funciono");
+      }
+    );
     this._servicioSesion.agregarServicio(this.servicio);
-    this.tarjetaCarrito.actualizarCarrito();
+    //this.tarjetaCarrito.actualizarCarrito();
   }
 
   public getSantizeUrl(img) {

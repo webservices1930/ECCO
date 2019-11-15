@@ -55,7 +55,7 @@ export class PagoComponent implements OnInit {
     } else {
       alert('El pago se realizara bajo el numero de tarjeta ' + this.numTarjeta);
       this.pagoservice.pago(this._SesionServicio.id);
-      this.tarjetaCarritoService.actualizarCarrito();
+      //this.tarjetaCarritoService.actualizarCarrito();
       this.router.navigate([`/home`]);
     }
   }

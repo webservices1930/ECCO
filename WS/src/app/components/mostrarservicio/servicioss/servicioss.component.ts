@@ -46,7 +46,7 @@ export class ServiciossComponent implements OnInit {
       this.serviciosCopia= res;
       this.servicios=res;
      });
-     this.tarjetaCarritoService.actualizarCarrito();
+     //this.tarjetaCarritoService.actualizarCarrito();
 
   }
 

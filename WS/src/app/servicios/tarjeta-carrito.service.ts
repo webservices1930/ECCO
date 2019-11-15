@@ -15,14 +15,14 @@ export class TarjetaCarritoService {
 
   constructor(private carritoService: CarritoService, private _SesionServicio: SesionService) { }
 
-  public actualizarCarrito() {
+  /*public actualizarCarrito() {
     this.carritoService.getCarritoCostoByUsernameJSON(this._SesionServicio.id).then(res =>{
       //Object.assign(this.carrito, res);
       this.total = res;
       console.log(this.total);
      });
 
-  }
+  }*/
 
   public getServicios(){
     return this.servicios;
