@@ -61,8 +61,12 @@ public class CarritoController {
                 c.getServicios().add(servicio.get());
             }else{
                 c.getServicios().add(servicio.get());
-                c.setNumServicios(c.getNumServicios()+1);
-                c.setCostoTotal(c.getCostoTotal()+servicio.get().getCosto());
+                c.setNumServicios(c.getServicios().size());
+                float tot = 0;
+                for(Servicio s:c.getServicios()){
+                    tot+=s.getCosto();
+                }
+                c.setCostoTotal(tot);
             } 
             carritoRepository.save(c);
             return ResponseEntity.ok(response.toMap());
@@ -86,8 +90,12 @@ public class CarritoController {
                
             }else{
                 c.getServicios().remove(servicio.get());
-                c.setNumServicios(c.getNumServicios()-1);
-                c.setCostoTotal(c.getCostoTotal()-servicio.get().getCosto());
+                c.setNumServicios(c.getServicios().size());
+                float tot = 0;
+                for(Servicio s:c.getServicios()){
+                    tot+=s.getCosto();
+                }
+                c.setCostoTotal(tot);
                 response.put("message", "servicio eliminado con exito");
                 carritoRepository.save(c);
             } 
@@ -105,8 +113,8 @@ public class CarritoController {
         JSONObject response = new JSONObject();
         if(c!=null){
             JSONObject x = new JSONObject(c.toJsonString());
-            response.put("carrito", x);
-            return ResponseEntity.ok(response.toMap());
+            
+            return ResponseEntity.ok(x.toMap());
         }else{
             response.put("message", "el cliente no tiene carrito");
             return ResponseEntity.ok(response.toMap());
