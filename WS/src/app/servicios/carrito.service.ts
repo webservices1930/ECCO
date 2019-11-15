@@ -70,7 +70,8 @@ export class CarritoService {
     return this.http.get<CarritoCompras>(url);
   }
 
-  public removerDelCarrito(userNameCliente: string, servicio: Servis) {
-
+  public removerDelCarrito(id, servicio: Servis) {
+    const url = `${environment.baseUrl}/usuario/carrito/${id}/${servicio.Id}`;
+    return this.http.delete<any>(url);
   }
 }
