@@ -14,13 +14,12 @@ import { TarjetaCarritoService } from '../../../servicios/tarjeta-carrito.servic
 })
 export class CartComponent implements OnInit {
 
-  //servicios:Servis[]=[];
   servicios;
-  //total:number[]=[];
   total;
   carrito: CarritoCompras;
+  bandera: boolean = true;
+  public href: string = "";
   // tslint:disable-next-line: max-line-length
-  _subscripcion: any;
   constructor(private _SesionServicio:SesionService, private router: Router, private carritoService: CarritoService, private tarjetaCarrito: TarjetaCarritoService) { }
 
   ngOnInit() {
@@ -32,9 +31,15 @@ export class CartComponent implements OnInit {
     //this.carrito = new CarritoCompras();
     this.servicios =[];
     this.total = 0;
+    this.href = this.router.url;
+    console.log("hoa"+this.href);
+    if (this.href == "/pago"){
+      this.bandera = false;
+      console.log("hoa"+this.href);
+    }
     this.carritoService.getCarritoServicios(this._SesionServicio.id).subscribe(result => {
       this.carrito = result;
-      this.servicios = this.carrito.servicios;
+      this.servicios = this.carrito.servicios; //esto no asigna nada
       this.total =  this.carrito.costoTotal;
       console.log(this.carrito);
     });

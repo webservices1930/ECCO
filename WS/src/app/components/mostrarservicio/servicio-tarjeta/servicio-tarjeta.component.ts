@@ -51,6 +51,7 @@ export class ServicioTarjetaComponent implements OnInit {
         console.log("Funciono");
       }
     );
+    alert("Servicio agregado correctamente al carrito");
     this._servicioSesion.agregarServicio(this.servicio);
     //this.tarjetaCarrito.actualizarCarrito();
   }

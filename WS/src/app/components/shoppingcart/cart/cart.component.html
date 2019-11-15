@@ -30,7 +30,7 @@
         </tr>
       </tfoot>
     </table>
-    <div>
+    <div *ngIf="this.bandera == true">
       <button  type="button" class="btn btn-success btn-lg btn-block" (click)="pago()" >Realizar Pago</button>
     </div>
   </div>

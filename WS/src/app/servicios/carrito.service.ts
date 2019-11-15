@@ -71,28 +71,6 @@ export class CarritoService {
   }
 
   public removerDelCarrito(userNameCliente: string, servicio: Servis) {
-   var xmlhttp = new XMLHttpRequest();
-   xmlhttp.open('POST', 'http://whatsmusic.pythonanywhere.com/soap/', true);
-   let sr=
-  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:djan="django.soap.service">'+
-    '<soapenv:Header/>'+
-    '<soapenv:Body>'+
-      '<djan:removerDelCarrito>'+
-         '<djan:nomUsuario>'+userNameCliente+'</djan:nomUsuario>'+
-         '<djan:idServicio>'+servicio.Id+'</djan:idServicio>'+
-      '</djan:removerDelCarrito>'+
-   '</soapenv:Body>'+
-  '</soapenv:Envelope>';
-   xmlhttp.onreadystatechange = function () {
-     if (xmlhttp.readyState == 4) {
-         if (xmlhttp.status == 200) {
-             alert('Se elimino el servicio del carrito');
-           }
-     }
-   }
-   // Send the POST request
-   xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-   xmlhttp.send(sr);
 
- }
+  }
 }
