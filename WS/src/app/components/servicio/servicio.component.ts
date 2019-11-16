@@ -86,7 +86,7 @@ export class ServicioComponent {
 
 
 
-        this._preguntaService.getPreguntasServicio(params['id']).then(res => {
+        this._preguntaService.getPreguntasServicio(params['id']).subscribe(res => {
           this.preguntasCargadas = true;
           this.preguntass = res;
         });
@@ -120,7 +120,11 @@ export class ServicioComponent {
       this.autenticadoComoCliente = false;
     }
     else {
-      this._preguntaService.crearPregunta(this.pregunta);
+      console.log(this.pregunta.cliente.nombreUsuario);
+      console.log(this.pregunta.idServicio);
+      this._preguntaService.crearPregunta(this.pregunta).subscribe(res => {
+
+      });
       this.pregunta.pregunta = "";
       this.preguntar = false;
       this.actualizarPreguntas();
@@ -148,12 +152,14 @@ export class ServicioComponent {
   }
 
   agregarRespuesta(i: number) {
-    this._preguntaService.agregarRespuesta(this.preguntass[i]);
+    this._preguntaService.agregarRespuesta(this.preguntass[i]).subscribe(res => {
+
+    });;
     this.actualizarPreguntas();
   }
 
   actualizarPreguntas() {
-    this._preguntaService.getPreguntasServicio(this.idServicio).then(res => {
+    this._preguntaService.getPreguntasServicio(this.idServicio).subscribe(res => {
       this.preguntass = res;
     });
   }
