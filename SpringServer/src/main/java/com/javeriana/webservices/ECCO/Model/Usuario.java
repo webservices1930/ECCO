@@ -38,6 +38,7 @@ public class Usuario {
     private String telefono ;
     private String contrasena ;
 
+    
     public Long getId() {
         return Id;
     }
