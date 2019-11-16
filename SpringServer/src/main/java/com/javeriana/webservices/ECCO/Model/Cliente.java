@@ -5,6 +5,7 @@
  */
 package com.javeriana.webservices.ECCO.Model;
 
+import java.util.Base64;
 import javax.persistence.Entity;
 
 /**
@@ -14,4 +15,9 @@ import javax.persistence.Entity;
 @Entity
 public class Cliente extends Usuario{
     
+    public String toJsonString(){
+        String f = ((this.getFoto() == null) ? "null" :Base64.getMimeEncoder().encodeToString(this.getFoto()));
+        return "{id:"+this.getId()+",nombreUsuario:"+this.getNombreUsuario()+",nombre :"+this.getNombre()+",edad:"+this.getEdad()+",foto:"+f+",descripcion:"+
+                this.getDescripcion() +",telefono :"+this.getTelefono()+"}";
+    }
 }

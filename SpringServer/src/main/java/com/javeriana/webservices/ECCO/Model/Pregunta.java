@@ -27,12 +27,17 @@ public class Pregunta {
     private String respuesta;
     private String fechaRespuesta;
     @JoinColumn(name = "servicio_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     private Servicio servicio;
     @JoinColumn(name = "cliente_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     private Cliente cliente;
 
+    public String toJsonString(){
+        String s = "{id :"+this.id+",pregunta:"+this.pregunta+",fechaPregunta:"+this.fechaPregunta+",respuesta : "+this.respuesta+
+                ",fechaRespuesta: "+this.fechaRespuesta+",servicio :"+this.servicio.toJsonString()+",cliente:"+this.cliente.toJsonString()+"}";
+        return s;
+    }
     public Long getId() {
         return id;
     }

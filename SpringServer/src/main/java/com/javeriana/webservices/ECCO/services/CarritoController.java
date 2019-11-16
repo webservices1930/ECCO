@@ -61,6 +61,7 @@ public class CarritoController {
                 c.getServicios().add(servicio.get());
             }else{
                 c.getServicios().add(servicio.get());
+                carritoRepository.save(c);
                 c.setNumServicios(c.getServicios().size());
                 float tot = 0;
                 for(Servicio s:c.getServicios()){
@@ -90,6 +91,7 @@ public class CarritoController {
                
             }else{
                 c.getServicios().remove(servicio.get());
+                carritoRepository.save(c);
                 c.setNumServicios(c.getServicios().size());
                 float tot = 0;
                 for(Servicio s:c.getServicios()){
