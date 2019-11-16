@@ -32,6 +32,10 @@ import { EditarservicioComponent } from './components/editarservicio/editarservi
 import { ServiciosproveedorComponent } from './components/serviciosproveedor/serviciosproveedor.component';
 import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.component';
 
+//Mapas
+import { AgmCoreModule } from '@agm/core';
+
+
 
 @NgModule({
   declarations: [
@@ -63,7 +67,12 @@ import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.compone
     APP_ROUTING,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    //LLAVE PARA LOS MAPAS
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDbLs6hjVLJqgv1EdJDUVXCnyVVnX8OD-0',
+      libraries: ['places']
+    })
   ],
   providers: [
     ServicioService

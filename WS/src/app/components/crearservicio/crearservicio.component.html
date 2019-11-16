@@ -9,9 +9,10 @@
     </div>
 
 
-    <div class="form-group"> 
+    <div class="form-group">
       <label for="pais">País</label>
-      <select name="pais" class="form-control" formControlName="pais" [ngClass]="{ 'is-invalid': submitted && f.pais.errors }">
+      <select name="pais" class="form-control" formControlName="pais"
+        [ngClass]="{ 'is-invalid': submitted && f.pais.errors }">
         <option value="Afganistán">Afganistán</option>
         <option value="Albania">Albania</option>
         <option value="Alemania">Alemania</option>
@@ -245,7 +246,7 @@
         <option value="Yemen">Yemen</option>
         <option value="Zambia">Zambia</option>
         <option value="Zimbabue">Zimbabue</option>
-        </select>
+      </select>
     </div>
 
 
@@ -314,101 +315,101 @@
     </div>
 
     <div *ngIf="this.tipoServicio == 'Alojamiento'">
-        <div class="form-group">
-            <label for="numeropersonas">Número de personas</label>
-            <input type="number" formControlName="numeropersonas" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }" />
-          </div>
+      <div class="form-group">
+        <label for="numeropersonas">Número de personas</label>
+        <input type="number" formControlName="numeropersonas" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }" />
+      </div>
 
-          <div class="form-group">
-              <label for="tipoalojamiento">Tipo de alojamiento</label>
-              <select (change)=cambiar() [(ngModel)]="this.tipoAlojamiento" name="tipoalojamiento" id="tipoalojamiento" ng-model="listItems"
-                formControlName="tipoalojamiento" class="form-control">
-                <option value="HOTEL">Hotel</option>
-                <option value="CASA">Casa</option>
-                <option value="CAMPING">Camping</option>
-                <option value="MOTEL">Motel</option>
-              </select>
-          </div>
+      <div class="form-group">
+        <label for="tipoalojamiento">Tipo de alojamiento</label>
+        <select (change)=cambiar() [(ngModel)]="this.tipoAlojamiento" name="tipoalojamiento" id="tipoalojamiento"
+          ng-model="listItems" formControlName="tipoalojamiento" class="form-control">
+          <option value="HOTEL">Hotel</option>
+          <option value="CASA">Casa</option>
+          <option value="CAMPING">Camping</option>
+          <option value="MOTEL">Motel</option>
+        </select>
+      </div>
 
-          <div class="form-group">
-            <label for="numerohabitaciones">Número de habitaciones</label>
-            <input type="number" formControlName="numerohabitaciones" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.numerohabitaciones.errors }" />
-          </div>
+      <div class="form-group">
+        <label for="numerohabitaciones">Número de habitaciones</label>
+        <input type="number" formControlName="numerohabitaciones" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.numerohabitaciones.errors }" />
+      </div>
 
-          <div class="form-group">
-              <label for="numerobanos">Número de baños</label>
-              <input type="number" formControlName="numerobanos" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.numerobanos.errors }" />
-          </div>
+      <div class="form-group">
+        <label for="numerobanos">Número de baños</label>
+        <input type="number" formControlName="numerobanos" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.numerobanos.errors }" />
+      </div>
 
-          <div class="form-group">
-              <label for="serviciolimpieza">Servicio de limpieza</label>
-              <select (change)=cambiar() [(ngModel)]="this.serviciolimpieza" name="serviciolimpieza" id="serviciolimpieza" ng-model="listItems"
-                formControlName="serviciolimpieza" class="form-control">
-                <option value="Si">Sí</option>
-                <option value="No">No</option>
-              </select>
-          </div>
+      <div class="form-group">
+        <label for="serviciolimpieza">Servicio de limpieza</label>
+        <select (change)=cambiar() [(ngModel)]="this.serviciolimpieza" name="serviciolimpieza" id="serviciolimpieza"
+          ng-model="listItems" formControlName="serviciolimpieza" class="form-control">
+          <option value="Si">Sí</option>
+          <option value="No">No</option>
+        </select>
+      </div>
 
-          <div class="form-group">
-              <label for="serviciowifi">Servicio de Wi-Fi</label>
-              <select (change)=cambiar() [(ngModel)]="this.serviciowifi" name="serviciowifi" id="serviciowifi" ng-model="listItems"
-                formControlName="serviciowifi" class="form-control">
-                <option value="Si">Sí</option>
-                <option value="No">No</option>
-              </select>
-          </div>
+      <div class="form-group">
+        <label for="serviciowifi">Servicio de Wi-Fi</label>
+        <select (change)=cambiar() [(ngModel)]="this.serviciowifi" name="serviciowifi" id="serviciowifi"
+          ng-model="listItems" formControlName="serviciowifi" class="form-control">
+          <option value="Si">Sí</option>
+          <option value="No">No</option>
+        </select>
+      </div>
     </div>
 
     <div *ngIf="this.tipoServicio == 'Transporte'">
-        <br>
-        <div class="form-group">
-            <label for="numeropersonas">Número de personas</label>
-            <input type="number" formControlName="numeropersonas" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }" />
-          </div>
+      <br>
+      <div class="form-group">
+        <label for="numeropersonas">Número de personas</label>
+        <input type="number" formControlName="numeropersonas" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.numeropersonas.errors }" />
+      </div>
 
-        <div class="form-group">
-            <label for="empresa">Empresa</label>
-            <input type="text" formControlName="empresa" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.empresa.errors }" />
-        </div>
+      <div class="form-group">
+        <label for="empresa">Empresa</label>
+        <input type="text" formControlName="empresa" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.empresa.errors }" />
+      </div>
 
-        <div class="form-group">
-              <label for="tipotransporte">Tipo de transporte</label>
-              <select (change)=cambiar() [(ngModel)]="this.tipoTransporte" name="tipotransporte" id="tipotransporte" ng-model="listItems"
-                formControlName="tipotransporte" class="form-control">
-                <option value="TERRESTRE">Terrestre</option>
-                <option value="AEREO">Aéreo</option>
-                <option value="MARITIMO">Marítimo</option>
-              </select>
-          </div>
+      <div class="form-group">
+        <label for="tipotransporte">Tipo de transporte</label>
+        <select (change)=cambiar() [(ngModel)]="this.tipoTransporte" name="tipotransporte" id="tipotransporte"
+          ng-model="listItems" formControlName="tipotransporte" class="form-control">
+          <option value="TERRESTRE">Terrestre</option>
+          <option value="AEREO">Aéreo</option>
+          <option value="MARITIMO">Marítimo</option>
+        </select>
+      </div>
 
-          <div class="form-group">
-              <label for="origen">Origen</label>
-              <input type="text" formControlName="origen" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }" />
-          </div>
+      <div class="form-group">
+        <label for="origen">Origen</label>
+        <input type="text" formControlName="origen" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }" />
+      </div>
 
-          <div class="form-group">
-              <label for="destino">Destino</label>
-              <input type="text" formControlName="destino" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }" />
-          </div>
+      <div class="form-group">
+        <label for="destino">Destino</label>
+        <input type="text" formControlName="destino" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.tipocomida.errors }" />
+      </div>
 
-          <div class="form-group">
-              <label for="horainicio">Hora salida</label>
-              <input type="time" formControlName="horainicio" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.horainicio.errors }" />
-          </div>
+      <div class="form-group">
+        <label for="horainicio">Hora salida</label>
+        <input type="time" formControlName="horainicio" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.horainicio.errors }" />
+      </div>
 
-          <div class="form-group">
-              <label for="horafin">Hora Fin</label>
-              <input type="time" formControlName="horafin" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.horafin.errors }" />
-          </div>
+      <div class="form-group">
+        <label for="horafin">Hora Fin</label>
+        <input type="time" formControlName="horafin" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.horafin.errors }" />
+      </div>
 
 
     </div>
@@ -447,9 +448,30 @@
 
     </div>
 
+    <div class="form-group">
+      <label>Enter address</label>
+      <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+        placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+        #search>
+    </div>
+
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick) = moverMarcador($event)>
+      <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+        (dragEnd)="markerDragEnd($event)"></agm-marker>
+    </agm-map>
+
+    <h5>Address: {{address}}</h5>
+    <div>Latitude: {{latitude}}</div>
+    <div>Longitude: {{longitude}}</div>
+    <div>Id: {{placeid}}</div>
+
+
+
 
     <div class="form-group">
       <button class="btn btn-outline-success mx-auto d-block">Crear servicio</button>
     </div>
+
+
   </form>
 </div>
