@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
 
 
   fbLibrary() {
- 
+
     (window as any).fbAsyncInit = function() {
       window['FB'].init({
         appId      : '2327416410905894',
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
       });
       window['FB'].AppEvents.logPageView();
     };
- 
+
     (function(d, s, id){
        var js, fjs = d.getElementsByTagName(s)[0];
        if (d.getElementById(id)) {return;}
@@ -71,11 +71,11 @@ export class LoginComponent implements OnInit {
        js.src = "https://connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
- 
+
 }
 
 login() {
- 
+
   window['FB'].login((response) => {
       console.log('login response',response);
       if (response.authResponse) {
@@ -94,19 +94,33 @@ login() {
               this.usuario.descripcion = "Ingresaste con facebook";
               this.usuario.contrasena = userInfo.email;
               //this.usuario.foto =;
-              this.usuarioService.registrarUsuario(this.usuario);
-            }
-                  this.sesionService.sesion = 'usuario' ;
-                  this.sesionService.sesionCambio.next('usuario');
-                  this.sesionService.id = res.idUsuario ;
-                  this.sesionService.idCambio.next(res.idUsuario);
-                  this.sesionService.loginSatisfactorio(res.idUsuario,'usuario');
-                  this.ngZone.run(() => this.router.navigate(['servicioss']));
-                  alert("Ingresaste con facebook");
+              this.usuarioService.registrarUsuario(this.usuario).subscribe( xd =>{
+                this.sesionService.login(userInfo.email,userInfo.email).subscribe( res2 => {
+                    this.sesionService.sesion = 'usuario' ;
+                    this.sesionService.sesionCambio.next('usuario');
 
+                    this.sesionService.id = res2.idUsuario ;
+                    this.sesionService.idCambio.next(res2.idUsuario);
+                    this.sesionService.loginSatisfactorio(res2.idUsuario,'usuario');
+                    this.ngZone.run(() => this.router.navigate(['servicioss']));
+                    alert("Ingresaste con facebook");
+
+                })
+              })
+
+            }else{
+              this.sesionService.sesion = 'usuario' ;
+              this.sesionService.sesionCambio.next('usuario');
+
+              this.sesionService.id = res.idUsuario ;
+              this.sesionService.idCambio.next(res.idUsuario);
+              this.sesionService.loginSatisfactorio(res.idUsuario,'usuario');
+              this.ngZone.run(() => this.router.navigate(['servicioss']));
+              alert("Ingresaste con facebook");
+            }
           })
         });
-         
+
       } else {
         console.log('User login failed');
       }

@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { RequestService } from '../Request/request.service';
 import { UsuarioService } from './usuario.service';
 import { ProveedorService } from './proveedor.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ServicioService {
@@ -32,7 +33,7 @@ export class ServicioService {
 
   serviciosAux:any=[];
 
-  constructor(private request: RequestService,        private proveedorService:ProveedorService)    {
+  constructor(private request: RequestService,        private proveedorService:ProveedorService,private http: HttpClient)    {
     this.getTodosServicios().subscribe(res => {
       this.serviciosCopia = res;
       this.servicios = res;
@@ -134,74 +135,9 @@ getServicioId(id){
 
   eliminarServicio(servicio){
     console.log(servicio);
-    if(servicio.tipo=="alimentacion"){
-      const url = `${environment.baseUrl}/servicio/alimentacion/${servicio.Id}`;
-        return this.request.delete(url, {
-          nombre :  servicio.nombre,
-          pais :  servicio.pais,
-          ciudad :  servicio.ciudad,
-          costo :  servicio.costo,
-          idioma :  servicio.idioma,
-          descripcion :  servicio.descripcion,
-          numeroPersonas :  servicio.numeropersonas,
-          tipoComida :  servicio.tipocomida,
-          cantidadPlatos :  servicio.cantidadplatos,
-          //proveedor:user
-      });
-    }else if(servicio.tipo=="transporte"){
-      const url = `${environment.baseUrl}/servicio/transporte/${servicio.Id}`;
-      return this.request.delete(url, {
-        nombre :  servicio.nombre,
-        pais :  servicio.pais,
-        ciudad :  servicio.ciudad,
-        costo :  servicio.costo,
-        idioma :  servicio.idioma,
-        descripcion :  servicio.descripcion,
-        numeroPersonas :  servicio.numeropersonas,
-        empresa :  servicio.tipocomida,
-        tipoTransporte :  servicio.tipotransporte,
-        origen: servicio.origen,
-        destino: servicio.destino,
-        horaSalida: servicio.horainicio,
-        horaLlegada: servicio.horafin,
-        //proveedor : user
-    });
-    }else if(servicio.tipo=="paseoEcologico"){
-      const url = `${environment.baseUrl}/servicio/paseoEcologico/${servicio.Id}`;
-      return this.request.delete(url, {
-        nombre :  servicio.nombre,
-        pais :  servicio.pais,
-        ciudad :  servicio.ciudad,
-        costo :  servicio.costo,
-        idioma :  servicio.idioma,
-        descripcion :  servicio.descripcion,
-        numeroPersonas :  servicio.numeropersonas,
-        origen: servicio.origen,
-        destino: servicio.destino,
-        horaInicio: servicio.horainicio,
-        horaFin: servicio.horafin,
-        //proveedor : user
-    });
-    }else if(servicio.tipo=="alojamiento"){
-      const url = `${environment.baseUrl}/servicio/alojamiento/${servicio.Id}`;
-      return this.request.delete(url, {
-        nombre :  servicio.nombre,
-        pais :  servicio.pais,
-        ciudad :  servicio.ciudad,
-        costo :  servicio.costo,
-        idioma :  servicio.idioma,
-        descripcion :  servicio.descripcion,
-        numeroPersonas :  servicio.numeropersonas,
-        tipoAlojamiento:  servicio.tipoalojamiento,
-        numeroHabitaciones:  servicio.numerohabitaciones,
-        numeroBanos:  servicio.numerobanos,
-        servicioLimpieza: servicio.serviciolimpieza,
-        servicioWifi: servicio.serviciowifi,
-        //proveedor : user
-    });
-    }else{
-      return this.request.delete('', {});
-    }
+      const url = `${environment.baseUrl}/servicio/${servicio.Id}`;
+        return this.http.delete<any>(url);
+
   }
 
   getServicio( idx: string ){

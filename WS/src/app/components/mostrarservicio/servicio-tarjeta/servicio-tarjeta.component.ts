@@ -56,7 +56,7 @@ export class ServicioTarjetaComponent implements OnInit {
   }
 
   agregarServicio(servicio : Servis){
-    this.carritoService.agregarAlCarrito(this._servicioSesion.id, servicio).subscribe(
+    this.carritoService.agregarAlCarrito(this.usuario.id, servicio).subscribe(
       res => {
         console.log("Funciono");
       }
