@@ -58,7 +58,6 @@ import { AgmCoreModule } from '@agm/core';
     EditarservicioComponent,
     ServiciosproveedorComponent,
     MostrarcarritoComponent,
-    MomentPipe,
 
   ],
   imports: [

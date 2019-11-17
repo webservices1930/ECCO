@@ -207,8 +207,8 @@
                 <tr>
                     <td *ngFor="let forecast of weather">
                         <img [src]="forecast.iconLink" />
-                        <p>{{ forecast.highTemperature }}C</p>
-                        <p>{{ forecast.utcTime | moment }}</p>
+                        <p>{{ forecast.highTemperature }}°C</p>
+                        <p>{{ forecast.utcTime | date: 'dd/MM/yyyy' }}</p>
                     </td>
                 </tr>
             </tbody>
