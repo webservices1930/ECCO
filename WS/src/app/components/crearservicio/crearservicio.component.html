@@ -285,7 +285,7 @@
 
     <div>
       <label for="tipo">Tipo de servicio</label>
-      <select (change)=cambiar() [(ngModel)]="this.tipoServicio" name="combo" id="combo" ng-model="listItems"
+      <select [(ngModel)]="this.tipoServicio" name="combo" id="combo" ng-model="listItems"
         formControlName="tipo" class="form-control">
         <option value="Alimentacion">Alimentación</option>
         <option value="Alojamiento">Alojamiento</option>

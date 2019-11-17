@@ -57,8 +57,9 @@ export class ProfileComponent implements OnInit {
 
   }
   public getSantizeUrl() {
-    this.image = "data:image/"+this.usuarioMostrar[0].tipo+";base64, "+this.usuarioMostrar[0].img;
-    return this.sanitization.bypassSecurityTrustUrl(this.image);
+   // this.image = "data:image/"+this.usuarioMostrar[0].tipo+";base64, "+this.usuarioMostrar[0].img;
+    //return this.sanitization.bypassSecurityTrustUrl(this.image);
+    return this.usuarioMostrar[0].tipo;
  }
 
  onSelectFile(event) { // called each time file input changes
@@ -82,8 +83,15 @@ export class ProfileComponent implements OnInit {
         this.usuarioService.updateUsuario(this.usuarioMostrar[0],this.base64data,this.ext);
 
     }else{
-      this.usuarioMostrar[0].password =(<HTMLInputElement>document.getElementById("password")).value;
-      this.proveedorService.updateProveedor(this.usuarioMostrar[0],this.base64data,this.ext);
+      this.proveedorService.updateProveedor(this.usuarioMostrar[0]).subscribe(
+        result =>{
+           alert("Se actualizó el proveedor");
+        },
+        error => {
+         alert("No se actualizó el proveedor");
+
+        }
+      )
 
     }
   }

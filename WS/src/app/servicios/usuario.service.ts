@@ -40,9 +40,17 @@ export class UsuarioService {
     return this.request.get<Usuario>(url);
   }
 
-  updateUsuario(usuarioMostrar,base64data, ext){
-
-
+  updateUsuario(usuario,base64data, ext){
+    const url = `${environment.baseUrl}/usuario/cliente/${usuario.id}`;
+    return this.request.put(url, {
+      nombre: usuario.nombre,
+      nombreUsuario: usuario.nombreUsuario,
+      edad:usuario.edad,
+      contrasena:usuario.contrasena,
+      descripcion:usuario.descripcion,
+      foto:usuario.foto,
+      telefono:usuario.telefono
+    });
     }
 
   borrarUsuario(usuario){

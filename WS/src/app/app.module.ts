@@ -70,7 +70,7 @@ import { AgmCoreModule } from '@agm/core';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
     //LLAVE PARA LOS MAPAS
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDbLs6hjVLJqgv1EdJDUVXCnyVVnX8OD-0',

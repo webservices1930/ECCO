@@ -9,9 +9,7 @@ import { RequestService } from '../Request/request.service';
   providedIn: 'root'
 })
 export class ProveedorService {
-  updateProveedor(arg0: any, base64data: string, ext: string) {
-    throw new Error("Method not implemented.");
-  }
+  
   ext: string;
   base64data: string;
 
@@ -68,6 +66,20 @@ export class ProveedorService {
       });
   }
 
+  updateProveedor(proveedor) {
+    const url = `${environment.baseUrl}/usuario/proveedor/${proveedor.id}`;
+    return this.request.put(url, {
+      nombre: proveedor.nombre,
+      nombreUsuario: proveedor.nombreUsuario,
+      edad:proveedor.edad,
+      contrasena:proveedor.contrasena,
+      descripcion:proveedor.descripcion,
+      foto:proveedor.foto,
+      telefono:proveedor.telefono,
+      paginaWeb:proveedor.paginaWeb,
+        contactoRS:proveedor.contactoRS
+    });
+  }
 
 
   async getProveedoresJSON(){

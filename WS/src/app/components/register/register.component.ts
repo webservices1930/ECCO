@@ -26,7 +26,8 @@ export class RegisterComponent implements OnInit {
   ext : string;
   image :string;
 
-
+  public selectedFile;
+  imgURL:any;
   tipo="";
 
   usuario: Usuario = new Usuario (
@@ -117,7 +118,7 @@ export class RegisterComponent implements OnInit {
         this.usuario.descripcion = this.registerForm.value.descripcion;
         this.usuario.telefono = this.registerForm.value.telefono;
         this.usuario.contrasena = this.registerForm.value.password;
-        this.usuario.foto = this.base64data;
+        this.usuario.foto = this.selectedFile;
         this.usuarioService.registrarUsuario(this.usuario).subscribe(
           results => {
             console.log(results);
@@ -137,13 +138,11 @@ export class RegisterComponent implements OnInit {
   }
 
   onSelectFile(event) { // called each time file input changes
-    if (event.target.files && event.target.files[0]) {
+      this.selectedFile = event.target.files[0];
       var reader = new FileReader();
-      reader.readAsBinaryString(event.target.files[0]);
-      this.ext=event.target.files[0].type;
-      reader.onload = (event) => { // called once readAsDataURL is completed
-            this.base64data=btoa(reader.result as string);
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event2) => { // called once readAsDataURL is completed
+            this.imgURL= reader.result;
       }
     }
-  }
 }

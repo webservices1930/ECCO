@@ -6,6 +6,7 @@ import { resolve } from 'url';
 import { environment } from 'src/environments/environment';
 import { RequestService } from '../Request/request.service';
 import { UsuarioService } from './usuario.service';
+import { ProveedorService } from './proveedor.service';
 
 @Injectable()
 export class ServicioService {
@@ -31,7 +32,7 @@ export class ServicioService {
 
   serviciosAux:any=[];
 
-  constructor(private request: RequestService,    private usuarioService:UsuarioService) {
+  constructor(private request: RequestService,        private proveedorService:ProveedorService)    {
     this.getTodosServicios().subscribe(res => {
       this.serviciosCopia = res;
       this.servicios = res;
@@ -44,19 +45,21 @@ export class ServicioService {
   }
 
 
-  crearServicio(registerForm,tipo,iduser){
+  crearServicio(registerForm,tipo,user){
+
       if(tipo=="Alimentacion"){
-        const url = `${environment.baseUrl}/servicio/alimentacion/${iduser}`;
-        return this.request.post(url, {
-          nombre : registerForm.value.nombres,
-          pais : registerForm.value.pais,
-          ciudad : registerForm.value.ciudad,
-          costo : registerForm.value.costo,
-          idioma : registerForm.value.idioma,
-          descripcion : registerForm.value.foto,
-          numeroPersonas : registerForm.value.numeropersonas,
-          tipoComida : registerForm.value.tipocomida,
-          cantidadPlatos : registerForm.value.cantidadplatos,
+        const url = `${environment.baseUrl}/servicio/alimentacion/${user.id}`;
+          return this.request.post(url, {
+            nombre : registerForm.value.nombres,
+            pais : registerForm.value.pais,
+            ciudad : registerForm.value.ciudad,
+            costo : registerForm.value.costo,
+            idioma : registerForm.value.idioma,
+            descripcion : registerForm.value.foto,
+            numeroPersonas : registerForm.value.numeropersonas,
+            tipoComida : registerForm.value.tipocomida,
+            cantidadPlatos : registerForm.value.cantidadplatos,
+            proveedor : user
         });
       }else if(tipo=="Transporte"){
         return this.request.post('', {});
@@ -65,19 +68,14 @@ export class ServicioService {
       }else if(tipo=="Alojamiento"){
         return this.request.post('', {});
       }
-  }
-
-
-  async getServiciosAlimentacionJSON(){
+    
 
   }
-
 
 
 //Busca en TODOS los servicios
 getServicioId(id){
     const url = `${environment.baseUrl}/servicio/${id}`;
-    console.log('xddd');
       return this.request.get<Servis>(url);
 }
 
@@ -86,8 +84,28 @@ getServicioId(id){
       return this.request.get<Servis[]>(url);
  }
 
-  eliminarServicio(id){
-
+  eliminarServicio(servicio){
+    if(servicio.tipo=="Alimentacion"){
+      const url = `${environment.baseUrl}/servicio/alimentacion/${servicio.id}`;
+        return this.request.delete(url, {
+          nombre : servicio.nombres,
+          pais : servicio.pais,
+          ciudad : servicio.ciudad,
+          costo : servicio.costo,
+          idioma : servicio.idioma,
+          descripcion : servicio.foto,
+          numeroPersonas : servicio.numeropersonas,
+          tipoComida : servicio.tipocomida,
+          cantidadPlatos : servicio.cantidadplatos,
+          proveedor : servicio.proveedor
+      });
+    }else if(servicio.tipo=="Transporte"){
+      return this.request.post('', {});
+    }else if(servicio.tipo=="PaseoEcologico"){
+      return this.request.post('', {});
+    }else if(servicio.tipo=="Alojamiento"){
+      return this.request.post('', {});
+    }
   }
 
   getServicio( idx: string ){

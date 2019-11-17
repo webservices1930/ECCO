@@ -134,7 +134,7 @@ export class ServicioComponent {
   }
 
   eliminar() {
-    this._serviciosService.eliminarServicio(this.servicio[0].idx);
+    this._serviciosService.eliminarServicio(this.servicio[0]);
     this.router.navigate(['servicioss']);
   }
 

@@ -6,6 +6,7 @@ import { ServicioService } from '../../servicios/servicio.service';
 import { SesionService } from '../../servicios/sesion.service';
 import { Servis } from '../../model/servis';
 import { MapsAPILoader } from '@agm/core';
+import { ProveedorService } from '../../servicios/proveedor.service';
 
 @Component({
   selector: 'app-crearservicio',
@@ -54,7 +55,8 @@ export class CrearservicioComponent implements OnInit {
       private servicioService:ServicioService,
       private sesionService:SesionService,
       private mapsAPILoader: MapsAPILoader,
-      private ngZone: NgZone
+      private ngZone: NgZone,
+      private proveedorService:ProveedorService
   ) {
     this.base64data=" ";
      this.ext=" ";
@@ -160,18 +162,23 @@ export class CrearservicioComponent implements OnInit {
     if(this.registerForm.invalid){
       alert("Ingrese todos los campos por favor");
     }else{
-      this.servicioService.crearServicio(this.registerForm,this.tipoServicio,this.user).subscribe(
-        results => {
-          console.log(results);
-          this.router.navigate(['servicioss']);
-          alert("Se creó el servicio satisfactoriamente");
+      this.proveedorService.getProveedorByUsernameJSON(this.user).subscribe( res => {
+        console.log(res);
+        this.servicioService.crearServicio(this.registerForm,this.tipoServicio,res).subscribe(
+          results => {
+            console.log(results);
+            this.router.navigate(['servicioss']);
+            alert("Se creó el servicio satisfactoriamente");
+  
+          },
+          error => {
+            console.error(error);
+            alert("No se creó el servicio. Por favor intente nuevamente");
+          }
+        )
+      
+      });
 
-        },
-        error => {
-          console.error(error);
-          alert("No se creó el servicio. Por favor intente nuevamente");
-        }
-      )
     }
   }
 
