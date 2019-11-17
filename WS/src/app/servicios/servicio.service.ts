@@ -133,31 +133,30 @@ getServicioId(id){
  }
 
   eliminarServicio(servicio){
-    if(servicio.tipo=="Alimentacion"){
-      const url = `${environment.baseUrl}/servicio/alimentacion/${servicio.id}`;
+    console.log(servicio);
+    if(servicio.tipo=="alimentacion"){
+      const url = `${environment.baseUrl}/servicio/alimentacion/${servicio.Id}`;
         return this.request.delete(url, {
-          nombre :  servicio.nombres,
+          nombre :  servicio.nombre,
           pais :  servicio.pais,
           ciudad :  servicio.ciudad,
           costo :  servicio.costo,
           idioma :  servicio.idioma,
           descripcion :  servicio.descripcion,
-          foto: servicio.foto.foto,
           numeroPersonas :  servicio.numeropersonas,
           tipoComida :  servicio.tipocomida,
           cantidadPlatos :  servicio.cantidadplatos,
           //proveedor:user
       });
-    }else if(servicio.tipo=="Transporte"){
-      const url = `${environment.baseUrl}/servicio/transporte/${servicio.id}`;
+    }else if(servicio.tipo=="transporte"){
+      const url = `${environment.baseUrl}/servicio/transporte/${servicio.Id}`;
       return this.request.delete(url, {
-        nombre :  servicio.nombres,
+        nombre :  servicio.nombre,
         pais :  servicio.pais,
         ciudad :  servicio.ciudad,
         costo :  servicio.costo,
         idioma :  servicio.idioma,
         descripcion :  servicio.descripcion,
-        foto: servicio.foto.foto,
         numeroPersonas :  servicio.numeropersonas,
         empresa :  servicio.tipocomida,
         tipoTransporte :  servicio.tipotransporte,
@@ -167,16 +166,15 @@ getServicioId(id){
         horaLlegada: servicio.horafin,
         //proveedor : user
     });
-    }else if(servicio.tipo=="PaseoEcologico"){
-      const url = `${environment.baseUrl}/servicio/paseoEcologico/${servicio.id}`;
+    }else if(servicio.tipo=="paseoEcologico"){
+      const url = `${environment.baseUrl}/servicio/paseoEcologico/${servicio.Id}`;
       return this.request.delete(url, {
-        nombre :  servicio.nombres,
+        nombre :  servicio.nombre,
         pais :  servicio.pais,
         ciudad :  servicio.ciudad,
         costo :  servicio.costo,
         idioma :  servicio.idioma,
         descripcion :  servicio.descripcion,
-        foto: servicio.foto.foto,
         numeroPersonas :  servicio.numeropersonas,
         origen: servicio.origen,
         destino: servicio.destino,
@@ -184,16 +182,15 @@ getServicioId(id){
         horaFin: servicio.horafin,
         //proveedor : user
     });
-    }else if(servicio.tipo=="Alojamiento"){
-      const url = `${environment.baseUrl}/servicio/alojamiento/${servicio.id}`;
+    }else if(servicio.tipo=="alojamiento"){
+      const url = `${environment.baseUrl}/servicio/alojamiento/${servicio.Id}`;
       return this.request.delete(url, {
-        nombre :  servicio.nombres,
+        nombre :  servicio.nombre,
         pais :  servicio.pais,
         ciudad :  servicio.ciudad,
         costo :  servicio.costo,
         idioma :  servicio.idioma,
         descripcion :  servicio.descripcion,
-        foto: servicio.foto.foto,
         numeroPersonas :  servicio.numeropersonas,
         tipoAlojamiento:  servicio.tipoalojamiento,
         numeroHabitaciones:  servicio.numerohabitaciones,
@@ -212,7 +209,8 @@ getServicioId(id){
   }
 
   getServicioProveedor(idProveedor){
-    const url = `${environment.baseUrl}/usuario/proveedor/${idProveedor}/services"`;
+    console.log("xxxx "+idProveedor);
+    const url = `${environment.baseUrl}/usuario/proveedor/${idProveedor}/services`;
     return this.request.get<any>(url);
   }
 

@@ -9,6 +9,8 @@ import { UsuarioService } from '../../../servicios/usuario.service';
 import { Usuario } from 'src/app/model/usuario';
 import { CarritoService } from '../../../servicios/carrito.service';
 import { TarjetaCarritoService } from '../../../servicios/tarjeta-carrito.service';
+import { ServicioService } from '../../../servicios/servicio.service';
+import { ProveedorService } from '../../../servicios/proveedor.service';
 
 
 @Component({
@@ -27,17 +29,25 @@ export class ServicioTarjetaComponent implements OnInit {
   @Output() servicioSeleccionado: EventEmitter<number>;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private sesionService:SesionService ,private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService, private carritoService: CarritoService, private tarjetaCarrito: TarjetaCarritoService) {
+  constructor(private sesionService:SesionService ,private _serviciosService:ServicioService, private router: Router, private _servicioSesion:SesionService,private sanitization:DomSanitizer, private usuarioservice: UsuarioService, private proveedorservice: ProveedorService, private carritoService: CarritoService, private tarjetaCarrito: TarjetaCarritoService) {
     this.servicioSeleccionado = new EventEmitter();
   }
 
   ngOnInit() {
     this.sesion = this.sesionService.sesion;
     const idUsuario = this._servicioSesion.id;
+    if(this.sesion=='usuario'){
       this.usuarioservice.getUsuarioByUsernameJSON(idUsuario).subscribe( res => {
         this.usuario = res;
         console.log(this.usuario);
       });
+    }else{
+      this.proveedorservice.getProveedorByUsernameJSON(idUsuario).subscribe( res => {
+        this.usuario = res;
+        console.log(this.usuario);
+      });
+    }
+
     // this.carrito.setCliente(this.usuario);
   }
 
@@ -59,4 +69,14 @@ export class ServicioTarjetaComponent implements OnInit {
   public getSantizeUrl(img) {
     return this.sanitization.bypassSecurityTrustUrl(img);
  }
+
+  eliminar() {
+    this._serviciosService.eliminarServicio(this.servicio);
+    this.router.navigate(['servicioss']);
+  }
+
+  editar() {
+      this.router.navigate(['/editarservicio', this.servicio.Id]);
+
+  }
 }

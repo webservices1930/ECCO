@@ -18,6 +18,7 @@ export class ServiciosproveedorComponent implements OnInit {
     this.user = this.sesionService.id;
     console.log("iddd "+this.user);
     this._serviciosService.getServicioProveedor(this.user).subscribe(res =>{
+      console.log(res);
       this.servicios = res;
      });
   }

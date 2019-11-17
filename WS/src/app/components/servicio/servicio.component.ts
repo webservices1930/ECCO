@@ -98,7 +98,7 @@ export class ServicioComponent {
         console.log("entro");
         console.log(res);
         this.servicio[0] = res;
-        this.servicioProveedorid = res.proveedor;
+        this.servicioProveedorid = res.proveedor.Id;
         this.userid = this._sesionService.id;
 
 
@@ -134,7 +134,14 @@ export class ServicioComponent {
   }
 
   eliminar() {
-    this._serviciosService.eliminarServicio(this.servicio[0]);
+    this._serviciosService.eliminarServicio(this.servicio[0]).subscribe(
+      res =>{
+        console.log(res);
+      },
+      errors=>{
+        console.log(errors);
+      }
+    )
     this.router.navigate(['servicioss']);
   }
 
