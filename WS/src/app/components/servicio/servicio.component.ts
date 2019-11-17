@@ -8,6 +8,8 @@ import { Pregunta } from 'src/app/model/pregunta';
 import { Usuario } from 'src/app/model/usuario';
 import { SesionService } from '../../servicios/sesion.service';
 import { PreguntaService } from 'src/app/servicios/pregunta.service';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-servicio',
@@ -56,17 +58,34 @@ export class ServicioComponent {
   );
   servicio=[];
 
+
+    private appId: string;
+    private appCode: string;
+    public weather: any;
+
   constructor(private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
     private sanitization: DomSanitizer,
     private _sesionService: SesionService,
     private router: Router,
-    private _preguntaService: PreguntaService
+    private _preguntaService: PreguntaService,
+    private http: HttpClient
   ) {
-
+    this.appId = "DHdAP2csCaXmWs7BqkdI";
+    this.appCode = "1K1F8fwfcgvcJG0Y0nx6kg";
+    this.weather = [];
   }
 
   ngOnInit() {
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            this.getWeather(position.coords);
+        });
+    } else {
+        console.error("The browser does not support geolocation...");
+    }
+
+
     this.preguntasCargadas = false;
     this.activatedRoute.params.subscribe(params => {
       this.idServicio = params['id'];
@@ -95,6 +114,17 @@ export class ServicioComponent {
 
 
     });
+  }
+  public getWeather(coordinates: any) {
+    console.log(coordinates);
+    this.http.jsonp("https://weather.cit.api.here.com/weather/1.0/report.json?product=forecast_7days_simple&latitude=" + coordinates.latitude + "&longitude=" + coordinates.longitude + "&app_id=" + this.appId + "&app_code=" + this.appCode, "jsonpCallback")
+    .pipe(map(result => (<any>result).dailyForecasts.forecastLocation))
+    .subscribe(result => {
+        this.weather = result.forecast;
+    }, error => {
+        console.error(error);
+    });
+
   }
 
   public getSantizeUrl(img) {

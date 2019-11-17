@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HttpClientJsonpModule  } from '@angular/common/http';
 
 // Rutas
 import { APP_ROUTING } from './app.routes';
@@ -31,6 +31,7 @@ import { PagoComponent } from './components/pago/pago.component';
 import { EditarservicioComponent } from './components/editarservicio/editarservicio.component';
 import { ServiciosproveedorComponent } from './components/serviciosproveedor/serviciosproveedor.component';
 import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.component';
+import { MomentPipe } from './servicios/moment.pipe';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.compone
     EditarservicioComponent,
     ServiciosproveedorComponent,
     MostrarcarritoComponent,
+    MomentPipe,
 
   ],
   imports: [
@@ -63,7 +65,8 @@ import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.compone
     APP_ROUTING,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientJsonpModule
   ],
   providers: [
     ServicioService
