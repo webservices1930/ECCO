@@ -33,6 +33,10 @@ import { ServiciosproveedorComponent } from './components/serviciosproveedor/ser
 import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.component';
 import { MomentPipe } from './servicios/moment.pipe';
 
+//Mapas
+import { AgmCoreModule } from '@agm/core';
+
+
 
 @NgModule({
   declarations: [
@@ -67,6 +71,11 @@ import { MomentPipe } from './servicios/moment.pipe';
     HttpClientModule,
     ReactiveFormsModule,
     HttpClientJsonpModule
+    //LLAVE PARA LOS MAPAS
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDbLs6hjVLJqgv1EdJDUVXCnyVVnX8OD-0',
+      libraries: ['places']
+    })
   ],
   providers: [
     ServicioService
