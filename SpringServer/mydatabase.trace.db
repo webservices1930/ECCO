@@ -133,3 +133,12 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+2019-11-17 15:22:41 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLException: Table "SERVICIOALIMENTACION" not found; SQL statement:
+SELECT * FROM  servicioALIMENTACION [42102-196]
+2019-11-17 15:34:02 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Data conversion error converting "'' (SERVICIO: PROVEEDOR_ID BIGINT NOT NULL)"; SQL statement:
+UPDATE "PUBLIC"."SERVICIO" SET "ID"=? ,"CIUDAD"=? ,"COSTO"=? ,"DESCRIPCION"=? ,"FOTO"=? ,"IDIOMA"=? ,"NOMBRE"=? ,"NUMERO_PERSONAS"=? ,"PAIS"=? ,"PROVEEDOR_ID"=?  WHERE "ID"=? [22018-196]
+2019-11-17 15:34:02 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Data conversion error converting "'' (SERVICIO: PROVEEDOR_ID BIGINT NOT NULL)"; SQL statement:
+UPDATE "PUBLIC"."SERVICIO" SET "ID"=? ,"CIUDAD"=? ,"COSTO"=? ,"DESCRIPCION"=? ,"FOTO"=? ,"IDIOMA"=? ,"NOMBRE"=? ,"NUMERO_PERSONAS"=? ,"PAIS"=? ,"PROVEEDOR_ID"=?  WHERE "ID"=? [22018-196]

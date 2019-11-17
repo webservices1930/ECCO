@@ -12,6 +12,11 @@ import com.javeriana.webservices.ECCO.Model.PaseoEcologico;
 import com.javeriana.webservices.ECCO.Model.Proveedor;
 import com.javeriana.webservices.ECCO.Model.Servicio;
 import com.javeriana.webservices.ECCO.Model.Transporte;
+import com.javeriana.webservices.ECCO.pojo.AlimentacionPojo;
+import com.javeriana.webservices.ECCO.pojo.AlojamientoPojo;
+import com.javeriana.webservices.ECCO.pojo.PaseoEcologicoPojo;
+import com.javeriana.webservices.ECCO.pojo.ProveedorPojo;
+import com.javeriana.webservices.ECCO.pojo.TransportePojo;
 import com.javeriana.webservices.ECCO.repositories.AlimentacionRepository;
 import com.javeriana.webservices.ECCO.repositories.AlojamientoRepository;
 import com.javeriana.webservices.ECCO.repositories.PaseoEcologicoRepository;
@@ -19,7 +24,9 @@ import com.javeriana.webservices.ECCO.repositories.ProveedorRepository;
 import com.javeriana.webservices.ECCO.repositories.ServicioRepository;
 import com.javeriana.webservices.ECCO.repositories.TransporteRepository;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.json.JSONArray;
@@ -66,29 +73,26 @@ public class ServicioController {
     
     @GetMapping
     public ResponseEntity getServicios(){
-        JSONArray res = new JSONArray();
         List<Servicio> x =this.servicioRepository.findAll();
+        List<Object> res = new ArrayList<>();
+        System.out.println(x.size());
         for (Servicio aux : x){
-            JSONObject js = new JSONObject(aux.toJsonString()); 
-            if(js.get("tipo").equals("paseoEcologico") ){
-                String s = String.valueOf(js.get("horaInicio"));
-                s.replace("*", ":");
-                js.put("horaInicio", s);
-                s = String.valueOf(js.get("horaFin"));
-                s.replace("*", ":");
-                js.put("horaFin", s);
-                
-            }else if(js.get("tipo").equals("transporte")){
-                String s = String.valueOf(js.get("horaSalida"));
-                s.replace("*", ":");
-                js.put("horaSalida", s);
-                s = String.valueOf(js.get("horaLlegada"));
-                s.replace("*", ":");
-                js.put("horaLlegada", s);
+            if(aux instanceof Alojamiento){
+                Alojamiento a = (Alojamiento) aux;
+                res.add(AlojamientoPojo.toPojo(a));
+            }else if(aux instanceof Transporte ){
+                Transporte t = (Transporte) aux;
+                res.add(TransportePojo.toPojo(t));
+            }else if(aux instanceof PaseoEcologico){
+                PaseoEcologico p =(PaseoEcologico) aux;
+                res.add(PaseoEcologicoPojo.toPojo(p));
+            }else if(aux instanceof Alimentacion){
+                Alimentacion a = (Alimentacion) aux;
+                res.add(AlimentacionPojo.toPojo(a));
             }
-            res.put(js.toMap());
+            
         }
-        return ResponseEntity.ok(res.toList());
+        return ResponseEntity.ok(res);
     }
     
     @GetMapping("/{id}")
@@ -96,7 +100,24 @@ public class ServicioController {
         
         Optional<Servicio> x = this.servicioRepository.findById(servicioId);
         if(x.isPresent()){
-            return ResponseEntity.ok(new JSONObject(x.get().toJsonString()).toMap());
+            if(x.get() instanceof Alojamiento){
+                Alojamiento a = (Alojamiento) x.get();
+                return ResponseEntity.ok(AlojamientoPojo.toPojo(a));
+                
+            }else if(x.get() instanceof Transporte ){
+                Transporte t = (Transporte) x.get();
+                return ResponseEntity.ok(TransportePojo.toPojo(t));
+                
+            }else if(x.get() instanceof PaseoEcologico){
+                PaseoEcologico p =(PaseoEcologico) x.get();
+                return ResponseEntity.ok(PaseoEcologicoPojo.toPojo(p));
+                
+            }else if(x.get() instanceof Alimentacion){
+                Alimentacion a = (Alimentacion) x.get();
+                return ResponseEntity.ok(AlimentacionPojo.toPojo(a));
+                
+            }
+            
         }
         return ResponseEntity.ok(new JSONObject("{ message : no hay servicio con ese id}").toMap());
     }
@@ -106,8 +127,12 @@ public class ServicioController {
         Optional<Servicio> servicio = servicioRepository.findById(servicioId);
         JSONObject response = new JSONObject();
         if(servicio.isPresent()){
-            response.put("message","mensaje eliminado con exito");
+            Optional<Proveedor> prov = proveedorRepository.findById(servicio.get().getProveedor().getId());
+            prov.get().getServicios().remove(servicio.get());
+            proveedorRepository.save(prov.get());
             servicioRepository.delete(servicio.get());
+            response.put("message","mensaje eliminado con exito");
+            
             return ResponseEntity.ok(response.toMap());
         }
         response.put("message", "serivicio no encontrado");
@@ -115,8 +140,12 @@ public class ServicioController {
     }
     
     @GetMapping("/alojamiento")
-    public List<Alojamiento> getAllAlojamiento() {
-        return alojamientoRepository.findAll();
+    public List<AlojamientoPojo> getAllAlojamiento() {
+        List<AlojamientoPojo> res = new ArrayList<>();
+        for(Alojamiento o: alojamientoRepository.findAll() ){
+            res.add(AlojamientoPojo.toPojo(o));
+        }
+        return res;
     }
 
     @GetMapping("/alojamiento/{id}")
@@ -124,73 +153,97 @@ public class ServicioController {
         
         Optional<Alojamiento> alojamiento = alojamientoRepository.findById(alojamientoId);
         if(alojamiento.isPresent()){
-            return ResponseEntity.ok().body(alojamiento.get());
+            return ResponseEntity.ok().body(AlojamientoPojo.toPojo(alojamiento.get()));
         }
-        return (ResponseEntity) ResponseEntity.notFound();
+        return ResponseEntity.ok(false);
         
     }
     
     @PostMapping("/alojamiento/{idProveedor}")
-    public ResponseEntity createAlojamiento(@PathVariable(value = "idProveedor") Long proveedorId, @Valid @RequestBody Alojamiento alojamiento) {
+    public ResponseEntity createAlojamiento(@PathVariable(value = "idProveedor") Long proveedorId, @Valid @RequestBody AlojamientoPojo alojamiento) {
+        JSONObject pay = new JSONObject();
         try {
             Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
             if(proveedor.isPresent()){
-                alojamiento.setProveedor(proveedor.get());
-                Alojamiento x =alojamientoRepository.save(alojamiento);
-                proveedor.get().getServicios().add(alojamiento);
+                pay.put("message", "servicio creado");
+                Alojamiento x = new Alojamiento();
+                x.setProveedor(proveedor.get());
+                
+                x.setNombre(alojamiento.getNombre());
+                x.setPais(alojamiento.getPais());
+                x.setCiudad(alojamiento.getCiudad());
+                x.setIdioma(alojamiento.getIdioma());
+                x.setCosto(alojamiento.getCosto());
+                x.setDescripcion(alojamiento.getDescripcion());if(alojamiento.getFoto()!=null){
+                    x.setFoto(Base64.getDecoder().decode(alojamiento.getFoto()));
+                }else{
+                    x.setFoto(null);
+                }
+                x.setNumeroPersonas(alojamiento.getNumeroPersonas());
+
+                x.setTipoAlojamiento(alojamiento.getTipoAlojamiento());
+                x.setNumeroHabitaciones(alojamiento.getNumeroHabitaciones());
+                x.setNumeroBanos(alojamiento.getNumeroBanos());
+                x.setServicioWifi(alojamiento.getServicioWifi());
+                x.setServicioLimpieza(alojamiento.getServicioLimpieza());
+                Alojamiento aux =alojamientoRepository.save(x);
+                proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
-                return ResponseEntity.ok().body(true);
+                
+                return ResponseEntity.ok().body(pay.toMap());
             }
-            return (ResponseEntity) ResponseEntity.notFound();
+            pay.put("message", "proveedor no encontrado");
+            return ResponseEntity.ok().body(pay.toMap());
         } catch (Exception e) {
-            return (ResponseEntity) ResponseEntity.badRequest();
+            pay.put("message", "error");
+            return ResponseEntity.ok().body(pay.toMap());
         }
         
         
     }
 
     @PutMapping("/alojamiento/{idServicio}")
-    public ResponseEntity updateAlojamiento(@PathVariable(value = "idServicio") Long alojamientoId, @Valid @RequestBody Alojamiento alojamientoDetails) {
-            Optional<Alojamiento> alojamiento = alojamientoRepository.findById(alojamientoId);
+    public ResponseEntity updateAlojamiento(@PathVariable(value = "idServicio") Long alojamientoId, @Valid @RequestBody AlojamientoPojo alojamientoDetails) {
+        Optional<Alojamiento> alojamiento = alojamientoRepository.findById(alojamientoId);
+        JSONObject pay = new JSONObject();
         if(alojamiento.isPresent()){
-            alojamiento.get().setNombre(alojamientoDetails.getNombre());
-            alojamiento.get().setNumeroPersonas(alojamientoDetails.getNumeroPersonas());
-            alojamiento.get().setCiudad(alojamientoDetails.getCiudad());
-            alojamiento.get().setCosto(alojamientoDetails.getCosto());
-            alojamiento.get().setFoto(alojamientoDetails.getFoto());
-            alojamiento.get().setDescripcion(alojamientoDetails.getDescripcion());
-            alojamiento.get().setIdioma(alojamientoDetails.getIdioma());
-            alojamiento.get().setPais(alojamientoDetails.getPais());
-            //---------------------------------------------------------------------------------------------
-            alojamiento.get().setNumeroBanos(alojamientoDetails.getNumeroBanos());
-            alojamiento.get().setNumeroHabitaciones(alojamientoDetails.getNumeroHabitaciones());
-            alojamiento.get().setServicioLimpieza(alojamientoDetails.getServicioLimpieza());
-            alojamiento.get().setServicioWifi(alojamientoDetails.getServicioWifi());
-            alojamiento.get().setTipoAlojamiento(alojamientoDetails.getTipoAlojamiento());
+            
+                alojamiento.get().setNombre(alojamientoDetails.getNombre());
+                alojamiento.get().setPais(alojamientoDetails.getPais());
+                alojamiento.get().setCiudad(alojamientoDetails.getCiudad());
+                alojamiento.get().setIdioma(alojamientoDetails.getIdioma());
+                alojamiento.get().setCosto(alojamientoDetails.getCosto());
+                alojamiento.get().setDescripcion(alojamientoDetails.getDescripcion());
+                if(alojamientoDetails.getFoto()!=null){
+                    alojamiento.get().setFoto(Base64.getDecoder().decode(alojamientoDetails.getFoto()));
+                }else{
+                    alojamiento.get().setFoto(null);
+                }
+                alojamiento.get().setNumeroPersonas(alojamientoDetails.getNumeroPersonas());
+
+                alojamiento.get().setTipoAlojamiento(alojamientoDetails.getTipoAlojamiento());
+                alojamiento.get().setNumeroHabitaciones(alojamientoDetails.getNumeroHabitaciones());
+                alojamiento.get().setNumeroBanos(alojamientoDetails.getNumeroBanos());
+                alojamiento.get().setServicioWifi(alojamientoDetails.getServicioWifi());
+                alojamiento.get().setServicioLimpieza(alojamientoDetails.getServicioLimpieza());
             
             final Alojamiento x = alojamientoRepository.save(alojamiento.get());
-            return ResponseEntity.ok(true);
+            pay.put("message", "servicio actualizado");
+            return ResponseEntity.ok().body(pay.toMap());
         }else{
-            return (ResponseEntity) ResponseEntity.notFound();
+            pay.put("message", "servicio no encontrado");
+            return ResponseEntity.ok().body(pay.toMap());
         }
         
-    }
-
-    @DeleteMapping("/alojamiento/{id}")
-    public ResponseEntity deleteAlojamiento(@PathVariable(value = "id") Long alojamientoId) {
-        Optional<Alojamiento> alojamiento = alojamientoRepository.findById(alojamientoId);
-       
-        if(alojamiento.isPresent()){
-            alojamientoRepository.delete(alojamiento.get());
-            return ResponseEntity.ok(true);
-        }
-        
-        return (ResponseEntity) ResponseEntity.badRequest();
     }
     
-        @GetMapping("/transporte")
-    public List<Transporte> getAllTransporte() {
-        return transporteRepository.findAll();
+    @GetMapping("/transporte")
+    public List<TransportePojo> getAllTransporte() {
+        List<TransportePojo> res = new ArrayList<>();
+        for(Transporte o: transporteRepository.findAll() ){
+            res.add(TransportePojo.toPojo(o));
+        }
+        return res;
     }
 
     @GetMapping("/transporte/{id}")
@@ -198,74 +251,103 @@ public class ServicioController {
         
         Optional<Transporte> transporte = transporteRepository.findById(transporteId);
         if(transporte.isPresent()){
-            return ResponseEntity.ok().body(transporte.get());
+            return ResponseEntity.ok().body(TransportePojo.toPojo(transporte.get()));
         }
-        return (ResponseEntity) ResponseEntity.notFound();
+        return ResponseEntity.ok(false);
         
     }
     
     @PostMapping("/transporte/{idProveedor}")
-    public ResponseEntity createTransporte(@PathVariable(value = "idProveedor") Long proveedorId, @Valid @RequestBody Transporte transporte) {
+    public ResponseEntity createTransporte(@PathVariable(value = "idProveedor") Long proveedorId, @Valid @RequestBody TransportePojo transporte) {
+        JSONObject pay = new JSONObject();
         try {
             Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
             if(proveedor.isPresent()){
-                transporte.setProveedor(proveedor.get());
-                proveedor.get().getServicios().add(transporte);
-                Transporte x =transporteRepository.save(transporte);
+                pay.put("message", "servicio creado");
+                Transporte x = new Transporte();
+                x.setProveedor(proveedor.get());
+                
+                x.setNombre(transporte.getNombre());
+                x.setPais(transporte.getPais());
+                x.setCiudad(transporte.getCiudad());
+                x.setIdioma(transporte.getIdioma());
+                x.setCosto(transporte.getCosto());
+                x.setDescripcion(transporte.getDescripcion());
+                if(transporte.getFoto()!=null){
+                    x.setFoto(Base64.getDecoder().decode(transporte.getFoto()));
+                }else{
+                    x.setFoto(null);
+                }
+                x.setNumeroPersonas(transporte.getNumeroPersonas());
+
+                x.setEmpresa(transporte.getEmpresa());
+                x.setDestino(transporte.getDestino());
+                x.setHoraLlegada(transporte.getHoraLlegada());
+                x.setOrigen(transporte.getOrigen());
+                x.setHoraSalida(transporte.getHoraSalida());
+                x.setTipoTransporte(transporte.getTipoTransporte());
+                
+                Transporte aux =transporteRepository.save(x);
+                proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
-                return ResponseEntity.ok().body(true);
+                
+                return ResponseEntity.ok().body(pay.toMap());
             }
-            return (ResponseEntity) ResponseEntity.notFound();
+            pay.put("message", "proveedor no encontrado");
+            return ResponseEntity.ok(pay.toMap());
         } catch (Exception e) {
-            return (ResponseEntity) ResponseEntity.badRequest();
+            pay.put("message", "error");
+            return ResponseEntity.ok(pay.toMap());
         }
         
         
     }
 
     @PutMapping("/transporte/{idServicio}")
-    public ResponseEntity updateTransporte(@PathVariable(value = "idServicio") Long transporteId, @Valid @RequestBody Transporte transporteDetails) {
-            Optional<Transporte> transporte = transporteRepository.findById(transporteId);
+    public ResponseEntity updateTransporte(@PathVariable(value = "idServicio") Long transporteId, @Valid @RequestBody TransportePojo transporteDetails) {
+        JSONObject pay = new JSONObject();
+        Optional<Transporte> transporte = transporteRepository.findById(transporteId);
         if(transporte.isPresent()){
-            transporte.get().setNombre(transporteDetails.getNombre());
-            transporte.get().setNumeroPersonas(transporteDetails.getNumeroPersonas());
-            transporte.get().setCiudad(transporteDetails.getCiudad());
-            transporte.get().setCosto(transporteDetails.getCosto());
-            transporte.get().setFoto(transporteDetails.getFoto());
-            transporte.get().setDescripcion(transporteDetails.getDescripcion());
-            transporte.get().setIdioma(transporteDetails.getIdioma());
-            transporte.get().setPais(transporteDetails.getPais());
-            //---------------------------------------------------------------------------------------------
-            transporte.get().setDestino(transporteDetails.getDestino());
-            transporte.get().setEmpresa(transporteDetails.getEmpresa());
-            transporte.get().setHoraLlegada(transporteDetails.getHoraLlegada());
-            transporte.get().setHoraSalida(transporteDetails.getHoraSalida());
-            transporte.get().setOrigen(transporteDetails.getOrigen());
-            transporte.get().setTipoTransporte(transporteDetails.getTipoTransporte());
+                pay.put("message", "servicio  actualizado");
+            
+                transporte.get().setNombre(transporteDetails.getNombre());
+                transporte.get().setPais(transporteDetails.getPais());
+                transporte.get().setCiudad(transporteDetails.getCiudad());
+                transporte.get().setIdioma(transporteDetails.getIdioma());
+                transporte.get().setCosto(transporteDetails.getCosto());
+                transporte.get().setDescripcion(transporteDetails.getDescripcion());
+                if(transporteDetails.getFoto()!=null){
+                    transporte.get().setFoto(Base64.getDecoder().decode(transporteDetails.getFoto()));
+                }else{
+                    transporte.get().setFoto(null);
+                }
+                transporte.get().setNumeroPersonas(transporteDetails.getNumeroPersonas());
+
+                transporte.get().setEmpresa(transporteDetails.getEmpresa());
+                transporte.get().setDestino(transporteDetails.getDestino());
+                transporte.get().setHoraLlegada(transporteDetails.getHoraLlegada());
+                transporte.get().setOrigen(transporteDetails.getOrigen());
+                transporte.get().setHoraSalida(transporteDetails.getHoraSalida());
+                transporte.get().setTipoTransporte(transporteDetails.getTipoTransporte());
             
             final Transporte x = transporteRepository.save(transporte.get());
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(pay.toMap());
         }else{
-            return (ResponseEntity) ResponseEntity.notFound();
+            pay.put("message", "servicio no encontrado");
+            return ResponseEntity.ok(pay.toMap());
         }
         
     }
 
-    @DeleteMapping("/transporte/{id}")
-    public ResponseEntity deleteTransporte(@PathVariable(value = "id") Long transporteId) {
-        Optional<Transporte> transporte = transporteRepository.findById(transporteId);
-       
-        if(transporte.isPresent()){
-            transporteRepository.delete(transporte.get());
-            return ResponseEntity.ok(true);
-        }
-        
-        return (ResponseEntity) ResponseEntity.badRequest();
-    }
+    
     
     @GetMapping("/paseoEcologico")
-    public List<PaseoEcologico> getAllPaseoEcologico() {
-        return paseoEcologicoRepository.findAll();
+    public List<PaseoEcologicoPojo> getAllPaseoEcologico() {
+        List<PaseoEcologicoPojo> res = new ArrayList<>();
+        for(PaseoEcologico o: paseoEcologicoRepository.findAll() ){
+            res.add(PaseoEcologicoPojo.toPojo(o));
+        }
+        return res;
     }
 
     @GetMapping("/paseoEcologico/{id}")
@@ -273,73 +355,101 @@ public class ServicioController {
         
         Optional<PaseoEcologico> paseoEcologico = paseoEcologicoRepository.findById(paseoEcologicoId);
         if(paseoEcologico.isPresent()){
-            return ResponseEntity.ok().body(paseoEcologico.get());
+            return ResponseEntity.ok().body(PaseoEcologicoPojo.toPojo(paseoEcologico.get()));
         }
-        return (ResponseEntity) ResponseEntity.notFound();
+        return ResponseEntity.ok(false);
         
     }
     
     @PostMapping("/paseoEcologico/{idProveedor}")
-    public ResponseEntity createPaseoEcologico(@PathVariable(value = "idProveedor") Long proveedorId, @Valid @RequestBody PaseoEcologico paseoEcologico) {
+    public ResponseEntity createPaseoEcologico(@PathVariable(value = "idProveedor") Long proveedorId, @Valid @RequestBody PaseoEcologicoPojo paseoEcologico) {
+        JSONObject pay = new JSONObject();
         try {
             Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
             if(proveedor.isPresent()){
-                paseoEcologico.setProveedor(proveedor.get());
-                PaseoEcologico x =paseoEcologicoRepository.save(paseoEcologico);
-                proveedor.get().getServicios().add(paseoEcologico);
+                pay.put("message", "servicio creado");
+                PaseoEcologico x = new PaseoEcologico();
+                x.setProveedor(proveedor.get());
+                
+                x.setNombre(paseoEcologico.getNombre());
+                x.setPais(paseoEcologico.getPais());
+                x.setCiudad(paseoEcologico.getCiudad());
+                x.setIdioma(paseoEcologico.getIdioma());
+                x.setCosto(paseoEcologico.getCosto());
+                x.setDescripcion(paseoEcologico.getDescripcion());
+                if(paseoEcologico.getFoto()!=null){
+                    x.setFoto(Base64.getDecoder().decode(paseoEcologico.getFoto()));
+                }else{
+                    x.setFoto(null);
+                }
+                x.setNumeroPersonas(paseoEcologico.getNumeroPersonas());
+
+                
+                x.setDestino(paseoEcologico.getDestino());
+                x.setOrigen(paseoEcologico.getOrigen());
+                x.setHoraInicio(paseoEcologico.getHoraInicio());
+                x.setHoraFin(paseoEcologico.getHoraFin());
+                
+                PaseoEcologico aux =paseoEcologicoRepository.save(x);
+                proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
-                return ResponseEntity.ok().body(true);
+                return ResponseEntity.ok().body(pay.toMap());
             }
-            return (ResponseEntity) ResponseEntity.notFound();
+            pay.put("message", "proveedor no encontrado");
+            return ResponseEntity.ok(pay.toMap());
         } catch (Exception e) {
-            return (ResponseEntity) ResponseEntity.badRequest();
+            pay.put("message", "error");
+            return ResponseEntity.ok(pay.toMap());
         }
         
         
     }
 
     @PutMapping("/paseoEcologico/{idServicio}")
-    public ResponseEntity updatePaseoEcologico(@PathVariable(value = "idServicio") Long paseoEcologicoId, @Valid @RequestBody PaseoEcologico paseoEcologicoDetails) {
-            Optional<PaseoEcologico> paseoEcologico = paseoEcologicoRepository.findById(paseoEcologicoId);
-        if(paseoEcologico.isPresent()){
-            paseoEcologico.get().setNombre(paseoEcologicoDetails.getNombre());
-            paseoEcologico.get().setNumeroPersonas(paseoEcologicoDetails.getNumeroPersonas());
-            paseoEcologico.get().setCiudad(paseoEcologicoDetails.getCiudad());
-            paseoEcologico.get().setCosto(paseoEcologicoDetails.getCosto());
-            paseoEcologico.get().setFoto(paseoEcologicoDetails.getFoto());
-            paseoEcologico.get().setDescripcion(paseoEcologicoDetails.getDescripcion());
-            paseoEcologico.get().setIdioma(paseoEcologicoDetails.getIdioma());
-            paseoEcologico.get().setPais(paseoEcologicoDetails.getPais());
-            //---------------------------------------------------------------------------------------------
-            paseoEcologico.get().setDestino(paseoEcologicoDetails.getDestino());
-            paseoEcologico.get().setHoraFin(paseoEcologicoDetails.getHoraFin());
-            paseoEcologico.get().setHoraInicio(paseoEcologicoDetails.getHoraInicio());
-            paseoEcologico.get().setOrigen(paseoEcologicoDetails.getOrigen());
+    public ResponseEntity updatePaseoEcologico(@PathVariable(value = "idServicio") Long paseoEcologicoId, @Valid @RequestBody PaseoEcologicoPojo paseoEcologicoDetails) {
             
+        JSONObject pay = new JSONObject();
+        Optional<PaseoEcologico> paseoEcologico = paseoEcologicoRepository.findById(paseoEcologicoId);
+        if(paseoEcologico.isPresent()){
+                pay.put("message", "servicio actualizado");
+                paseoEcologico.get().setNombre(paseoEcologicoDetails.getNombre());
+                paseoEcologico.get().setPais(paseoEcologicoDetails.getPais());
+                paseoEcologico.get().setCiudad(paseoEcologicoDetails.getCiudad());
+                paseoEcologico.get().setIdioma(paseoEcologicoDetails.getIdioma());
+                paseoEcologico.get().setCosto(paseoEcologicoDetails.getCosto());
+                paseoEcologico.get().setDescripcion(paseoEcologicoDetails.getDescripcion());
+                if(paseoEcologicoDetails.getFoto()!=null){
+                    paseoEcologico.get().setFoto(Base64.getDecoder().decode(paseoEcologicoDetails.getFoto()));
+                }else{
+                    paseoEcologico.get().setFoto(null);
+                }
+                paseoEcologico.get().setNumeroPersonas(paseoEcologicoDetails.getNumeroPersonas());
+
+                
+                paseoEcologico.get().setDestino(paseoEcologicoDetails.getDestino());
+                paseoEcologico.get().setOrigen(paseoEcologicoDetails.getOrigen());
+                paseoEcologico.get().setHoraInicio(paseoEcologicoDetails.getHoraInicio());
+                paseoEcologico.get().setHoraFin(paseoEcologicoDetails.getHoraFin());
             
             final PaseoEcologico x = paseoEcologicoRepository.save(paseoEcologico.get());
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(pay.toMap());
         }else{
-            return (ResponseEntity) ResponseEntity.notFound();
+            pay.put("message", "servicio no encontrado");
+            return ResponseEntity.ok(pay.toMap());
         }
         
+         
     }
 
-    @DeleteMapping("/paseoEcologico/{id}")
-    public ResponseEntity deletePaseoEcologico(@PathVariable(value = "id") Long paseoEcologicoId) {
-        Optional<PaseoEcologico> paseoEcologico = paseoEcologicoRepository.findById(paseoEcologicoId);
-       
-        if(paseoEcologico.isPresent()){
-            paseoEcologicoRepository.delete(paseoEcologico.get());
-            return ResponseEntity.ok(true);
-        }
-        
-        return (ResponseEntity) ResponseEntity.badRequest();
-    }
+    
     
     @GetMapping("/alimentacion")
-    public List<Alimentacion> getAllAlimentacion() {
-        return alimentacionRepository.findAll();
+    public List<AlimentacionPojo> getAllAlimentacion() {
+        List<AlimentacionPojo> res = new ArrayList<>();
+        for(Alimentacion o: alimentacionRepository.findAll() ){
+            res.add(AlimentacionPojo.toPojo(o));
+        }
+        return res;
     }
 
     @GetMapping("/alimentacion/{id}")
@@ -347,40 +457,68 @@ public class ServicioController {
         
         Optional<Alimentacion> alimentacion = alimentacionRepository.findById(alimentacionId);
         if(alimentacion.isPresent()){
-            return ResponseEntity.ok().body(alimentacion.get());
+            return ResponseEntity.ok().body(AlimentacionPojo.toPojo(alimentacion.get()));
         }
         return (ResponseEntity) ResponseEntity.notFound();
         
     }
     
     @PostMapping("/alimentacion/{idProveedor}")
-    public ResponseEntity createAlimentacion(@PathVariable(value = "idProveedor") Long proveedorId, @Valid @RequestBody Alimentacion alimentacion) {
+    public ResponseEntity createAlimentacion(@PathVariable(value = "idProveedor") Long proveedorId, @Valid @RequestBody AlimentacionPojo alimentacion) {
+        JSONObject pay = new JSONObject();
         try {
             Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
             if(proveedor.isPresent()){
-                alimentacion.setProveedor(proveedor.get());
-                Alimentacion x =alimentacionRepository.save(alimentacion);
-                proveedor.get().getServicios().add(alimentacion);
+                pay.put("message", "servicio creado");
+                Alimentacion x = new Alimentacion();
+                x.setProveedor(proveedor.get());
+                
+                x.setNombre(alimentacion.getNombre());
+                x.setPais(alimentacion.getPais());
+                x.setCiudad(alimentacion.getCiudad());
+                x.setIdioma(alimentacion.getIdioma());
+                x.setCosto(alimentacion.getCosto());
+                x.setDescripcion(alimentacion.getDescripcion());
+                if(alimentacion.getFoto()!=null){
+                    x.setFoto(Base64.getDecoder().decode(alimentacion.getFoto()));
+                }else{
+                    x.setFoto(null);
+                }
+                x.setNumeroPersonas(alimentacion.getNumeroPersonas());
+
+                x.setCantidadPlatos(alimentacion.getCantidadPlatos());
+                x.setTipoComida(alimentacion.getTipoComida());
+                
+                Alimentacion aux =alimentacionRepository.save(x);
+                proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
-                return ResponseEntity.ok().body(true);
+                return ResponseEntity.ok().body(pay.toMap());
             }
-            return (ResponseEntity) ResponseEntity.notFound();
+            pay.put("message", "proveedor no encontrado");
+            return ResponseEntity.ok(pay.toMap());
         } catch (Exception e) {
-            return (ResponseEntity) ResponseEntity.badRequest();
+            pay.put("message", "error");
+            return ResponseEntity.ok(pay.toMap());
         }
         
         
     }
 
     @PutMapping("/alimentacion/{idServicio}")
-    public ResponseEntity updateAlimentacion(@PathVariable(value = "idServicio") Long alimentacionId, @Valid @RequestBody Alimentacion alimentacionDetails) {
-            Optional<Alimentacion> alimentacion = alimentacionRepository.findById(alimentacionId);
+    public ResponseEntity updateAlimentacion(@PathVariable(value = "idServicio") Long alimentacionId, @Valid @RequestBody AlimentacionPojo alimentacionDetails) {
+        JSONObject pay = new JSONObject();
+        Optional<Alimentacion> alimentacion = alimentacionRepository.findById(alimentacionId);
         if(alimentacion.isPresent()){
+            pay.put("message", "servicio actualizado");
             alimentacion.get().setNombre(alimentacionDetails.getNombre());
             alimentacion.get().setNumeroPersonas(alimentacionDetails.getNumeroPersonas());
             alimentacion.get().setCiudad(alimentacionDetails.getCiudad());
             alimentacion.get().setCosto(alimentacionDetails.getCosto());
-            alimentacion.get().setFoto(alimentacionDetails.getFoto());
+            if(alimentacionDetails.getFoto()!=null){
+                    alimentacion.get().setFoto(Base64.getDecoder().decode(alimentacionDetails.getFoto()));
+            }else{
+                alimentacion.get().setFoto(null);
+            }
             alimentacion.get().setDescripcion(alimentacionDetails.getDescripcion());
             alimentacion.get().setIdioma(alimentacionDetails.getIdioma());
             alimentacion.get().setPais(alimentacionDetails.getPais());
@@ -390,24 +528,15 @@ public class ServicioController {
             
             
             final Alimentacion x = alimentacionRepository.save(alimentacion.get());
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(pay.toMap());
         }else{
-            return (ResponseEntity) ResponseEntity.notFound();
+            pay.put("message", "servicio no encontrado");
+            return ResponseEntity.ok(pay.toMap());
         }
         
     }
 
-    @DeleteMapping("/alimentacion/{id}")
-    public ResponseEntity deletealimentacion(@PathVariable(value = "id") Long alimentacionId) {
-        Optional<Alimentacion> alimentacion = alimentacionRepository.findById(alimentacionId);
-       
-        if(alimentacion.isPresent()){
-            alimentacionRepository.delete(alimentacion.get());
-            return ResponseEntity.ok(true);
-        }
-        
-        return (ResponseEntity) ResponseEntity.badRequest();
-    }
+    
     
     
 }

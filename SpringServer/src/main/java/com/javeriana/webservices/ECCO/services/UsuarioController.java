@@ -8,9 +8,12 @@ package com.javeriana.webservices.ECCO.services;
 import com.javeriana.webservices.ECCO.Model.Cliente;
 import com.javeriana.webservices.ECCO.Model.Proveedor;
 import com.javeriana.webservices.ECCO.Model.Servicio;
+import com.javeriana.webservices.ECCO.pojo.ClientePojo;
+import com.javeriana.webservices.ECCO.pojo.ProveedorPojo;
 import com.javeriana.webservices.ECCO.repositories.ClienteRepository;
 import com.javeriana.webservices.ECCO.repositories.ProveedorRepository;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -56,15 +59,25 @@ public class UsuarioController {
         
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
         if(cliente.isPresent()){
-            return ResponseEntity.ok().body(cliente.get());
+            JSONObject x = new JSONObject(cliente.get().toJsonString());
+            
+            return ResponseEntity.ok().body(x.toMap());
         }
         return (ResponseEntity) ResponseEntity.notFound();
         
     }
     
     @PostMapping("/cliente")
-    public ResponseEntity createCliente(@Valid @RequestBody Cliente cliente) {
+    public ResponseEntity createCliente(@Valid @RequestBody ClientePojo clientePojo) {
         try {
+            Cliente cliente = new Cliente();
+            cliente.setNombre(clientePojo.getNombre());
+            cliente.setEdad(clientePojo.getEdad());
+            cliente.setNombreUsuario(clientePojo.getNombreUsuario());
+            cliente.setFoto(Base64.getDecoder().decode(clientePojo.getFoto()));
+            cliente.setTelefono(clientePojo.getTelefono());
+            cliente.setDescripcion(clientePojo.getDescripcion());
+            cliente.setContrasena(clientePojo.getContrasena());
             Cliente x =clienteRepository.save(cliente);
             return ResponseEntity.ok().body(true);
         } catch (Exception e) {
@@ -75,7 +88,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/cliente/{id}")
-    public ResponseEntity updateCliente(@PathVariable(value = "id") Long clienteId, @Valid @RequestBody Cliente clienteDetails) {
+    public ResponseEntity updateCliente(@PathVariable(value = "id") Long clienteId, @Valid @RequestBody ClientePojo clienteDetails) {
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
         if(cliente.isPresent()){
             cliente.get().setNombre(clienteDetails.getNombre());
@@ -83,12 +96,12 @@ public class UsuarioController {
             cliente.get().setEdad(clienteDetails.getEdad());
             cliente.get().setNombreUsuario(clienteDetails.getNombreUsuario());
             cliente.get().setTelefono(clienteDetails.getTelefono());
-            cliente.get().setFoto(clienteDetails.getFoto());
+            cliente.get().setFoto(Base64.getDecoder().decode(clienteDetails.getFoto()));
             cliente.get().setContrasena(clienteDetails.getContrasena());
             final Cliente updatedCliente = clienteRepository.save(cliente.get());
             return ResponseEntity.ok(true);
         }else{
-            return (ResponseEntity) ResponseEntity.badRequest();
+            return ResponseEntity.ok(false);
         }
         
     }
@@ -122,15 +135,24 @@ public class UsuarioController {
         
         Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
         if(proveedor.isPresent()){
-            return ResponseEntity.ok().body(proveedor.get());
+            JSONObject x = new JSONObject(proveedor.get().toJsonString());
+            return ResponseEntity.ok().body(x.toMap());
         }
         return (ResponseEntity) ResponseEntity.notFound();
         
     }
     
     @PostMapping("/proveedor")
-    public ResponseEntity createProveedor(@Valid @RequestBody Proveedor proveedor) {
+    public ResponseEntity createProveedor(@Valid @RequestBody ProveedorPojo proveedorPojo) {
         try {
+            Proveedor proveedor = new Proveedor();
+            proveedor.setNombre(proveedorPojo.getNombre());
+            proveedor.setEdad(proveedorPojo.getEdad());
+            proveedor.setNombreUsuario(proveedorPojo.getNombreUsuario());
+            proveedor.setFoto(Base64.getDecoder().decode(proveedorPojo.getFoto()));
+            proveedor.setTelefono(proveedorPojo.getTelefono());
+            proveedor.setDescripcion(proveedorPojo.getDescripcion());
+            proveedor.setContrasena(proveedorPojo.getContrasena());
             Proveedor x =proveedorRepository.save(proveedor);
             return ResponseEntity.ok().body(true);
         } catch (Exception e) {
@@ -141,7 +163,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/proveedor/{id}")
-    public ResponseEntity updateProveedor(@PathVariable(value = "id") Long proveedorId, @Valid @RequestBody Proveedor proveedorDetails) {
+    public ResponseEntity updateProveedor(@PathVariable(value = "id") Long proveedorId, @Valid @RequestBody ProveedorPojo proveedorDetails) {
         Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
         if(proveedor.isPresent()){
             proveedor.get().setNombre(proveedorDetails.getNombre());
@@ -151,7 +173,7 @@ public class UsuarioController {
             proveedor.get().setTelefono(proveedorDetails.getTelefono());
             proveedor.get().setPaginaWeb(proveedorDetails.getPaginaWeb());
             proveedor.get().setContactoRS(proveedorDetails.getContactoRS());
-            proveedor.get().setFoto(proveedorDetails.getFoto());
+            proveedor.get().setFoto(Base64.getDecoder().decode(proveedorDetails.getFoto()));
             final Proveedor updatedproveedor = proveedorRepository.save(proveedor.get());
             return ResponseEntity.ok(true);
         }else{
