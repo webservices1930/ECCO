@@ -31,7 +31,6 @@ import { PagoComponent } from './components/pago/pago.component';
 import { EditarservicioComponent } from './components/editarservicio/editarservicio.component';
 import { ServiciosproveedorComponent } from './components/serviciosproveedor/serviciosproveedor.component';
 import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.component';
-import { MomentPipe } from './servicios/moment.pipe';
 
 //Mapas
 import { AgmCoreModule } from '@agm/core';
