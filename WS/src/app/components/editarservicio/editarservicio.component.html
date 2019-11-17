@@ -4,10 +4,10 @@
 
   <div class="row animated fadeIn fast">
 
-    
+
 
     <div class="col-md-8">
-      
+
         <div class="col-md-4">
             <img [src]="getSantizeUrl()" [alt]="item.nombre">
             <br><br>
@@ -42,7 +42,7 @@
       </div>
 
 
-      <div *ngIf="item.tipo == 'Alimentacion'">
+      <div *ngIf="item.tipo == 'Alimentacion' || item.tipo == 'alimentacion'">
 
           <div>
               <label for="numeroPersonas">Cantidad de personas: </label>
@@ -58,7 +58,7 @@
           </div>
       </div>
 
-      <div *ngIf="item.tipo == 'PaseoEcologico'">
+      <div *ngIf="item.tipo == 'PaseoEcologico'  || item.tipo == 'paseoEcologico'">
 
           <div>
               <label for="numeroPersonas">Número de personas:</label>
@@ -87,7 +87,7 @@
 
       </div>
 
-      <div *ngIf="item.tipo == 'Alojamiento'">
+      <div *ngIf="item.tipo == 'Alojamiento'  || item.tipo == 'alojamiento' ">
 
           <div>
               <label for="numeroPersonas">Número de personas:</label>
@@ -132,7 +132,7 @@
 
       </div>
 
-      <div *ngIf="item.tipo == 'Transporte'">
+      <div *ngIf="item.tipo == 'Transporte'  || item.tipo == 'transporte'">
 
           <div>
               <label for="numeroPersonas">Número de personas:</label>

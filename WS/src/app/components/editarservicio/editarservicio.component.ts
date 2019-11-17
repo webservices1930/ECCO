@@ -31,12 +31,9 @@ export class EditarservicioComponent implements OnInit {
     this.activatedRoute.params.subscribe( params =>{
       this.servicioid = params['id'];
       this._serviciosService.getServicioId(params['id']).subscribe(res => {
-          this.servicio[0]=res[0];
+          this.servicio[0]=res;
           console.log(this.servicio[0]);
           this.image=this.servicio[0].img;
-          this.base64data = this.servicio[0].img.split(" ",2)[1];
-          this.ext = this.servicio[0].img.split(";",1)[0];
-          this.servicioProveedorid=res[0].nombreproveedor;
           this.userid = this._sesionService.id;
        });
     });

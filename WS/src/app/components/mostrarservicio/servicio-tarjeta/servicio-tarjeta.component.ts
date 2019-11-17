@@ -70,13 +70,5 @@ export class ServicioTarjetaComponent implements OnInit {
     return this.sanitization.bypassSecurityTrustUrl(img);
  }
 
-  eliminar() {
-    this._serviciosService.eliminarServicio(this.servicio);
-    this.router.navigate(['servicioss']);
-  }
 
-  editar() {
-      this.router.navigate(['/editarservicio', this.servicio.Id]);
-
-  }
 }
