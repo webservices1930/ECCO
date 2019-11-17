@@ -55,7 +55,7 @@ public class PreguntaController {
         JSONObject response = new JSONObject();
         if(cliente.isPresent() && servicio.isPresent()){
             pregunta.setCliente(cliente.get());
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             pregunta.setFechaPregunta(formatter.format(new Date(System.currentTimeMillis())));
             pregunta.setServicio(servicio.get());
             preguntaRepository.save(pregunta);
@@ -73,7 +73,7 @@ public class PreguntaController {
         Optional<Pregunta> pregunta = preguntaRepository.findById(preguntaId);
         JSONObject response = new JSONObject();
         if(pregunta.isPresent() ){
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             pregunta.get().setFechaRespuesta(formatter.format(new Date(System.currentTimeMillis())));
             pregunta.get().setRespuesta(preguntaDetails.getRespuesta());
             preguntaRepository.save(pregunta.get());
