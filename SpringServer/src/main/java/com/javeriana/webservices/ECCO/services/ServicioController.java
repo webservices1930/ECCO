@@ -69,7 +69,24 @@ public class ServicioController {
         JSONArray res = new JSONArray();
         List<Servicio> x =this.servicioRepository.findAll();
         for (Servicio aux : x){
-            res.put(new JSONObject(aux.toJsonString()).toMap());
+            JSONObject js = new JSONObject(aux.toJsonString()); 
+            if(js.get("tipo").equals("paseoEcologico") ){
+                String s = String.valueOf(js.get("horaInicio"));
+                s.replace("*", ":");
+                js.put("horaInicio", s);
+                s = String.valueOf(js.get("horaFin"));
+                s.replace("*", ":");
+                js.put("horaFin", s);
+                
+            }else if(js.get("tipo").equals("transporte")){
+                String s = String.valueOf(js.get("horaSalida"));
+                s.replace("*", ":");
+                js.put("horaSalida", s);
+                s = String.valueOf(js.get("horaLlegada"));
+                s.replace("*", ":");
+                js.put("horaLlegada", s);
+            }
+            res.put(js.toMap());
         }
         return ResponseEntity.ok(res.toList());
     }

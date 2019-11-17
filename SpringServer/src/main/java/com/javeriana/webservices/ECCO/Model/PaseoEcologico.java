@@ -25,7 +25,7 @@ public class PaseoEcologico  extends Servicio{
         String f = ((this.getFoto() == null) ? "null" :Base64.getMimeEncoder().encodeToString(this.getFoto()));
         String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
            +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
-           +",origen :"+this.origen+",destino:"+this.destino+",horaInicio :"+this.horaInicio+",horaFin:"+this.horaFin+",tipo: paseoEcologico}";
+           +",origen :"+this.origen+",destino:"+this.destino+",horaInicio :"+(this.horaInicio.replace(":", "*"))+",horaFin:"+(this.horaFin.replace(":", "*"))+",tipo: paseoEcologico}";
         return s;
     }
     public String getOrigen() {
