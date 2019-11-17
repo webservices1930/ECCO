@@ -69,7 +69,7 @@ public class ServicioController {
         JSONArray res = new JSONArray();
         List<Servicio> x =this.servicioRepository.findAll();
         for (Servicio aux : x){
-            res.put(new JSONObject(aux.toJsonString()));
+            res.put(new JSONObject(aux.toJsonString()).toMap());
         }
         return ResponseEntity.ok(res.toList());
     }
