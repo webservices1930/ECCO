@@ -101,6 +101,18 @@ public class ServicioController {
         return ResponseEntity.ok(new JSONObject("{ message : no hay servicio con ese id}").toMap());
     }
     
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteServicio(@PathVariable(value = "id") Long servicioId) {
+        Optional<Servicio> servicio = servicioRepository.findById(servicioId);
+       
+        if(servicio.isPresent()){
+            servicioRepository.delete(servicio.get());
+            return ResponseEntity.ok(true);
+        }
+        
+        return (ResponseEntity) ResponseEntity.badRequest();
+    }
+    
     @GetMapping("/alojamiento")
     public List<Alojamiento> getAllAlojamiento() {
         return alojamientoRepository.findAll();
