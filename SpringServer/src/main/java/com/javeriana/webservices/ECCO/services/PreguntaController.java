@@ -90,7 +90,7 @@ public class PreguntaController {
         List<Pregunta> preguntas = preguntaRepository.searchByServicioId(servicioId);
         JSONArray res = new JSONArray();
         for (Pregunta aux : preguntas){
-            res.put(new JSONObject(aux.toJsonString()));
+            res.put(new JSONObject(aux.toJsonString()).toMap());
         }
         return ResponseEntity.ok(res.toList());
     }
