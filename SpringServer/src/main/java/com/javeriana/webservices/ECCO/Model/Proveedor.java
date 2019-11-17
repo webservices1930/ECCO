@@ -29,7 +29,7 @@ public class Proveedor extends Usuario implements Serializable {
     
     public String toJsonString(){
         String f = ((this.getFoto()== null) ? "null" :Base64.getEncoder().encodeToString(this.getFoto()));
-        String s = "{nombreUsuario : "+this.getNombreUsuario()+", nombre:"+this.getNombre()+",edad:"+this.getEdad()+",foto:"+f+
+        String s = "{Id :"+this.getId()+",nombreUsuario : "+this.getNombreUsuario()+", nombre:"+this.getNombre()+",edad:"+this.getEdad()+",foto:"+f+
                 ",telefono:"+this.getTelefono()+",paginaWeb : "+this.paginaWeb+",contactoRS:"+this.contactoRS+"}";
         return s;
     }
