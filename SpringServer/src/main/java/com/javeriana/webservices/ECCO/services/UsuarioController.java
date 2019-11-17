@@ -84,6 +84,7 @@ public class UsuarioController {
             cliente.get().setNombreUsuario(clienteDetails.getNombreUsuario());
             cliente.get().setTelefono(clienteDetails.getTelefono());
             cliente.get().setFoto(clienteDetails.getFoto());
+            cliente.get().setContrasena(clienteDetails.getContrasena());
             final Cliente updatedCliente = clienteRepository.save(cliente.get());
             return ResponseEntity.ok(true);
         }else{
