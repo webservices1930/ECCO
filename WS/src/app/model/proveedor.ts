@@ -5,7 +5,7 @@ export class Proveedor extends Usuario{
     public nombreUsuario: string,
     public edad:number,
     public contrasena:string,
-    public descripcion:number,
+    public descripcion:string,
     public foto: string,
     public telefono: number,
     public paginaWeb: string,
