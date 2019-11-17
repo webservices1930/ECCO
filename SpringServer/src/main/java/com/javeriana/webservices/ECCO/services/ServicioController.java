@@ -104,13 +104,14 @@ public class ServicioController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteServicio(@PathVariable(value = "id") Long servicioId) {
         Optional<Servicio> servicio = servicioRepository.findById(servicioId);
-       
+        JSONObject response = new JSONObject();
         if(servicio.isPresent()){
+            response.put("message","mensaje eliminado con exito");
             servicioRepository.delete(servicio.get());
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(response.toMap());
         }
-        
-        return (ResponseEntity) ResponseEntity.badRequest();
+        response.put("message", "serivicio no encontrado");
+        return ResponseEntity.ok(response.toMap());
     }
     
     @GetMapping("/alojamiento")
