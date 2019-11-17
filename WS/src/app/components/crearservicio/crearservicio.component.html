@@ -323,7 +323,7 @@
 
       <div class="form-group">
         <label for="tipoalojamiento">Tipo de alojamiento</label>
-        <select (change)=cambiar() [(ngModel)]="this.tipoAlojamiento" name="tipoalojamiento" id="tipoalojamiento"
+        <select   [(ngModel)]="this.tipoAlojamiento" name="tipoalojamiento" id="tipoalojamiento"
           ng-model="listItems" formControlName="tipoalojamiento" class="form-control">
           <option value="HOTEL">Hotel</option>
           <option value="CASA">Casa</option>
@@ -346,7 +346,7 @@
 
       <div class="form-group">
         <label for="serviciolimpieza">Servicio de limpieza</label>
-        <select (change)=cambiar() [(ngModel)]="this.serviciolimpieza" name="serviciolimpieza" id="serviciolimpieza"
+        <select   [(ngModel)]="this.serviciolimpieza" name="serviciolimpieza" id="serviciolimpieza"
           ng-model="listItems" formControlName="serviciolimpieza" class="form-control">
           <option value="Si">Sí</option>
           <option value="No">No</option>
@@ -355,7 +355,7 @@
 
       <div class="form-group">
         <label for="serviciowifi">Servicio de Wi-Fi</label>
-        <select (change)=cambiar() [(ngModel)]="this.serviciowifi" name="serviciowifi" id="serviciowifi"
+        <select   [(ngModel)]="this.serviciowifi" name="serviciowifi" id="serviciowifi"
           ng-model="listItems" formControlName="serviciowifi" class="form-control">
           <option value="Si">Sí</option>
           <option value="No">No</option>
@@ -379,7 +379,7 @@
 
       <div class="form-group">
         <label for="tipotransporte">Tipo de transporte</label>
-        <select (change)=cambiar() [(ngModel)]="this.tipoTransporte" name="tipotransporte" id="tipotransporte"
+        <select   [(ngModel)]="this.tipoTransporte" name="tipotransporte" id="tipotransporte"
           ng-model="listItems" formControlName="tipotransporte" class="form-control">
           <option value="TERRESTRE">Terrestre</option>
           <option value="AEREO">Aéreo</option>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators  } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SesionService } from '../../servicios/sesion.service';
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private sesionService:SesionService,
     private usuarioService: UsuarioService,
-
+    private ngZone: NgZone
     ) { }
 
     usuario: Usuario = new Usuario (
@@ -87,27 +87,23 @@ login() {
           console.log("user information");
           console.log(userInfo);
           this.sesionService.login(userInfo.email,userInfo.email).subscribe( res => {
+            console.log(res);
             if(res.tipo !== 'cliente'){
               this.usuario.nombre = userInfo.first_name;
               this.usuario.nombreUsuario = userInfo.email;
-              this.usuario.edad = 20;
               this.usuario.descripcion = "Ingresaste con facebook";
-              this.usuario.telefono = 313226877;
               this.usuario.contrasena = userInfo.email;
-              this.usuario.foto = userInfo.picture;
-              this.usuarioService.registrarUsuario(this.usuario).subscribe(
-                results => {
-                  console.log(results);
-                  this.router.navigate(['login']);
-                  alert("Se creó el usuario satisfactoriamente");
-      
-                },
-                error => {
-                  console.error(error);
-                  alert("No se creó el usuario. Por favor intente nuevamente");
-                }
-              )
+              //this.usuario.foto =;
+              this.usuarioService.registrarUsuario(this.usuario);
             }
+                  this.sesionService.sesion = 'usuario' ;
+                  this.sesionService.sesionCambio.next('usuario');
+                  this.sesionService.id = res.idUsuario ;
+                  this.sesionService.idCambio.next(res.idUsuario);
+                  this.sesionService.loginSatisfactorio(res.idUsuario,'usuario');
+                  this.ngZone.run(() => this.router.navigate(['servicioss']));
+                  alert("Ingresaste con facebook");
+
           })
         });
          

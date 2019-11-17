@@ -26,7 +26,7 @@
       </p>
 
       <hr>
-      <div *ngIf="item.tipo=='Alimentacion'">
+      <div *ngIf="item.tipo=='Alimentacion' || item.tipo=='alimentacion'">
         <p>
             <span class="subtitulo">Número de personas:</span>
           {{ item.numeroPersonas }}
@@ -42,7 +42,7 @@
       </div>
 
 
-      <div *ngIf="item.tipo=='PaseoEcologico'">
+      <div *ngIf="item.tipo=='PaseoEcologico' || item.tipo=='paseoEcologico' || item.tipo=='paseoecologico'">
         <p>
             <span class="subtitulo">Número de personas:</span>
           {{ item.numeroPersonas }}
@@ -65,7 +65,7 @@
         </p>
       </div>
 
-      <div *ngIf="item.tipo=='Transporte'">
+      <div *ngIf="item.tipo=='Transporte' || item.tipo=='transporte'">
         <p>
             <span class="subtitulo">Número de personas:</span>
           {{ item.numeroPersonas }}
@@ -96,7 +96,7 @@
         </p>
       </div>
 
-      <div *ngIf="item.tipo=='Alojamiento'">
+      <div *ngIf="item.tipo=='Alojamiento' || item.tipo=='alojamiento'">
         <p>
             <span class="subtitulo">Número de personas:</span>
           {{ item.numeroPersonas }}

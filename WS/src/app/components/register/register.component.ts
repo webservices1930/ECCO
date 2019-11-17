@@ -67,6 +67,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.registerForm = this.formBuilder.group({
       nombres: ['', Validators.required],
       email: ['', Validators.required],
@@ -98,7 +99,7 @@ export class RegisterComponent implements OnInit {
         this.proveedor.contrasena = this.registerForm.value.password;
         this.proveedor.paginaWeb =this.registerForm.value.paginaweb;
         this.proveedor.contactoRS =this.registerForm.value.contacto;
-        this.proveedor.foto = this.base64data;
+       // this.proveedor.foto = this.base64data;
         this.proveedorService.registrarProveedor(this.proveedor).subscribe(
           results => {
             console.log(results);
@@ -118,7 +119,7 @@ export class RegisterComponent implements OnInit {
         this.usuario.descripcion = this.registerForm.value.descripcion;
         this.usuario.telefono = this.registerForm.value.telefono;
         this.usuario.contrasena = this.registerForm.value.password;
-        this.usuario.foto = this.selectedFile;
+        //this.usuario.foto = this.selectedFile;
         this.usuarioService.registrarUsuario(this.usuario).subscribe(
           results => {
             console.log(results);
@@ -145,4 +146,5 @@ export class RegisterComponent implements OnInit {
             this.imgURL= reader.result;
       }
     }
+   
 }
