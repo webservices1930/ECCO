@@ -36,7 +36,7 @@ import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.compone
 //Mapas
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
-
+import { BarRatingModule } from 'ngx-bar-rating';
 
 
 @NgModule({
@@ -71,6 +71,7 @@ import { AgmDirectionModule } from 'agm-direction';
     HttpClientModule,
     ReactiveFormsModule,
     HttpClientJsonpModule,
+    BarRatingModule,
     //LLAVE PARA LOS MAPAS
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDbLs6hjVLJqgv1EdJDUVXCnyVVnX8OD-0',

@@ -1,5 +1,5 @@
- <div *ngFor="let item of servicio">
- <h1 class="animated fadeIn">{{ item.nombre | uppercase }} <small>({{ item.ciudad }})</small></h1>
+<div *ngFor="let item of servicio">
+  <h1 class="animated fadeIn">{{ item.nombre | uppercase }} <small>({{ item.ciudad }})</small></h1>
   <hr>
 
   <div class="row animated fadeIn fast">
@@ -17,33 +17,34 @@
         {{ item.descripcion }}
       </p>
       <p>
-          <span class="subtitulo">Costo:</span>
+        <span class="subtitulo">Costo:</span>
         {{ item.costo | number:'.2-2'}} USD
       </p>
       <p>
-          <span class="subtitulo">Tipo:</span>
+        <span class="subtitulo">Tipo:</span>
         {{ item.tipo }}
       </p>
 
       <hr>
       <div *ngIf="item.tipo=='Alimentacion' || item.tipo=='alimentacion'">
         <p>
-            <span class="subtitulo">Número de personas:</span>
+          <span class="subtitulo">Número de personas:</span>
           {{ item.numeroPersonas }}
         </p>
         <p>
-            <span class="subtitulo">Tipo de comida:</span>
+          <span class="subtitulo">Tipo de comida:</span>
           {{ item.tipoComida }}
         </p>
         <p>
-            <span class="subtitulo">Cantidad de platos:</span>
+          <span class="subtitulo">Cantidad de platos:</span>
           {{ item.cantidadPlatos }}
         </p>
 
         <span class="subtitulo">Como llegar ?</span>
         <br>
         <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
-          <agm-direction [origin]="{ lat: latitude, lng: longitude }" [destination]="{ lat: item.latitud, lng: item.longitud }"></agm-direction>
+          <agm-direction [origin]="{ lat: latitude, lng: longitude }"
+            [destination]="{ lat: item.latitud, lng: item.longitud }"></agm-direction>
         </agm-map>
 
       </div>
@@ -51,103 +52,108 @@
 
       <div *ngIf="item.tipo=='PaseoEcologico' || item.tipo=='paseoEcologico' || item.tipo=='paseoecologico'">
         <p>
-            <span class="subtitulo">Número de personas:</span>
+          <span class="subtitulo">Número de personas:</span>
           {{ item.numeroPersonas }}
         </p>
         <p>
-            <span class="subtitulo">Orígen:</span>
+          <span class="subtitulo">Orígen:</span>
           {{ item.origen }}
         </p>
         <p>
-            <span class="subtitulo">Destino:</span>
+          <span class="subtitulo">Destino:</span>
           {{ item.destino }}
         </p>
         <p>
-            <span class="subtitulo">Hora Inicio:</span>
+          <span class="subtitulo">Hora Inicio:</span>
           {{ item.horaInicio }}
         </p>
         <p>
-            <span class="subtitulo">Hora Final:</span>
+          <span class="subtitulo">Hora Final:</span>
           {{ item.horaFin }}
         </p>
 
         <span class="subtitulo">Ruta del paseo:</span>
         <br>
         <agm-map [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [zoom]="zoom">
-          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
-          <agm-direction [origin]="{ lat: item.latitudOrigen, lng: item.longitudOrigen }" [destination]="{ lat: item.latitudDestino, lng: item.longitudDestino }"></agm-direction>
+          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion">
+          </agm-marker>
+          <agm-direction [origin]="{ lat: item.latitudOrigen, lng: item.longitudOrigen }"
+            [destination]="{ lat: item.latitudDestino, lng: item.longitudDestino }"></agm-direction>
         </agm-map>
 
       </div>
 
       <div *ngIf="item.tipo=='Transporte' || item.tipo=='transporte'">
         <p>
-            <span class="subtitulo">Número de personas:</span>
+          <span class="subtitulo">Número de personas:</span>
           {{ item.numeroPersonas }}
         </p>
         <p>
-            <span class="subtitulo">Empresa transportadora:</span>
+          <span class="subtitulo">Empresa transportadora:</span>
           {{ item.empresa }}
         </p>
         <p>
-            <span class="subtitulo">Tipo de transporte:</span>
+          <span class="subtitulo">Tipo de transporte:</span>
           {{ item.tipoTransporte }}
         </p>
         <p>
-            <span class="subtitulo">Orígen:</span>
+          <span class="subtitulo">Orígen:</span>
           {{ item.origen }}
         </p>
         <p>
-            <span class="subtitulo">Destino:</span>
+          <span class="subtitulo">Destino:</span>
           {{ item.destino }}
         </p>
         <p>
-            <span class="subtitulo">Hora Salida:</span>
+          <span class="subtitulo">Hora Salida:</span>
           {{ item.horaSalida }}
         </p>
         <p>
-            <span class="subtitulo">Hora Llegada:</span>
+          <span class="subtitulo">Hora Llegada:</span>
           {{ item.horaLlegada }}
         </p>
 
         <span class="subtitulo">Ruta del viaje:</span>
         <br>
         <agm-map [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [zoom]="zoom">
-          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
-          <agm-direction [origin]="{ lat: item.latitudOrigen, lng: item.longitudOrigen }" [destination]="{ lat: item.latitudDestino, lng: item.longitudDestino }"></agm-direction>
+          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion">
+          </agm-marker>
+          <agm-direction [origin]="{ lat: item.latitudOrigen, lng: item.longitudOrigen }"
+            [destination]="{ lat: item.latitudDestino, lng: item.longitudDestino }"></agm-direction>
         </agm-map>
 
       </div>
 
       <div *ngIf="item.tipo=='Alojamiento' || item.tipo=='alojamiento'">
         <p>
-            <span class="subtitulo">Número de personas:</span>
+          <span class="subtitulo">Número de personas:</span>
           {{ item.numeroPersonas }}
         </p>
         <p>
-            <span class="subtitulo">Tipo de alojamiento:</span>
+          <span class="subtitulo">Tipo de alojamiento:</span>
           {{ item.tipoAlojamiento }}
         </p>
         <p>
-            <span class="subtitulo">Número de habitaciones:</span>
+          <span class="subtitulo">Número de habitaciones:</span>
           {{ item.numeroHabitaciones }}
         </p>
         <p>
-            <span class="subtitulo">Número de baños:</span>
+          <span class="subtitulo">Número de baños:</span>
           {{ item.numeroBanos }}
         </p>
         <p>
-            <span class="subtitulo">Servicio de Limpieza:</span>
+          <span class="subtitulo">Servicio de Limpieza:</span>
           {{ item.servicioLimpieza }}
         </p>
         <p>
-            <span class="subtitulo">Servicio de Wi-Fi:</span>
+          <span class="subtitulo">Servicio de Wi-Fi:</span>
           {{ item.servicioWifi }}
         </p>
         <span class="subtitulo">Como llegar ?</span>
         <br>
         <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
-          <agm-direction [origin]="{ lat: latitude, lng: longitude }" [destination]="{ lat: item.latitud, lng: item.longitud }"></agm-direction>
+          <agm-direction [origin]="{ lat: latitude, lng: longitude }"
+            [destination]="{ lat: item.latitud, lng: item.longitud }"></agm-direction>
         </agm-map>
 
       </div>
@@ -161,22 +167,68 @@
 </div>
 <br>
 <div class="clima">
-    <h3>Predicción del clima: en {{ciudad}}</h3>
-    <p *ngIf="weather.length == 0">Searching...</p>
-    <div *ngIf="weather.length > 0">
-        <table style="width: 100%; text-align: center">
-            <thead></thead>
-            <tbody>
-                <tr>
-                    <td *ngFor="let forecast of weather">
-                        <img [src]="forecast.iconLink" />
-                        <p>{{ forecast.highTemperature }}°C</p>
-                        <p>{{ forecast.utcTime | date: 'dd/MM/yyyy' }}</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+  <h3>Predicción del clima: en {{ciudad}}</h3>
+  <p *ngIf="weather.length == 0">Searching...</p>
+  <div *ngIf="weather.length > 0">
+    <table style="width: 100%; text-align: center">
+      <thead></thead>
+      <tbody>
+        <tr>
+          <td *ngFor="let forecast of weather">
+            <img [src]="forecast.iconLink" />
+            <p>{{ forecast.highTemperature }}°C</p>
+            <p>{{ forecast.utcTime | date: 'dd/MM/yyyy' }}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div>
+  <h2>Reseñas y Calificaciones</h2>
+  <form id="resenarForm" (ngSubmit)="hacerResena()" #resenaForm="ngForm">
+    <input class="form-control mr-sm-2" placeholder="Escribir una resena.." (click)="resenar=true" required name="resena"
+      [(ngModel)]="resena.comentario" maxlength="200" #txtResena="ngModel" />
+    
+    <bar-rating [(ngModel)]="resena.calificacion" name="calificacion" required  [max]="5" [hidden]="!resenar" #calificacion="ngModel"></bar-rating>
+    <div id="botonesPregunta">
+      <button type="submit" class="btn btn-success" [hidden]="!resenar"
+        [disabled]="!resenaForm.form.valid">Publicar/Editar Reseña</button>
+      <button type="button" class="btn btn-danger" [hidden]="!resenar" (click)="cancelarResena()">Cancelar</button>
     </div>
+    <div class="alert alert-danger" id="errorPregunta" [hidden]="autenticadoComoCliente || !resenar">
+      Para escribir reseñas de un servicio debe estar autenticado como cliente
+    </div>
+  </form>
+
+
+  <div id="preguntaRespuesta" *ngFor="let resena of resenass; let i=index">
+  <div id="preguntaCliente">
+    <img id="fotoClientePregunta" [src]="getSantizeUrl(resena.cliente.img)" alt="image">
+    <div>
+      <div id="nombreYFechaPregunta">
+        <div class="nombreClientePregunta">{{ resena.cliente.nombre }}</div>
+        <div class="fechaPregunta">{{ resena.fecha }} </div>
+       
+      </div>
+      <div>
+          <div class="fechaPregunta">{{ resena.comentario }} </div>
+          <bar-rating [max]="5" [rate]="resena.calificacion" [readOnly]="true" ></bar-rating>
+      </div>
+
+
+    </div>
+  </div> 
+  </div>
+
+
+<div class="alert alert-info" *ngIf="resenass.length==0 && resenasCargadas">
+  <p>No hay reseñas en este servicio, sé el primero en reñar el servicio</p>
+</div>
+
+
+
 </div>
 
 <div>
@@ -185,7 +237,8 @@
     <input class="form-control mr-sm-2" placeholder="Hacer una pregunta al proveedor..." (click)="preguntar=true"
       required name="pregunta" [(ngModel)]="pregunta.pregunta" maxlength="200" #txtPregunta="ngModel" />
     <div id="botonesPregunta">
-      <button type="submit" class="btn btn-success" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer pregunta</button>
+      <button type="submit" class="btn btn-success" [hidden]="!preguntar" [disabled]="!preguntaForm.form.valid">Hacer
+        pregunta</button>
       <button type="button" class="btn btn-danger" [hidden]="!preguntar" (click)="cancelarPregunta()">Cancelar</button>
     </div>
     <div class="alert alert-danger" id="errorPregunta" [hidden]="autenticadoComoCliente || !preguntar">
@@ -218,7 +271,8 @@
         <input class="form-control mr-sm-2" placeholder="Escribir respuesta..." required name="respuesta"
           [(ngModel)]="preguntass[i].respuesta" maxlength="80" #txtPregunta="ngModel" />
         <div id="botonesPregunta">
-          <button type="submit" class="btn btn-success" [disabled]="!preguntaForm.form.valid || !(preguntass[i].respuesta.length>1)">Enviar
+          <button type="submit" class="btn btn-success"
+            [disabled]="!preguntaForm.form.valid || !(preguntass[i].respuesta.length>1)">Enviar
             respuesta</button>
           <button type="button" class="btn btn-danger" (click)="cancelarRespuesta(i)">Cancelar</button>
         </div>
