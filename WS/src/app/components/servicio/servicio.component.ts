@@ -30,7 +30,7 @@ export class ServicioComponent {
   preguntasCargadas: boolean;
 
 
-
+  ciudad="";
   preguntass: any = [];
 
   userid;
@@ -63,6 +63,9 @@ export class ServicioComponent {
     private appCode: string;
     public weather: any;
 
+    latitud;
+    longitud;
+
   constructor(private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
     private sanitization: DomSanitizer,
@@ -77,13 +80,7 @@ export class ServicioComponent {
   }
 
   ngOnInit() {
-    if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            this.getWeather(position.coords);
-        });
-    } else {
-        console.error("The browser does not support geolocation...");
-    }
+
 
 
     this.preguntasCargadas = false;
@@ -101,8 +98,21 @@ export class ServicioComponent {
         this.servicioProveedorid = res.proveedor.id
         this.userid = this._sesionService.id;
 
+        if(this.servicio[0].tipo=="Alimentacion"||this.servicio[0].tipo=="alimentacion"){
+          this.latitud=this.servicio[0].latitud;
+          this.longitud=this.servicio[0].longitud;
+        }else if(this.servicio[0].tipo=="Transporte"||this.servicio[0].tipo=="transporte"){
+          this.latitud=this.servicio[0].latitudDestino;
+          this.longitud=this.servicio[0].longitudDestino;
+        }else if(this.servicio[0].tipo=="PaseoEcologico"||this.servicio[0].tipo=="paseoEcologico"){
+          this.latitud=this.servicio[0].latitudDestino;
+          this.longitud=this.servicio[0].longitudDestino;
+        }else if(this.servicio[0].tipo=="Alojamiento"||this.servicio[0].tipo=="alojamiento"){
+          this.latitud=this.servicio[0].latitud;
+          this.longitud=this.servicio[0].longitud;
 
-
+        }
+        this.getWeather(this.latitud,this.longitud);
 
 
         this._preguntaService.getPreguntasServicio(params['id']).subscribe(res => {
@@ -115,11 +125,12 @@ export class ServicioComponent {
 
     });
   }
-  public getWeather(coordinates: any) {
-    console.log(coordinates);
-    this.http.jsonp("https://weather.cit.api.here.com/weather/1.0/report.json?product=forecast_7days_simple&latitude=" + coordinates.latitude + "&longitude=" + coordinates.longitude + "&app_id=" + this.appId + "&app_code=" + this.appCode, "jsonpCallback")
+  public getWeather(latitud, longitud) {
+    this.http.jsonp("https://weather.cit.api.here.com/weather/1.0/report.json?product=forecast_7days_simple&latitude=" + latitud + "&longitude=" + longitud + "&app_id=" + this.appId + "&app_code=" + this.appCode, "jsonpCallback")
     .pipe(map(result => (<any>result).dailyForecasts.forecastLocation))
     .subscribe(result => {
+      console.log(result);
+        this.ciudad = result.city + "," + result.state + "," + result.country;
         this.weather = result.forecast;
     }, error => {
         console.error(error);
@@ -136,6 +147,7 @@ export class ServicioComponent {
     this._serviciosService.eliminarServicio(this.servicio[0]).subscribe(
       res =>{
         console.log(res);
+        alert("Se eliminó el servicio")
         this.router.navigate(['servicioss']);
 
       },

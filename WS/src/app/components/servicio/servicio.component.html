@@ -198,7 +198,9 @@
       </p>
     </div>
   </div>-->
+
   <div class="clima">
+    <h3>Predicción del clima: en {{ciudad}}</h3>
     <p *ngIf="weather.length == 0">Searching...</p>
     <div *ngIf="weather.length > 0">
         <table style="width: 100%; text-align: center">

@@ -55,7 +55,9 @@ export class ServicioService {
           numeroPersonas : servicio.numeroPersonas,
           tipoComida : servicio.tipoComida,
           cantidadPlatos : servicio.cantidadPlatos,
-          proveedor : servicio.proveedor
+          proveedor : servicio.proveedor,
+          latitud: servicio.latitud,
+          longitud: servicio.longitud
       });
     }else if(servicio.tipo=="Transporte"||servicio.tipo=="transporte"){
       const url = `${environment.baseUrl}/servicio/transporte/${servicio.id}`;
@@ -74,7 +76,11 @@ export class ServicioService {
         destino:servicio.destino,
         horaSalida:servicio.horaSalida,
         horaLlegada:servicio.horaLlegada,
-        proveedor : servicio.proveedor
+        proveedor : servicio.proveedor,
+        latitudOrigen: servicio.latitudOrigen,
+        longitudOrigen: servicio.longitudOrigen,
+        latitudDestino: servicio.latitudDestino,
+        longitudDestino: servicio.longitudDestino,
     });
     }else if(servicio.tipo=="PaseoEcologico"||servicio.tipo=="paseoEcologico"){
       const url = `${environment.baseUrl}/servicio/paseoEcologico/${servicio.id}`;
@@ -91,7 +97,11 @@ export class ServicioService {
         destino:servicio.destino,
         horaInicio:servicio.horaInicio,
         horaFin:servicio.horaFin,
-        proveedor : servicio.proveedor
+        proveedor : servicio.proveedor,
+        latitudOrigen: servicio.latitudOrigen,
+        longitudOrigen: servicio.longitudOrigen,
+        latitudDestino: servicio.latitudDestino,
+        longitudDestino: servicio.longitudDestino,
     });
     }else if(servicio.tipo=="Alojamiento"||servicio.tipo=="alojamiento"){
       const url = `${environment.baseUrl}/servicio/alojamiento/${servicio.id}`;
@@ -109,7 +119,9 @@ export class ServicioService {
         numeroBanos: servicio.numeroBanos,
         servicioLimpieza:servicio.servicioLimpieza,
         servicioWifi:servicio.servicioWifi,
-        proveedor : servicio.proveedor
+        proveedor : servicio.proveedor,
+        latitud: servicio.latitud,
+        longitud: servicio.longitud
     });
     }else{
       return this.request.put('', {});
@@ -214,7 +226,7 @@ getServicioId(id){
 
  getTodosServicios(){
       const url = `${environment.baseUrl}/servicio`;
-      return this.request.get<Servis[]>(url);
+      return this.request.get<any[]>(url);
  }
 
   eliminarServicio(servicio){
