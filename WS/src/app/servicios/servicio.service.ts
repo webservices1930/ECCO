@@ -118,7 +118,7 @@ export class ServicioService {
   }
 
 
-  crearServicio(registerForm,tipo,user,fotico){
+  crearServicio(registerForm,tipo,user,fotico,latitude,longitude,latitude1,longitude1,latitude2,longitude2){
       if(tipo=="Alimentacion"){
         const url = `${environment.baseUrl}/servicio/alimentacion/${user.id}`;
           return this.request.post(url, {
@@ -132,7 +132,9 @@ export class ServicioService {
             numeroPersonas : registerForm.value.numeropersonas,
             tipoComida : registerForm.value.tipocomida,
             cantidadPlatos : registerForm.value.cantidadplatos,
-            proveedor : user
+            proveedor : user,
+            latitud : latitude,
+            longitud: longitude
         });
       }else if(tipo=="Transporte"){
         const url = `${environment.baseUrl}/servicio/transporte/${user.id}`;
@@ -151,7 +153,11 @@ export class ServicioService {
           destino:registerForm.value.destino,
           horaSalida:registerForm.value.horainicio,
           horaLlegada:registerForm.value.horafin,
-          proveedor : user
+          proveedor : user,
+          latitudOrigen: latitude1,
+          longitudOrigen: longitude1,
+          latitudDestino: latitude2,
+          longitudDestino: longitude2
       });
       }else if(tipo=="PaseoEcologico"){
         const url = `${environment.baseUrl}/servicio/paseoEcologico/${user.id}`;
@@ -168,7 +174,11 @@ export class ServicioService {
           destino:registerForm.value.destino,
           horaInicio:registerForm.value.horainicio,
           horaFin:registerForm.value.horafin,
-          proveedor : user
+          proveedor : user,
+          latitudOrigen: latitude1,
+          longitudOrigen: longitude1,
+          latitudDestino: latitude2,
+          longitudDestino: longitude2
       });
       }else if(tipo=="Alojamiento"){
         const url = `${environment.baseUrl}/servicio/alojamiento/${user.id}`;
@@ -186,7 +196,9 @@ export class ServicioService {
           numeroBanos: registerForm.value.numerobanos,
           servicioLimpieza:registerForm.value.serviciolimpieza,
           servicioWifi:registerForm.value.serviciowifi,
-          proveedor : user
+          proveedor : user,
+          latitud : latitude,
+          longitud: longitude
       });
       }else{
         return this.request.post('', {});
