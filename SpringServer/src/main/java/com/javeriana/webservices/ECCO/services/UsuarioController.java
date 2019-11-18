@@ -5,12 +5,23 @@
  */
 package com.javeriana.webservices.ECCO.services;
 
+import com.javeriana.webservices.ECCO.Model.Alimentacion;
+import com.javeriana.webservices.ECCO.Model.Alojamiento;
 import com.javeriana.webservices.ECCO.Model.Cliente;
+import com.javeriana.webservices.ECCO.Model.PaseoEcologico;
 import com.javeriana.webservices.ECCO.Model.Proveedor;
 import com.javeriana.webservices.ECCO.Model.Servicio;
+import com.javeriana.webservices.ECCO.Model.Transporte;
+import com.javeriana.webservices.ECCO.pojo.AlimentacionPojo;
+import com.javeriana.webservices.ECCO.pojo.AlojamientoPojo;
+import com.javeriana.webservices.ECCO.pojo.ClientePojo;
+import com.javeriana.webservices.ECCO.pojo.PaseoEcologicoPojo;
+import com.javeriana.webservices.ECCO.pojo.ProveedorPojo;
+import com.javeriana.webservices.ECCO.pojo.TransportePojo;
 import com.javeriana.webservices.ECCO.repositories.ClienteRepository;
 import com.javeriana.webservices.ECCO.repositories.ProveedorRepository;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -47,8 +58,12 @@ public class UsuarioController {
     private ProveedorRepository proveedorRepository;
 
     @GetMapping("/cliente")
-    public List<Cliente> getAllCliente() {
-        return clienteRepository.findAll();
+    public List<ClientePojo> getAllCliente() {
+        List<ClientePojo> res = new ArrayList<>();
+        for(Cliente o: clienteRepository.findAll() ){
+            res.add(ClientePojo.toPojo(o));
+        }
+        return res;
     }
 
     @GetMapping("/cliente/{id}")
@@ -56,15 +71,27 @@ public class UsuarioController {
         
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
         if(cliente.isPresent()){
-            return ResponseEntity.ok().body(cliente.get());
+            
+            return ResponseEntity.ok().body(ClientePojo.toPojo(cliente.get()));
         }
         return (ResponseEntity) ResponseEntity.notFound();
         
     }
     
     @PostMapping("/cliente")
-    public ResponseEntity createCliente(@Valid @RequestBody Cliente cliente) {
+    public ResponseEntity createCliente(@Valid @RequestBody ClientePojo clientePojo) {
         try {
+            Cliente cliente = new Cliente();
+            cliente.setNombre(clientePojo.getNombre());
+            cliente.setEdad(clientePojo.getEdad());
+            cliente.setNombreUsuario(clientePojo.getNombreUsuario());
+            if(clientePojo.getFoto()!= null){
+                cliente.setFoto(Base64.getDecoder().decode(clientePojo.getFoto()));
+            }
+            
+            cliente.setTelefono(clientePojo.getTelefono());
+            cliente.setDescripcion(clientePojo.getDescripcion());
+            cliente.setContrasena(clientePojo.getContrasena());
             Cliente x =clienteRepository.save(cliente);
             return ResponseEntity.ok().body(true);
         } catch (Exception e) {
@@ -75,7 +102,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/cliente/{id}")
-    public ResponseEntity updateCliente(@PathVariable(value = "id") Long clienteId, @Valid @RequestBody Cliente clienteDetails) {
+    public ResponseEntity updateCliente(@PathVariable(value = "id") Long clienteId, @Valid @RequestBody ClientePojo clienteDetails) {
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
         if(cliente.isPresent()){
             cliente.get().setNombre(clienteDetails.getNombre());
@@ -83,11 +110,14 @@ public class UsuarioController {
             cliente.get().setEdad(clienteDetails.getEdad());
             cliente.get().setNombreUsuario(clienteDetails.getNombreUsuario());
             cliente.get().setTelefono(clienteDetails.getTelefono());
-            cliente.get().setFoto(clienteDetails.getFoto());
+            if(clienteDetails.getFoto()!= null){
+                cliente.get().setFoto(Base64.getDecoder().decode(clienteDetails.getFoto()));
+            }
+            cliente.get().setContrasena(clienteDetails.getContrasena());
             final Cliente updatedCliente = clienteRepository.save(cliente.get());
             return ResponseEntity.ok(true);
         }else{
-            return (ResponseEntity) ResponseEntity.badRequest();
+            return ResponseEntity.ok(false);
         }
         
     }
@@ -105,15 +135,12 @@ public class UsuarioController {
     }
     
     @GetMapping("/proveedor")
-    public ResponseEntity getAllProveedor() {
-        List<Proveedor> x = proveedorRepository.findAll();
-        System.out.println(x.size());
-        JSONArray res = new JSONArray();
-        for(Proveedor p : x){
-            res.put(new JSONObject(p.toJsonString()));
+    public List<ProveedorPojo> getAllProveedor() {
+        List<ProveedorPojo> res = new ArrayList<>();
+        for(Proveedor o: proveedorRepository.findAll() ){
+            res.add(ProveedorPojo.toPojo(o));
         }
-        return ResponseEntity.ok().body(res.toList());
-        
+        return res;        
     }
 
     @GetMapping("/proveedor/{id}")
@@ -121,15 +148,25 @@ public class UsuarioController {
         
         Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
         if(proveedor.isPresent()){
-            return ResponseEntity.ok().body(proveedor.get());
+            return ResponseEntity.ok().body(ProveedorPojo.toPojo(proveedor.get()));
         }
         return (ResponseEntity) ResponseEntity.notFound();
         
     }
     
     @PostMapping("/proveedor")
-    public ResponseEntity createProveedor(@Valid @RequestBody Proveedor proveedor) {
+    public ResponseEntity createProveedor(@Valid @RequestBody ProveedorPojo proveedorPojo) {
         try {
+            Proveedor proveedor = new Proveedor();
+            proveedor.setNombre(proveedorPojo.getNombre());
+            proveedor.setEdad(proveedorPojo.getEdad());
+            proveedor.setNombreUsuario(proveedorPojo.getNombreUsuario());
+            if(proveedorPojo.getFoto()!=null){
+                proveedor.setFoto(Base64.getDecoder().decode(proveedorPojo.getFoto()));
+            }
+            proveedor.setTelefono(proveedorPojo.getTelefono());
+            proveedor.setDescripcion(proveedorPojo.getDescripcion());
+            proveedor.setContrasena(proveedorPojo.getContrasena());
             Proveedor x =proveedorRepository.save(proveedor);
             return ResponseEntity.ok().body(true);
         } catch (Exception e) {
@@ -140,7 +177,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/proveedor/{id}")
-    public ResponseEntity updateProveedor(@PathVariable(value = "id") Long proveedorId, @Valid @RequestBody Proveedor proveedorDetails) {
+    public ResponseEntity updateProveedor(@PathVariable(value = "id") Long proveedorId, @Valid @RequestBody ProveedorPojo proveedorDetails) {
         Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
         if(proveedor.isPresent()){
             proveedor.get().setNombre(proveedorDetails.getNombre());
@@ -150,7 +187,9 @@ public class UsuarioController {
             proveedor.get().setTelefono(proveedorDetails.getTelefono());
             proveedor.get().setPaginaWeb(proveedorDetails.getPaginaWeb());
             proveedor.get().setContactoRS(proveedorDetails.getContactoRS());
-            proveedor.get().setFoto(proveedorDetails.getFoto());
+            if(proveedorDetails.getFoto()!=null){    
+                proveedor.get().setFoto(Base64.getDecoder().decode(proveedorDetails.getFoto()));
+            }
             final Proveedor updatedproveedor = proveedorRepository.save(proveedor.get());
             return ResponseEntity.ok(true);
         }else{
@@ -173,16 +212,29 @@ public class UsuarioController {
     
     @GetMapping("/proveedor/{id}/services")
     public ResponseEntity getServiciosProveedor(@PathVariable(value = "id") Long proveedorId){
-        JSONArray res = new JSONArray();
+        List<Object> res = new ArrayList<>();
         Optional<Proveedor> proveedor = this.proveedorRepository.findById(proveedorId);
         if(proveedor.isPresent()){
             List<Servicio> x =proveedor.get().getServicios();
             for (Servicio aux : x){
-                res.put(new JSONObject(aux.toJsonString()));
+                if(aux instanceof Alojamiento){
+                    Alojamiento a = (Alojamiento) aux;
+                    res.add(AlojamientoPojo.toPojo(a));
+                }else if(aux instanceof Transporte ){
+                    Transporte t = (Transporte) aux;
+                    res.add(TransportePojo.toPojo(t));
+                }else if(aux instanceof PaseoEcologico){
+                    PaseoEcologico p =(PaseoEcologico) aux;
+                    res.add(PaseoEcologicoPojo.toPojo(p));
+                }else if(aux instanceof Alimentacion){
+                    Alimentacion a = (Alimentacion) aux;
+                    res.add(AlimentacionPojo.toPojo(a));
+                }
+                
             }
         }
         
-        return ResponseEntity.ok(res.toList());
+        return ResponseEntity.ok(res);
     }
     @PostMapping("/login")
     public ResponseEntity logIn(@Valid @RequestBody String body ){

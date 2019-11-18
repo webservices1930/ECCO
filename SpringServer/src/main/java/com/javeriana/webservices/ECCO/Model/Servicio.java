@@ -19,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -28,6 +30,7 @@ import javax.persistence.MappedSuperclass;
 @Inheritance(
     strategy = InheritanceType.JOINED
 )
+@OnDelete(action = OnDeleteAction.CASCADE)
 public abstract class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

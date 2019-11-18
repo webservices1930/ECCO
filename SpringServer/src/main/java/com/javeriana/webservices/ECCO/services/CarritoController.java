@@ -8,6 +8,7 @@ package com.javeriana.webservices.ECCO.services;
 import com.javeriana.webservices.ECCO.Model.CarritoCompras;
 import com.javeriana.webservices.ECCO.Model.Cliente;
 import com.javeriana.webservices.ECCO.Model.Servicio;
+import com.javeriana.webservices.ECCO.pojo.CarritoPojo;
 import com.javeriana.webservices.ECCO.repositories.CarritoRepository;
 import com.javeriana.webservices.ECCO.repositories.ClienteRepository;
 import com.javeriana.webservices.ECCO.repositories.ServicioRepository;
@@ -114,9 +115,8 @@ public class CarritoController {
         CarritoCompras c = carritoRepository.searchByClientId(clienteId);
         JSONObject response = new JSONObject();
         if(c!=null){
-            JSONObject x = new JSONObject(c.toJsonString());
             
-            return ResponseEntity.ok(x.toMap());
+            return ResponseEntity.ok(CarritoPojo.toPojo(c));
         }else{
             response.put("message", "el cliente no tiene carrito");
             return ResponseEntity.ok(response.toMap());
