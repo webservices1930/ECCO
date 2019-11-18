@@ -188,8 +188,10 @@
 <div>
   <h2>Reseñas y Calificaciones</h2>
   <form id="resenarForm" (ngSubmit)="hacerResena()" #resenaForm="ngForm">
-    <input class="form-control mr-sm-2" placeholder="Escribir una resena.." (click)="resena=true" required name="resena"
+    <input class="form-control mr-sm-2" placeholder="Escribir una resena.." (click)="resenar=true" required name="resena"
       [(ngModel)]="resena.comentario" maxlength="200" #txtResena="ngModel" />
+    
+    <bar-rating [(ngModel)]="resena.calificacion" name="calificacion" required  [max]="5" [hidden]="!resenar" #calificacion="ngModel"></bar-rating>
     <div id="botonesPregunta">
       <button type="submit" class="btn btn-success" [hidden]="!resenar"
         [disabled]="!resenaForm.form.valid">Publicar/Editar Reseña</button>
@@ -207,8 +209,15 @@
     <div>
       <div id="nombreYFechaPregunta">
         <div class="nombreClientePregunta">{{ resena.cliente.nombre }}</div>
-        <div class="fechaPregunta">{{ pregunta.fechaPregunta }} </div>
+        <div class="fechaPregunta">{{ resena.fecha }} </div>
+       
       </div>
+      <div>
+          <div class="fechaPregunta">{{ resena.comentario }} </div>
+          <bar-rating [max]="5" [rate]="resena.calificacion" [readOnly]="true" ></bar-rating>
+      </div>
+
+
     </div>
   </div> 
   </div>
@@ -217,6 +226,7 @@
 <div class="alert alert-info" *ngIf="resenass.length==0 && resenasCargadas">
   <p>No hay reseñas en este servicio, sé el primero en reñar el servicio</p>
 </div>
+
 
 
 </div>

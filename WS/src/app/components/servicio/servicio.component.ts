@@ -138,6 +138,7 @@ export class ServicioComponent {
       this.resena.idServicio = params['id'];
       if (this._sesionService.getSesion() == "usuario") {
         this.pregunta.cliente.nombreUsuario = this._sesionService.id;
+        this.resena.cliente.nombreUsuario = this._sesionService.id;
       }
       console.log("holita "+params['id']);
       this._serviciosService.getServicioId(params['id']).subscribe(res => {
@@ -289,7 +290,7 @@ export class ServicioComponent {
 
   actualizarResenas(){
     this._resenaService.getResenasServicio(this.idServicio).subscribe(res => {
-      this.preguntass = res;
+      this.resenass = res;
     });
   }
 

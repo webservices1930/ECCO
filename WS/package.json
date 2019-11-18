@@ -26,6 +26,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.9",
     "jquery": "^3.4.1",
+    "ngx-bar-rating": "^1.1.0",
     "popper.js": "^1.15.0",
     "rxjs": "^6.5.3",
     "zone.js": "^0.10.2"
