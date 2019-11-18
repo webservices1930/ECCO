@@ -206,11 +206,10 @@ export class ServicioComponent {
       console.log(this.pregunta.cliente.nombreUsuario);
       console.log(this.pregunta.idServicio);
       this._preguntaService.crearPregunta(this.pregunta).subscribe(res => {
-
+        this.actualizarPreguntas();
       });
       this.pregunta.pregunta = "";
       this.preguntar = false;
-      this.actualizarPreguntas();
     }
   }
   cancelarPregunta() {
@@ -236,9 +235,8 @@ export class ServicioComponent {
 
   agregarRespuesta(i: number) {
     this._preguntaService.agregarRespuesta(this.preguntass[i]).subscribe(res => {
-
-    });;
-    this.actualizarPreguntas();
+      this.actualizarPreguntas();
+    });
   }
 
   actualizarPreguntas() {
