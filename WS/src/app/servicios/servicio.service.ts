@@ -123,7 +123,7 @@ export class ServicioService {
         proveedor : servicio.proveedor,
         latitud: latitude,
         longitud: longitude,
-        placeid: placeid
+        placeId: placeid
     });
     }else{
       return this.request.put('', {});
@@ -149,7 +149,7 @@ export class ServicioService {
             proveedor : user,
             latitud : latitude,
             longitud: longitude,
-            placeid: placeid
+            placeId: placeid
         });
       }else if(tipo=="Transporte"){
         const url = `${environment.baseUrl}/servicio/transporte/${user.id}`;
@@ -214,7 +214,7 @@ export class ServicioService {
           proveedor : user,
           latitud : latitude,
           longitud: longitude,
-          placeid: placeid
+          placeId: placeid
       });
       }else{
         return this.request.post('', {});

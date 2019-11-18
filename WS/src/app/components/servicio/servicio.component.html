@@ -40,10 +40,10 @@
           {{ item.cantidadPlatos }}
         </p>
 
+        <span class="subtitulo">Como llegar ?</span>
+        <br>
         <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
-          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
-          <agm-marker [latitude]="item.latitud" [longitude]="item.longitud" [markerDraggable]="false" [label]="alimentacion"> </agm-marker>
-          <agm-direction [origin]="origin" [destination]="destination"></agm-direction>
+          <agm-direction [origin]="{ lat: latitude, lng: longitude }" [destination]="{ lat: item.latitud, lng: item.longitud }"></agm-direction>
         </agm-map>
 
       </div>
@@ -71,10 +71,11 @@
           {{ item.horaFin }}
         </p>
 
+        <span class="subtitulo">Ruta del paseo:</span>
+        <br>
         <agm-map [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [zoom]="zoom">
           <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
-          <agm-marker [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [markerDraggable]="false" [label]="origen"> </agm-marker>
-          <agm-marker [latitude]="item.latitudDestino" [longitude]="item.longitudDestino" [markerDraggable]="false" [label]="destino"> </agm-marker>
+          <agm-direction [origin]="{ lat: item.latitudOrigen, lng: item.longitudOrigen }" [destination]="{ lat: item.latitudDestino, lng: item.longitudDestino }"></agm-direction>
         </agm-map>
 
       </div>
@@ -109,10 +110,11 @@
           {{ item.horaLlegada }}
         </p>
 
+        <span class="subtitulo">Ruta del viaje:</span>
+        <br>
         <agm-map [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [zoom]="zoom">
           <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
-          <agm-marker [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [markerDraggable]="false" [label]="origen"> </agm-marker>
-          <agm-marker [latitude]="item.latitudDestino" [longitude]="item.longitudDestino" [markerDraggable]="false" [label]="destino"> </agm-marker>
+          <agm-direction [origin]="{ lat: item.latitudOrigen, lng: item.longitudOrigen }" [destination]="{ lat: item.latitudDestino, lng: item.longitudDestino }"></agm-direction>
         </agm-map>
 
       </div>
@@ -142,10 +144,10 @@
             <span class="subtitulo">Servicio de Wi-Fi:</span>
           {{ item.servicioWifi }}
         </p>
-
+        <span class="subtitulo">Como llegar ?</span>
+        <br>
         <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
-          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
-          <agm-marker [latitude]="item.latitud" [longitude]="item.longitud" [markerDraggable]="false" [label]="alojamiento"> </agm-marker>
+          <agm-direction [origin]="{ lat: latitude, lng: longitude }" [destination]="{ lat: item.latitud, lng: item.longitud }"></agm-direction>
         </agm-map>
 
       </div>

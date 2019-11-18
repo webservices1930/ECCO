@@ -23,6 +23,7 @@ export class Servis {
     public cantidadPlatos?:number,
     public latitud?:number,
     public longitud?:number,
+    public placeId?:string,
 
     //Servicio de paseo ecologico:
     public origen?:string,
