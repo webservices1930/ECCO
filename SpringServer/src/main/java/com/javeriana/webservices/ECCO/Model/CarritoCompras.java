@@ -37,16 +37,7 @@ public class CarritoCompras {
     @JoinTable(name="carrito_servicio", joinColumns=@JoinColumn(name="carrito_id"), inverseJoinColumns=@JoinColumn(name="servicio_id"))  
     private List<Servicio> servicios;
     
-    public String toJsonString(){
-        StringBuilder sb = new StringBuilder();
-        for(Servicio s : this.servicios){
-            sb.append(s.toJsonString());
-            sb.append(",");
-        }
-        sb.deleteCharAt(sb.length()-1);
-        String s = "{ Id:"+this.Id+",numServicios : "+this.numServicios+",costoTotal :"+this.costoTotal+",servicios : ["+sb.toString()+"]}";
-        return s;
-    }
+    
 
     public Long getId() {
         return Id;

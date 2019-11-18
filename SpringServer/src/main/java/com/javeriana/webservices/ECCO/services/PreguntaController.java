@@ -8,10 +8,12 @@ package com.javeriana.webservices.ECCO.services;
 import com.javeriana.webservices.ECCO.Model.Cliente;
 import com.javeriana.webservices.ECCO.Model.Pregunta;
 import com.javeriana.webservices.ECCO.Model.Servicio;
+import com.javeriana.webservices.ECCO.pojo.PreguntaPojo;
 import com.javeriana.webservices.ECCO.repositories.ClienteRepository;
 import com.javeriana.webservices.ECCO.repositories.PreguntaRepository;
 import com.javeriana.webservices.ECCO.repositories.ServicioRepository;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -88,10 +90,10 @@ public class PreguntaController {
     @GetMapping("/{idServicio}")
     public ResponseEntity getPreguntas(@PathVariable(value = "idServicio") Long servicioId){
         List<Pregunta> preguntas = preguntaRepository.searchByServicioId(servicioId);
-        JSONArray res = new JSONArray();
+        List<PreguntaPojo> res = new ArrayList<>();
         for (Pregunta aux : preguntas){
-            res.put(new JSONObject(aux.toJsonString()).toMap());
+            res.add(PreguntaPojo.toPojo(aux));
         }
-        return ResponseEntity.ok(res.toList());
+        return ResponseEntity.ok(res);
     }
 }

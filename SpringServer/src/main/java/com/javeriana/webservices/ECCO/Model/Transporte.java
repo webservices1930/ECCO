@@ -27,16 +27,43 @@ public class Transporte extends Servicio{
     private String destino;
     private String horaSalida;
     private String horaLlegada;
+    private double latitudOrigen;
+    private double longitudOrigen;
+    private double latitudDestino;
+    private double longitudDestino;
 
-    @Override
-    public String toJsonString() {
-        String f = ((this.getFoto()== null) ? "null" :Base64.getEncoder().encodeToString(this.getFoto()));
-        String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
-           +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
-           +",empresa :"+this.empresa+",tipoTransporte:"+this.tipoTransporte+",origen:"+this.origen+",destino :"+this.destino+",horaSalida :"+(this.horaSalida.replace(":", "*"))
-           +",horaLlegada :"+(this.horaLlegada.replace(":", "*")) +",tipo: transporte}";
-        return s;
+    public double getLatitudOrigen() {
+        return latitudOrigen;
     }
+
+    public void setLatitudOrigen(double latitudOrigen) {
+        this.latitudOrigen = latitudOrigen;
+    }
+
+    public double getLongitudOrigen() {
+        return longitudOrigen;
+    }
+
+    public void setLongitudOrigen(double longitudOrigen) {
+        this.longitudOrigen = longitudOrigen;
+    }
+
+    public double getLatitudDestino() {
+        return latitudDestino;
+    }
+
+    public void setLatitudDestino(double latitudDestino) {
+        this.latitudDestino = latitudDestino;
+    }
+
+    public double getLongitudDestino() {
+        return longitudDestino;
+    }
+
+    public void setLongitudDestino(double longitudDestino) {
+        this.longitudDestino = longitudDestino;
+    }
+   
     
     public String getEmpresa() {
         return empresa;

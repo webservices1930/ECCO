@@ -33,6 +33,10 @@ public class TransportePojo {
     private String horaSalida;
     private String horaLlegada;
     private String tipo;
+    private double latitudOrigen;
+    private double longitudOrigen;
+    private double latitudDestino;
+    private double longitudDestino;
     
     public static TransportePojo toPojo(Transporte p){
         TransportePojo x = new TransportePojo();
@@ -55,9 +59,46 @@ public class TransportePojo {
         x.setDestino(p.getDestino());
         x.setHoraSalida(p.getHoraSalida());
         x.setHoraLlegada(p.getHoraLlegada());
+        x.setLatitudOrigen(p.getLatitudOrigen());
+        x.setLatitudDestino(p.getLatitudDestino());
+        x.setLongitudDestino(p.getLongitudDestino());
+        x.setLongitudOrigen(p.getLongitudOrigen());
         return x;
     }
 
+    public double getLatitudOrigen() {
+        return latitudOrigen;
+    }
+
+    public void setLatitudOrigen(double latitudOrigen) {
+        this.latitudOrigen = latitudOrigen;
+    }
+
+    public double getLongitudOrigen() {
+        return longitudOrigen;
+    }
+
+    public void setLongitudOrigen(double longitudOrigen) {
+        this.longitudOrigen = longitudOrigen;
+    }
+
+    public double getLatitudDestino() {
+        return latitudDestino;
+    }
+
+    public void setLatitudDestino(double latitudDestino) {
+        this.latitudDestino = latitudDestino;
+    }
+
+    public double getLongitudDestino() {
+        return longitudDestino;
+    }
+
+    public void setLongitudDestino(double longitudDestino) {
+        this.longitudDestino = longitudDestino;
+    }
+
+    
     public String getTipo() {
         return tipo;
     }

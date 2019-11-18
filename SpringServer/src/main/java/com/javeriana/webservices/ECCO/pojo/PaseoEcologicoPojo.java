@@ -28,6 +28,10 @@ public class PaseoEcologicoPojo {
     private String horaInicio;
     private String horaFin;
     private String tipo;
+    private double latitudOrigen;
+    private double longitudOrigen;
+    private double latitudDestino;
+    private double longitudDestino;
 
     public static PaseoEcologicoPojo toPojo(PaseoEcologico p){
         PaseoEcologicoPojo x = new PaseoEcologicoPojo();
@@ -49,8 +53,46 @@ public class PaseoEcologicoPojo {
         x.setHoraFin(p.getHoraFin());
         x.setHoraInicio(p.getHoraInicio());
         x.setTipo("paseoEcologico");
+        x.setLatitudOrigen(p.getLatitudOrigen());
+        x.setLatitudDestino(p.getLatitudDestino());
+        x.setLongitudOrigen(p.getLongitudOrigen());
+        x.setLongitudDestino(p.getLongitudDestino());
         return x;
     }
+
+    public double getLatitudOrigen() {
+        return latitudOrigen;
+    }
+
+    public void setLatitudOrigen(double latitudOrigen) {
+        this.latitudOrigen = latitudOrigen;
+    }
+
+    public double getLongitudOrigen() {
+        return longitudOrigen;
+    }
+
+    public void setLongitudOrigen(double longitudOrigen) {
+        this.longitudOrigen = longitudOrigen;
+    }
+
+    public double getLatitudDestino() {
+        return latitudDestino;
+    }
+
+    public void setLatitudDestino(double latitudDestino) {
+        this.latitudDestino = latitudDestino;
+    }
+
+    public double getLongitudDestino() {
+        return longitudDestino;
+    }
+
+    public void setLongitudDestino(double longitudDestino) {
+        this.longitudDestino = longitudDestino;
+    }
+    
+    
     public Long getId() {
         return Id;
     }

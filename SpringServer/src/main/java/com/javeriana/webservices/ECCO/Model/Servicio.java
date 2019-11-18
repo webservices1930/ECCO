@@ -31,7 +31,7 @@ import org.hibernate.annotations.OnDeleteAction;
     strategy = InheritanceType.JOINED
 )
 @OnDelete(action = OnDeleteAction.CASCADE)
-public abstract class Servicio {
+public  class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
@@ -50,7 +50,7 @@ public abstract class Servicio {
     @JoinColumn(name = "proveedor_id",nullable = false)
     private Proveedor proveedor;
 
-    public abstract String toJsonString();
+    
     
     public Long getId() {
         return Id;

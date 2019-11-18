@@ -19,15 +19,12 @@ public class PaseoEcologico  extends Servicio{
     private String destino;
     private String horaInicio;
     private String horaFin;
-
-    @Override
-    public String toJsonString() {
-        String f = ((this.getFoto() == null) ? "null" :Base64.getEncoder().encodeToString(this.getFoto()));
-        String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
-           +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
-           +",origen :"+this.origen+",destino:"+this.destino+",horaInicio :"+(this.horaInicio.replace(":", "*"))+",horaFin:"+(this.horaFin.replace(":", "*"))+",tipo: paseoEcologico}";
-        return s;
-    }
+    private double latitudOrigen;
+    private double longitudOrigen;
+    private double latitudDestino;
+    private double longitudDestino;
+    
+    
     public String getOrigen() {
         return origen;
     }

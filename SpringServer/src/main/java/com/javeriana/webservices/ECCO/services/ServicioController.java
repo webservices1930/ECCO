@@ -187,6 +187,8 @@ public class ServicioController {
                 x.setNumeroBanos(alojamiento.getNumeroBanos());
                 x.setServicioWifi(alojamiento.getServicioWifi());
                 x.setServicioLimpieza(alojamiento.getServicioLimpieza());
+                x.setLatitud(alojamiento.getLatitud());
+                x.setLongitud(alojamiento.getLongitud());
                 Alojamiento aux =alojamientoRepository.save(x);
                 proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
@@ -227,6 +229,8 @@ public class ServicioController {
                 alojamiento.get().setNumeroBanos(alojamientoDetails.getNumeroBanos());
                 alojamiento.get().setServicioWifi(alojamientoDetails.getServicioWifi());
                 alojamiento.get().setServicioLimpieza(alojamientoDetails.getServicioLimpieza());
+                alojamiento.get().setLatitud(alojamientoDetails.getLatitud());
+                alojamiento.get().setLongitud(alojamientoDetails.getLongitud());
             
             final Alojamiento x = alojamientoRepository.save(alojamiento.get());
             pay.put("message", "servicio actualizado");
@@ -287,7 +291,10 @@ public class ServicioController {
                 x.setOrigen(transporte.getOrigen());
                 x.setHoraSalida(transporte.getHoraSalida());
                 x.setTipoTransporte(transporte.getTipoTransporte());
-                
+                x.setLatitudOrigen(transporte.getLatitudOrigen());
+                x.setLatitudDestino(transporte.getLatitudDestino());
+                x.setLongitudOrigen(transporte.getLongitudOrigen());
+                x.setLongitudDestino(transporte.getLongitudDestino());
                 Transporte aux =transporteRepository.save(x);
                 proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
@@ -330,7 +337,10 @@ public class ServicioController {
                 transporte.get().setOrigen(transporteDetails.getOrigen());
                 transporte.get().setHoraSalida(transporteDetails.getHoraSalida());
                 transporte.get().setTipoTransporte(transporteDetails.getTipoTransporte());
-            
+                transporte.get().setLatitudOrigen(transporteDetails.getLatitudOrigen());
+                transporte.get().setLatitudDestino(transporteDetails.getLatitudDestino());
+                transporte.get().setLongitudOrigen(transporteDetails.getLongitudOrigen());
+                transporte.get().setLongitudDestino(transporteDetails.getLongitudDestino());
             final Transporte x = transporteRepository.save(transporte.get());
             return ResponseEntity.ok(pay.toMap());
         }else{
@@ -390,7 +400,11 @@ public class ServicioController {
                 x.setOrigen(paseoEcologico.getOrigen());
                 x.setHoraInicio(paseoEcologico.getHoraInicio());
                 x.setHoraFin(paseoEcologico.getHoraFin());
-                
+                x.setLatitudOrigen(paseoEcologico.getLatitudOrigen());
+                x.setLatitudDestino(paseoEcologico.getLatitudDestino());
+                x.setLongitudOrigen(paseoEcologico.getLongitudOrigen());
+                x.setLongitudDestino(paseoEcologico.getLongitudDestino());
+        
                 PaseoEcologico aux =paseoEcologicoRepository.save(x);
                 proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
@@ -431,6 +445,10 @@ public class ServicioController {
                 paseoEcologico.get().setOrigen(paseoEcologicoDetails.getOrigen());
                 paseoEcologico.get().setHoraInicio(paseoEcologicoDetails.getHoraInicio());
                 paseoEcologico.get().setHoraFin(paseoEcologicoDetails.getHoraFin());
+                paseoEcologico.get().setLatitudOrigen(paseoEcologicoDetails.getLatitudOrigen());
+                paseoEcologico.get().setLatitudDestino(paseoEcologicoDetails.getLatitudDestino());
+                paseoEcologico.get().setLongitudOrigen(paseoEcologicoDetails.getLongitudOrigen());
+                paseoEcologico.get().setLongitudDestino(paseoEcologicoDetails.getLongitudDestino());
             
             final PaseoEcologico x = paseoEcologicoRepository.save(paseoEcologico.get());
             return ResponseEntity.ok(pay.toMap());
@@ -489,7 +507,8 @@ public class ServicioController {
 
                 x.setCantidadPlatos(alimentacion.getCantidadPlatos());
                 x.setTipoComida(alimentacion.getTipoComida());
-                
+                x.setLatitud(alimentacion.getLatitud());
+                x.setLongitud(alimentacion.getLongitud());
                 Alimentacion aux =alimentacionRepository.save(x);
                 proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
@@ -526,7 +545,8 @@ public class ServicioController {
             //---------------------------------------------------------------------------------------------
             alimentacion.get().setCantidadPlatos(alimentacionDetails.getCantidadPlatos());
             alimentacion.get().setTipoComida(alimentacionDetails.getTipoComida());
-            
+            alimentacion.get().setLatitud(alimentacionDetails.getLatitud());
+            alimentacion.get().setLongitud(alimentacionDetails.getLongitud());
             
             final Alimentacion x = alimentacionRepository.save(alimentacion.get());
             return ResponseEntity.ok(pay.toMap());
