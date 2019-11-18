@@ -30,7 +30,10 @@ public class ProveedorPojo {
         x.setNombreUsuario(p.getNombre());
         x.setNombre(p.getNombre());
         x.setEdad(p.getEdad());
-        x.setFoto(Base64.getEncoder().encodeToString(p.getFoto()));
+        if(p.getFoto()!=null){
+           x.setFoto(Base64.getEncoder().encodeToString(p.getFoto())); 
+        }
+        
         x.setDescripcion(p.getDescripcion());
         x.setTelefono(p.getTelefono());
         x.setPaginaWeb(p.getPaginaWeb());

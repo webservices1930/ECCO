@@ -5,6 +5,9 @@
  */
 package com.javeriana.webservices.ECCO.pojo;
 
+import com.javeriana.webservices.ECCO.Model.Cliente;
+import java.util.Base64;
+
 /**
  *
  * @author randy
@@ -20,6 +23,19 @@ public class ClientePojo {
     private String telefono ;
     private String contrasena ;
 
+    public static ClientePojo toPojo(Cliente o){
+        ClientePojo x = new ClientePojo();
+        x.setId(o.getId());
+        x.setNombre(o.getNombre());
+        x.setNombreUsuario(o.getNombreUsuario());
+        x.setEdad(o.getEdad());
+        x.setDescripcion(o.getDescripcion());
+        x.setTelefono(o.getTelefono());
+        if(o.getFoto()!= null){
+            x.setFoto(Base64.getEncoder().encodeToString(o.getFoto()));
+        }
+        return x;
+    }
     public Long getId() {
         return Id;
     }

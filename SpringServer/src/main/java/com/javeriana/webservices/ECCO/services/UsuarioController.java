@@ -50,8 +50,12 @@ public class UsuarioController {
     private ProveedorRepository proveedorRepository;
 
     @GetMapping("/cliente")
-    public List<Cliente> getAllCliente() {
-        return clienteRepository.findAll();
+    public List<ClientePojo> getAllCliente() {
+        List<ClientePojo> res = new ArrayList<>();
+        for(Cliente o: clienteRepository.findAll() ){
+            res.add(ClientePojo.toPojo(o));
+        }
+        return res;
     }
 
     @GetMapping("/cliente/{id}")
@@ -59,9 +63,8 @@ public class UsuarioController {
         
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
         if(cliente.isPresent()){
-            JSONObject x = new JSONObject(cliente.get().toJsonString());
             
-            return ResponseEntity.ok().body(x.toMap());
+            return ResponseEntity.ok().body(ClientePojo.toPojo(cliente.get()));
         }
         return (ResponseEntity) ResponseEntity.notFound();
         
@@ -74,7 +77,10 @@ public class UsuarioController {
             cliente.setNombre(clientePojo.getNombre());
             cliente.setEdad(clientePojo.getEdad());
             cliente.setNombreUsuario(clientePojo.getNombreUsuario());
-            cliente.setFoto(Base64.getDecoder().decode(clientePojo.getFoto()));
+            if(clientePojo.getFoto()!= null){
+                cliente.setFoto(Base64.getDecoder().decode(clientePojo.getFoto()));
+            }
+            
             cliente.setTelefono(clientePojo.getTelefono());
             cliente.setDescripcion(clientePojo.getDescripcion());
             cliente.setContrasena(clientePojo.getContrasena());
@@ -96,7 +102,9 @@ public class UsuarioController {
             cliente.get().setEdad(clienteDetails.getEdad());
             cliente.get().setNombreUsuario(clienteDetails.getNombreUsuario());
             cliente.get().setTelefono(clienteDetails.getTelefono());
-            cliente.get().setFoto(Base64.getDecoder().decode(clienteDetails.getFoto()));
+            if(clienteDetails.getFoto()!= null){
+                cliente.get().setFoto(Base64.getDecoder().decode(clienteDetails.getFoto()));
+            }
             cliente.get().setContrasena(clienteDetails.getContrasena());
             final Cliente updatedCliente = clienteRepository.save(cliente.get());
             return ResponseEntity.ok(true);
@@ -119,15 +127,12 @@ public class UsuarioController {
     }
     
     @GetMapping("/proveedor")
-    public ResponseEntity getAllProveedor() {
-        List<Proveedor> x = proveedorRepository.findAll();
-        System.out.println(x.size());
-        JSONArray res = new JSONArray();
-        for(Proveedor p : x){
-            res.put(new JSONObject(p.toJsonString()));
+    public List<ProveedorPojo> getAllProveedor() {
+        List<ProveedorPojo> res = new ArrayList<>();
+        for(Proveedor o: proveedorRepository.findAll() ){
+            res.add(ProveedorPojo.toPojo(o));
         }
-        return ResponseEntity.ok().body(res.toList());
-        
+        return res;        
     }
 
     @GetMapping("/proveedor/{id}")
@@ -135,8 +140,7 @@ public class UsuarioController {
         
         Optional<Proveedor> proveedor = proveedorRepository.findById(proveedorId);
         if(proveedor.isPresent()){
-            JSONObject x = new JSONObject(proveedor.get().toJsonString());
-            return ResponseEntity.ok().body(x.toMap());
+            return ResponseEntity.ok().body(ProveedorPojo.toPojo(proveedor.get()));
         }
         return (ResponseEntity) ResponseEntity.notFound();
         
@@ -149,7 +153,9 @@ public class UsuarioController {
             proveedor.setNombre(proveedorPojo.getNombre());
             proveedor.setEdad(proveedorPojo.getEdad());
             proveedor.setNombreUsuario(proveedorPojo.getNombreUsuario());
-            proveedor.setFoto(Base64.getDecoder().decode(proveedorPojo.getFoto()));
+            if(proveedorPojo.getFoto()!=null){
+                proveedor.setFoto(Base64.getDecoder().decode(proveedorPojo.getFoto()));
+            }
             proveedor.setTelefono(proveedorPojo.getTelefono());
             proveedor.setDescripcion(proveedorPojo.getDescripcion());
             proveedor.setContrasena(proveedorPojo.getContrasena());
@@ -173,7 +179,9 @@ public class UsuarioController {
             proveedor.get().setTelefono(proveedorDetails.getTelefono());
             proveedor.get().setPaginaWeb(proveedorDetails.getPaginaWeb());
             proveedor.get().setContactoRS(proveedorDetails.getContactoRS());
-            proveedor.get().setFoto(Base64.getDecoder().decode(proveedorDetails.getFoto()));
+            if(proveedorDetails.getFoto()!=null){    
+                proveedor.get().setFoto(Base64.getDecoder().decode(proveedorDetails.getFoto()));
+            }
             final Proveedor updatedproveedor = proveedorRepository.save(proveedor.get());
             return ResponseEntity.ok(true);
         }else{

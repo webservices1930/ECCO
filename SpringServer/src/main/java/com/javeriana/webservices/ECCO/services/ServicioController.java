@@ -174,7 +174,8 @@ public class ServicioController {
                 x.setCiudad(alojamiento.getCiudad());
                 x.setIdioma(alojamiento.getIdioma());
                 x.setCosto(alojamiento.getCosto());
-                x.setDescripcion(alojamiento.getDescripcion());if(alojamiento.getFoto()!=null){
+                x.setDescripcion(alojamiento.getDescripcion());
+                if(alojamiento.getFoto()!=null){
                     x.setFoto(Base64.getDecoder().decode(alojamiento.getFoto()));
                 }else{
                     x.setFoto(null);
