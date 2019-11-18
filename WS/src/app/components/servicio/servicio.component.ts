@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ServicioService } from '../../servicios/servicio.service';
@@ -10,6 +10,7 @@ import { SesionService } from '../../servicios/sesion.service';
 import { PreguntaService } from 'src/app/servicios/pregunta.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-servicio',
@@ -58,6 +59,33 @@ export class ServicioComponent {
   );
   servicio=[];
 
+  // aQUI VA LO DE MAPAS
+  title: string = 'Prueba mapa';
+  latitude: number;
+  longitude: number;
+
+  placeid: string;
+  zoom: number;
+  address: string;
+
+  //---------------
+  latitude1: number;
+  longitude1: number;
+  placeid1: string;
+  address1: string;
+  latitude2: number;
+  longitude2: number;
+  placeid2: string;
+  address2: string;
+  origen = "Origen";
+  destino = "Destino";
+
+  private geoCoder;
+
+  @ViewChild('search', null)
+  public searchElementRef: ElementRef;
+
+
 
     private appId: string;
     private appCode: string;
@@ -69,7 +97,9 @@ export class ServicioComponent {
     private _sesionService: SesionService,
     private router: Router,
     private _preguntaService: PreguntaService,
-    private http: HttpClient
+    private http: HttpClient,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
   ) {
     this.appId = "DHdAP2csCaXmWs7BqkdI";
     this.appCode = "1K1F8fwfcgvcJG0Y0nx6kg";
@@ -114,6 +144,7 @@ export class ServicioComponent {
 
 
     });
+    this.setCurrentLocation();
   }
   public getWeather(coordinates: any) {
     console.log(coordinates);
@@ -201,6 +232,33 @@ export class ServicioComponent {
     });
   }
 
+  private setCurrentLocation(){
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 15;
+      });
+    }
+  }
 
+  getAddress(latitude, longitude) {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      console.log(results);
+      console.log(status);
+      if (status === 'OK') {
+        if (results[0]) {
+          this.zoom = 12;
+          this.address = results[0].formatted_address;
+          this.placeid = results[0].place_id;
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+
+    });
+  }
 
 }

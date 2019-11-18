@@ -21,12 +21,18 @@ export class Servis {
     //Servicio de alimentación:
     public tipoComida?:string,
     public cantidadPlatos?:number,
+    public latitud?:number,
+    public longitud?:number,
 
     //Servicio de paseo ecologico:
     public origen?:string,
     public destino?:string,
     public horaInicio?:string,
     public horaFinal?:string,
+    public latitudOrigen?:number,
+    public longitudOrigen?:number,
+    public latitudDestino?:number,
+    public longitudDestino?:number,
 
     //Servicio de transporte:
     public empresa?:string,
