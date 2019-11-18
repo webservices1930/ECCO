@@ -36,15 +36,26 @@ public class Alojamiento extends Servicio {
     @Enumerated(EnumType.STRING)
     private BooleanChoices servicioWifi;
 
-    @Override
-    public String toJsonString() {
-        String f = ((this.getFoto() == null) ? "null" :Base64.getEncoder().encodeToString(this.getFoto()));
-        String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
-           +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
-           +",tipoAlojamiento : "+this.tipoAlojamiento.name()+",numeroHabitaciones : "+this.numeroHabitaciones + ",numeroBanos : "+this.numeroBanos
-           +",servicioLimpieza : "+this.servicioLimpieza.name()+",servicioWifi:"+this.servicioWifi.name()+",tipo: alojamiento}";
-        return s;
+    private double latitud;
+    private double longitud;
+
+    public double getLatitud() {
+        return latitud;
     }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+    
+    
     
     public TipoAlojamiento getTipoAlojamiento() {
         return tipoAlojamiento;

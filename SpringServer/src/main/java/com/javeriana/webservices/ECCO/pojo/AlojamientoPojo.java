@@ -25,6 +25,7 @@ public class AlojamientoPojo {
     private String descripcion;
     private String foto;
     private int numeroPersonas;
+    private String tipo;
     private ProveedorPojo proveedor;
     
     
@@ -36,6 +37,8 @@ public class AlojamientoPojo {
     
     private BooleanChoices servicioLimpieza;
     private BooleanChoices servicioWifi;
+    private double latitud;
+    private double longitud;
 
     public static AlojamientoPojo toPojo(Alojamiento p){
         AlojamientoPojo x = new AlojamientoPojo();
@@ -57,8 +60,37 @@ public class AlojamientoPojo {
         x.setNumeroBanos(p.getNumeroBanos());
         x.setServicioWifi(p.getServicioWifi());
         x.setServicioLimpieza(p.getServicioLimpieza());
+        x.setTipo("alojamiento");
+        x.setLatitud(p.getLatitud());
+        x.setLongitud(p.getLongitud());
         return x;
     }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
     public Long getId() {
         return Id;
     }
