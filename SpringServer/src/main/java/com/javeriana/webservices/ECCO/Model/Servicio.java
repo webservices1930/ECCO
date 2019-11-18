@@ -6,7 +6,9 @@
 package com.javeriana.webservices.ECCO.Model;
 
 import java.util.Base64;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -31,7 +34,7 @@ import org.hibernate.annotations.OnDeleteAction;
     strategy = InheritanceType.JOINED
 )
 @OnDelete(action = OnDeleteAction.CASCADE)
-public abstract class Servicio {
+public  class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
@@ -50,7 +53,9 @@ public abstract class Servicio {
     @JoinColumn(name = "proveedor_id",nullable = false)
     private Proveedor proveedor;
 
-    public abstract String toJsonString();
+    @OneToMany(targetEntity = Resena.class,cascade = CascadeType.ALL)
+    private List<Resena> resenas;
+    
     
     public Long getId() {
         return Id;

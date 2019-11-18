@@ -22,10 +22,13 @@ public class AlimentacionPojo {
     private float costo;
     private String descripcion;
     private String foto;
+    private String tipo;
     private int numeroPersonas;
     private ProveedorPojo proveedor;
     private String tipoComida;
     private int  cantidadPlatos;
+    private double latitud;
+    private double longitud;
 
     public static AlimentacionPojo toPojo(Alimentacion p){
         AlimentacionPojo x = new AlimentacionPojo();
@@ -41,10 +44,28 @@ public class AlimentacionPojo {
         }
         x.setNumeroPersonas(p.getNumeroPersonas());
         x.setProveedor(ProveedorPojo.toPojo(p.getProveedor()));
-        
+        x.setTipo("alimentacion");
         x.setTipoComida(p.getTipoComida());
         x.setCantidadPlatos(p.getCantidadPlatos());
+        x.setLatitud(p.getLatitud());
+        x.setLongitud(p.getLongitud());
         return x;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
     }
     
     public Long getId() {
@@ -141,6 +162,14 @@ public class AlimentacionPojo {
 
     public void setCantidadPlatos(int cantidadPlatos) {
         this.cantidadPlatos = cantidadPlatos;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
     

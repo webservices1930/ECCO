@@ -16,15 +16,26 @@ import javax.persistence.Entity;
 public class Alimentacion extends Servicio{
     private String tipoComida;
     private int  cantidadPlatos;
+    private double latitud;
+    private double longitud;
 
-    @Override
-    public String toJsonString() {
-        String f = ((this.getFoto() == null) ? "null" :Base64.getEncoder().encodeToString(this.getFoto()));
-        String s = "{ Id : "+this.getId()+", nombre : "+this.getNombre()+" , pais : "+this.getPais()+", ciudad  :"+this.getCiudad()+", idioma :"+this.getIdioma()+","
-           +"costo:"+this.getCosto()+",descripcion: "+this.getDescripcion()+", foto :"+f+", numeroPersonas :"+this.getNumeroPersonas()+", proveedor: "+this.getProveedor().toJsonString() 
-           +",tipoComida:"+this.tipoComida+",cantidadPlatos :"+this.cantidadPlatos+",tipo: alimentacion}";
-        return s;
+    public double getLatitud() {
+        return latitud;
     }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    
     public String getTipoComida() {
         return tipoComida;
     }

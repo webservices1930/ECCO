@@ -32,7 +32,12 @@ public class TransportePojo {
     private String destino;
     private String horaSalida;
     private String horaLlegada;
-
+    private String tipo;
+    private double latitudOrigen;
+    private double longitudOrigen;
+    private double latitudDestino;
+    private double longitudDestino;
+    
     public static TransportePojo toPojo(Transporte p){
         TransportePojo x = new TransportePojo();
         x.setId(p.getId());
@@ -47,14 +52,59 @@ public class TransportePojo {
         }
         x.setNumeroPersonas(p.getNumeroPersonas());
         x.setProveedor(ProveedorPojo.toPojo(p.getProveedor()));
-        
+        x.setTipo("transporte");
         x.setEmpresa(p.getEmpresa());
         x.setTipoTransporte(p.getTipoTransporte());
         x.setOrigen(p.getOrigen());
         x.setDestino(p.getDestino());
         x.setHoraSalida(p.getHoraSalida());
         x.setHoraLlegada(p.getHoraLlegada());
+        x.setLatitudOrigen(p.getLatitudOrigen());
+        x.setLatitudDestino(p.getLatitudDestino());
+        x.setLongitudDestino(p.getLongitudDestino());
+        x.setLongitudOrigen(p.getLongitudOrigen());
         return x;
+    }
+
+    public double getLatitudOrigen() {
+        return latitudOrigen;
+    }
+
+    public void setLatitudOrigen(double latitudOrigen) {
+        this.latitudOrigen = latitudOrigen;
+    }
+
+    public double getLongitudOrigen() {
+        return longitudOrigen;
+    }
+
+    public void setLongitudOrigen(double longitudOrigen) {
+        this.longitudOrigen = longitudOrigen;
+    }
+
+    public double getLatitudDestino() {
+        return latitudDestino;
+    }
+
+    public void setLatitudDestino(double latitudDestino) {
+        this.latitudDestino = latitudDestino;
+    }
+
+    public double getLongitudDestino() {
+        return longitudDestino;
+    }
+
+    public void setLongitudDestino(double longitudDestino) {
+        this.longitudDestino = longitudDestino;
+    }
+
+    
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
     public Long getId() {
