@@ -167,6 +167,8 @@ public class UsuarioController {
             proveedor.setTelefono(proveedorPojo.getTelefono());
             proveedor.setDescripcion(proveedorPojo.getDescripcion());
             proveedor.setContrasena(proveedorPojo.getContrasena());
+            proveedor.setContactoRS(proveedorPojo.getContactoRS());
+            proveedor.setPaginaWeb(proveedorPojo.getPaginaWeb());
             Proveedor x =proveedorRepository.save(proveedor);
             return ResponseEntity.ok().body(true);
         } catch (Exception e) {
@@ -190,6 +192,8 @@ public class UsuarioController {
             if(proveedorDetails.getFoto()!=null){    
                 proveedor.get().setFoto(Base64.getDecoder().decode(proveedorDetails.getFoto()));
             }
+            proveedor.get().setContactoRS(proveedorDetails.getContactoRS());
+            proveedor.get().setPaginaWeb(proveedorDetails.getPaginaWeb());
             final Proveedor updatedproveedor = proveedorRepository.save(proveedor.get());
             return ResponseEntity.ok(true);
         }else{
