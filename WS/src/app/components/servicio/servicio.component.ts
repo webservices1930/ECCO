@@ -11,6 +11,7 @@ import { PreguntaService } from 'src/app/servicios/pregunta.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MapsAPILoader } from '@agm/core';
+import { Pais } from '../../model/pais';
 
 @Component({
   selector: 'app-servicio',
@@ -68,6 +69,8 @@ export class ServicioComponent {
   zoom: number;
   address: string;
 
+  paisrec=[];
+
   //---------------
   latitude1: number;
   longitude1: number;
@@ -96,6 +99,7 @@ export class ServicioComponent {
 
     latitud;
     longitud;
+    pais;
 
   constructor(private activatedRoute: ActivatedRoute,
     private _serviciosService: ServicioService,
@@ -130,10 +134,12 @@ export class ServicioComponent {
         this.servicio[0] = res;
         this.servicioProveedorid = res.proveedor.id
         this.userid = this._sesionService.id;
+        this.pais = this.servicio[0].pais;
 
         if(this.servicio[0].tipo=="Alimentacion"||this.servicio[0].tipo=="alimentacion"){
           this.latitud=this.servicio[0].latitud;
           this.longitud=this.servicio[0].longitud;
+          this.placeid = this.servicio[0].placeid;
         }else if(this.servicio[0].tipo=="Transporte"||this.servicio[0].tipo=="transporte"){
           this.latitud=this.servicio[0].latitudDestino;
           this.longitud=this.servicio[0].longitudDestino;
@@ -143,10 +149,20 @@ export class ServicioComponent {
         }else if(this.servicio[0].tipo=="Alojamiento"||this.servicio[0].tipo=="alojamiento"){
           this.latitud=this.servicio[0].latitud;
           this.longitud=this.servicio[0].longitud;
-
+          this.placeid = this.servicio[0].placeid;
         }
         this.getWeather(this.latitud,this.longitud);
-
+        this.getCountry(this.pais).subscribe(res => {
+          this.paisrec[0] = new Pais(undefined, undefined, undefined, undefined, undefined);
+          this.paisrec[0].nombre = res[0].name;
+          this.paisrec[0].capital = res[0].capital;
+          this.paisrec[0].region = res[0].region;
+          this.paisrec[0].popultation = res[0].population;
+          this.paisrec[0].area = res[0].area;
+          this.paisrec[0].moneda = res[0].currencies[0].name;
+          this.paisrec[0].codigo = res[0].currencies[0].code;
+          console.log(res[0].currencies[0].name);
+        });
 
         this._preguntaService.getPreguntasServicio(params['id']).subscribe(res => {
           this.preguntasCargadas = true;
@@ -170,6 +186,11 @@ export class ServicioComponent {
         console.error(error);
     });
 
+  }
+
+  public getCountry(pais){
+    const url = 'https://restcountries.eu/rest/v2/name/'+pais;
+    return this.http.get<any>(url);
   }
 
   public getSantizeUrl() {

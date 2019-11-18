@@ -39,13 +39,12 @@
             <span class="subtitulo">Cantidad de platos:</span>
           {{ item.cantidadPlatos }}
         </p>
-
         <span class="subtitulo">Como llegar ?</span>
         <br>
         <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
           <agm-direction [origin]="{ lat: latitude, lng: longitude }" [destination]="{ lat: item.latitud, lng: item.longitud }"></agm-direction>
         </agm-map>
-
+        <br>
       </div>
 
 
@@ -177,6 +176,23 @@
             </tbody>
         </table>
     </div>
+</div>
+<h5>Informacion país</h5>
+<div *ngFor="let val of paisrec">
+    <span class="subtitulo">Nombre:</span>
+    <p>{{ val.nombre }}</p>
+    <span class="subtitulo">Capital:</span>
+    <p>{{ val.capital }}</p>
+    <span class="subtitulo">Region:</span>
+    <p>{{ val.region }}</p>
+    <span class="subtitulo">Poblacion:</span>
+    <p>{{ val.popultation }}</p>
+    <span class="subtitulo">Area:</span>
+    <p>{{ val.area }}</p>
+    <span class="subtitulo">Moneda:</span>
+    <p>{{ val.moneda }}</p>
+    <span class="subtitulo">Codigo:</span>
+    <p>{{ val.codigo }}</p>
 </div>
 
 <div>
