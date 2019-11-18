@@ -41,8 +41,8 @@
         </p>
 
         <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
-          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" ></agm-marker>
-          <agm-marker [latitude]="item.latitud" [longitude]="item.longitud" [markerDraggable]="false"></agm-marker>
+          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
+          <agm-marker [latitude]="item.latitud" [longitude]="item.longitud" [markerDraggable]="false" [label]="alimentacion"> </agm-marker>
         </agm-map>
 
       </div>
@@ -69,6 +69,13 @@
             <span class="subtitulo">Hora Final:</span>
           {{ item.horaFin }}
         </p>
+
+        <agm-map [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [zoom]="zoom">
+          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
+          <agm-marker [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [markerDraggable]="false" [label]="origen"> </agm-marker>
+          <agm-marker [latitude]="item.latitudDestino" [longitude]="item.longitudDestino" [markerDraggable]="false" [label]="destino"> </agm-marker>
+        </agm-map>
+
       </div>
 
       <div *ngIf="item.tipo=='Transporte' || item.tipo=='transporte'">
@@ -100,6 +107,13 @@
             <span class="subtitulo">Hora Llegada:</span>
           {{ item.horaLlegada }}
         </p>
+
+        <agm-map [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [zoom]="zoom">
+          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
+          <agm-marker [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [markerDraggable]="false" [label]="origen"> </agm-marker>
+          <agm-marker [latitude]="item.latitudDestino" [longitude]="item.longitudDestino" [markerDraggable]="false" [label]="destino"> </agm-marker>
+        </agm-map>
+
       </div>
 
       <div *ngIf="item.tipo=='Alojamiento' || item.tipo=='alojamiento'">
@@ -127,6 +141,12 @@
             <span class="subtitulo">Servicio de Wi-Fi:</span>
           {{ item.servicioWifi }}
         </p>
+
+        <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
+          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [label]="posicion" ></agm-marker>
+          <agm-marker [latitude]="item.latitud" [longitude]="item.longitud" [markerDraggable]="false" [label]="alojamiento"> </agm-marker>
+        </agm-map>
+
       </div>
 
       <div *ngIf="servicioProveedorid == userid">

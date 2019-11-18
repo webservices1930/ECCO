@@ -77,6 +77,9 @@ export class ServicioComponent {
   longitude2: number;
   placeid2: string;
   address2: string;
+  alimentacion = "Servcio alimentación";
+  alojamiento = "Servcio alojamiento";
+  posicion = "Ubicación actual";
   origen = "Origen";
   destino = "Destino";
 
