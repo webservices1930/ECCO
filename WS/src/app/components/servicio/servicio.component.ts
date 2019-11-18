@@ -170,7 +170,7 @@ export class ServicioComponent {
         }
         this.getWeather(this.latitud,this.longitud);
         this.getCountry(this.pais).subscribe(res => {
-          this.paisrec[0] = new Pais(undefined, undefined, undefined, undefined, undefined);
+          this.paisrec[0] = new Pais(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
           this.paisrec[0].nombre = res[0].name;
           this.paisrec[0].capital = res[0].capital;
           this.paisrec[0].region = res[0].region;
