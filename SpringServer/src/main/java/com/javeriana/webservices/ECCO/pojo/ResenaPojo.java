@@ -10,6 +10,7 @@ import com.javeriana.webservices.ECCO.Model.Alojamiento;
 import com.javeriana.webservices.ECCO.Model.PaseoEcologico;
 import com.javeriana.webservices.ECCO.Model.Resena;
 import com.javeriana.webservices.ECCO.Model.Transporte;
+import java.util.List;
 
 /**
  *
@@ -23,6 +24,7 @@ public class ResenaPojo {
     private String comentario;
     private float calificacion;
     private String fecha;
+    private List<ResenaPojo> resenas;
 
     public static ResenaPojo toPojo(Resena r){
         ResenaPojo x = new ResenaPojo();
@@ -48,8 +50,19 @@ public class ResenaPojo {
 
         }
         x.setCliente(ClientePojo.toPojo(r.getCliente()));
+        
         return x;
     }
+
+    public List<ResenaPojo> getResenas() {
+        return resenas;
+    }
+
+    public void setResenas(List<ResenaPojo> resenas) {
+        this.resenas = resenas;
+    }
+    
+    
     public Long getId() {
         return Id;
     }

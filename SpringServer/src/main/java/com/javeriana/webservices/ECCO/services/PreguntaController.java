@@ -60,6 +60,7 @@ public class PreguntaController {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             pregunta.setFechaPregunta(formatter.format(new Date(System.currentTimeMillis())));
             pregunta.setServicio(servicio.get());
+            pregunta.setRespuesta(" ");
             preguntaRepository.save(pregunta);
             response.put("message", "pregunta creada con exito");
             return ResponseEntity.ok(response.toMap());
