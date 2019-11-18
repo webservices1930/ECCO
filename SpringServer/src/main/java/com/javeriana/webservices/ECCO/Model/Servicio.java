@@ -55,6 +55,14 @@ public  class Servicio {
 
     @OneToMany(targetEntity = Resena.class,cascade = CascadeType.ALL)
     private List<Resena> resenas;
+
+    public List<Resena> getResenas() {
+        return resenas;
+    }
+
+    public void setResenas(List<Resena> resenas) {
+        this.resenas = resenas;
+    }
     
     
     public Long getId() {
