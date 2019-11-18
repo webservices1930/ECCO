@@ -130,6 +130,26 @@
     </div>
   </div>
 </div>
+<br>
+<div class="clima">
+    <h3>Predicción del clima: en {{ciudad}}</h3>
+    <p *ngIf="weather.length == 0">Searching...</p>
+    <div *ngIf="weather.length > 0">
+        <table style="width: 100%; text-align: center">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td *ngFor="let forecast of weather">
+                        <img [src]="forecast.iconLink" />
+                        <p>{{ forecast.highTemperature }}°C</p>
+                        <p>{{ forecast.utcTime | date: 'dd/MM/yyyy' }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div>
   <h2> Preguntas </h2>
   <form id="preguntarForm" (ngSubmit)="hacerPregunta()" #preguntaForm="ngForm">
@@ -199,24 +219,7 @@
     </div>
   </div>-->
 
-  <div class="clima">
-    <h3>Predicción del clima: en {{ciudad}}</h3>
-    <p *ngIf="weather.length == 0">Searching...</p>
-    <div *ngIf="weather.length > 0">
-        <table style="width: 100%; text-align: center">
-            <thead></thead>
-            <tbody>
-                <tr>
-                    <td *ngFor="let forecast of weather">
-                        <img [src]="forecast.iconLink" />
-                        <p>{{ forecast.highTemperature }}°C</p>
-                        <p>{{ forecast.utcTime | date: 'dd/MM/yyyy' }}</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+
 
 
 <a [routerLink]="['/servicioss']" class="btn btn-outline-danger btn-block">Regresar</a>
