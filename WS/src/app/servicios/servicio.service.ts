@@ -40,7 +40,7 @@ export class ServicioService {
     });
   }
 
-  updateServicio(servicio) {
+  updateServicio(servicio, latitude, longitude, latitude1, longitude1, latitude2, longitude2) {
     console.log(servicio);
     if(servicio.tipo=="Alimentacion"||servicio.tipo=="alimentacion"){
       const url = `${environment.baseUrl}/servicio/alimentacion/${servicio.id}`;
@@ -56,8 +56,8 @@ export class ServicioService {
           tipoComida : servicio.tipoComida,
           cantidadPlatos : servicio.cantidadPlatos,
           proveedor : servicio.proveedor,
-          latitud: servicio.latitud,
-          longitud: servicio.longitud
+          latitud: latitude,
+          longitud: longitude
       });
     }else if(servicio.tipo=="Transporte"||servicio.tipo=="transporte"){
       const url = `${environment.baseUrl}/servicio/transporte/${servicio.id}`;
@@ -77,10 +77,10 @@ export class ServicioService {
         horaSalida:servicio.horaSalida,
         horaLlegada:servicio.horaLlegada,
         proveedor : servicio.proveedor,
-        latitudOrigen: servicio.latitudOrigen,
-        longitudOrigen: servicio.longitudOrigen,
-        latitudDestino: servicio.latitudDestino,
-        longitudDestino: servicio.longitudDestino,
+        latitudOrigen: latitude1,
+        longitudOrigen: longitude1,
+        latitudDestino: latitude2,
+        longitudDestino: longitude2
     });
     }else if(servicio.tipo=="PaseoEcologico"||servicio.tipo=="paseoEcologico"){
       const url = `${environment.baseUrl}/servicio/paseoEcologico/${servicio.id}`;
@@ -98,10 +98,10 @@ export class ServicioService {
         horaInicio:servicio.horaInicio,
         horaFin:servicio.horaFin,
         proveedor : servicio.proveedor,
-        latitudOrigen: servicio.latitudOrigen,
-        longitudOrigen: servicio.longitudOrigen,
-        latitudDestino: servicio.latitudDestino,
-        longitudDestino: servicio.longitudDestino,
+        latitudOrigen: latitude1,
+        longitudOrigen: longitude1,
+        latitudDestino: latitude2,
+        longitudDestino: longitude2
     });
     }else if(servicio.tipo=="Alojamiento"||servicio.tipo=="alojamiento"){
       const url = `${environment.baseUrl}/servicio/alojamiento/${servicio.id}`;
@@ -120,8 +120,8 @@ export class ServicioService {
         servicioLimpieza:servicio.servicioLimpieza,
         servicioWifi:servicio.servicioWifi,
         proveedor : servicio.proveedor,
-        latitud: servicio.latitud,
-        longitud: servicio.longitud
+        latitud: latitude,
+        longitud: longitude
     });
     }else{
       return this.request.put('', {});

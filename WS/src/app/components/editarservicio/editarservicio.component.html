@@ -56,6 +56,26 @@
               <label for="cantidadPlatos">Cantidad de platos:</label>
               <input type="number" class="form-control" id="cantidadPlatos" [(ngModel)]="item.cantidadPlatos" >
           </div>
+
+          <div class="form-group">
+            <label>Inserte lugar o dirección donde se encuentra el servicio</label>
+            <p>*Si colocas un lugar válido, mostraremos las reviews dadas por google !</p>
+            <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+              placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+              #search>
+          </div>
+
+          <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
+            <agm-marker [latitude]="item.latitud" [longitude]="item.longitud" [markerDraggable]="true" [label]="alimentacion"
+            (dragEnd)="markerDragEnd($event)"> </agm-marker>
+          </agm-map>
+          <br>
+          <h5>Address: {{address}}</h5>
+          <div>Latitude: {{latitude}}</div>
+          <div>Longitude: {{longitude}}</div>
+          <div>Id: {{placeid}}</div>
+          <br>
+
       </div>
 
       <div *ngIf="item.tipo == 'PaseoEcologico'  || item.tipo == 'paseoEcologico'">
@@ -84,6 +104,30 @@
                       <label for="horafin">Hora final:</label>
                       <input type="time" class="form-control" id="horafin" [(ngModel)]="item.horaFin" >
               </div>
+
+              <div class="form-group">
+                <label>Origen y destino del recorrido</label>
+                <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+                  placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+                  #search>
+              </div>
+
+              <agm-map [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [zoom]="zoom">
+                <agm-marker [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [markerDraggable]="true" [label]="origen"
+                (dragEnd)="markerDragEnd1($event)"> </agm-marker>
+                <agm-marker [latitude]="item.latitudDestino" [longitude]="item.longitudDestino" [markerDraggable]="true" [label]="destino"
+                (dragEnd)="markerDragEnd2($event)"> </agm-marker>
+              </agm-map>
+              <br>
+              <h5>Direccion origen: {{address1}}</h5>
+              <div>Latitude origen: {{latitude1}}</div>
+              <div>Longitude origen: {{longitude1}}</div>
+              <div>Id origen: {{placeid1}}</div>
+              <h5>Direccion destino: {{address2}}</h5>
+              <div>Latitude destino: {{latitude2}}</div>
+              <div>Longitude destino: {{longitude2}}</div>
+              <div>Id destino: {{placeid2}}</div>
+              <br>
 
       </div>
 
@@ -130,6 +174,25 @@
             </select>
         </div>
 
+        <div class="form-group">
+          <label>Inserte lugar o dirección donde se encuentra el alojamiento</label>
+          <p>*Si colocas un lugar válido, mostraremos las reviews dadas por google !</p>
+          <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+            placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+            #search>
+        </div>
+
+        <agm-map [latitude]="item.latitud" [longitude]="item.longitud" [zoom]="zoom">
+          <agm-marker [latitude]="item.latitud" [longitude]="item.longitud" [markerDraggable]="true" [label]="alojamiento" [markerDraggable]="true"
+          (dragEnd)="markerDragEnd($event)"> </agm-marker>
+        </agm-map>
+        <br>
+        <h5>Address: {{address}}</h5>
+        <div>Latitude: {{latitude}}</div>
+        <div>Longitude: {{longitude}}</div>
+        <div>Id: {{placeid}}</div>
+        <br>
+
       </div>
 
       <div *ngIf="item.tipo == 'Transporte'  || item.tipo == 'transporte'">
@@ -173,6 +236,30 @@
                   <label for="horaLlegada">Hora llegada:</label>
                   <input type="time" class="form-control" id="horaLlegada" [(ngModel)]="item.horaLlegada" >
           </div>
+
+          <div class="form-group">
+            <label>Origen y destino del recorrido</label>
+            <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+              placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+              #search>
+          </div>
+
+          <agm-map [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [zoom]="zoom">
+            <agm-marker [latitude]="item.latitudOrigen" [longitude]="item.longitudOrigen" [markerDraggable]="true" [label]="origen"
+            (dragEnd)="markerDragEnd1($event)"> </agm-marker>
+            <agm-marker [latitude]="item.latitudDestino" [longitude]="item.longitudDestino" [markerDraggable]="true" [label]="destino"
+            (dragEnd)="markerDragEnd2($event)"> </agm-marker>
+          </agm-map>
+          <br>
+          <h5>Direccion origen: {{address1}}</h5>
+          <div>Latitude origen: {{latitude1}}</div>
+          <div>Longitude origen: {{longitude1}}</div>
+          <div>Id origen: {{placeid1}}</div>
+          <h5>Direccion destino: {{address2}}</h5>
+          <div>Latitude destino: {{latitude2}}</div>
+          <div>Longitude destino: {{longitude2}}</div>
+          <div>Id destino: {{placeid2}}</div>
+          <br>
 
       </div>
     </div>
