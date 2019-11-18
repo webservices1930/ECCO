@@ -11,6 +11,8 @@ import { PreguntaService } from 'src/app/servicios/pregunta.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MapsAPILoader } from '@agm/core';
+import { Resena } from 'src/app/model/resena';
+import { ResenaService } from 'src/app/servicios/resena.service';
 
 @Component({
   selector: 'app-servicio',
@@ -25,14 +27,25 @@ export class ServicioComponent {
     undefined,
     undefined
   );
+  resena: Resena = new Resena(
+    new Usuario(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined),
+    undefined,
+    undefined,
+    undefined,
+    undefined
+  );
+
   preguntar: boolean = false;
+  resenar: boolean = false;
   reponder: boolean = false;
   autenticadoComoCliente: boolean = true;
   preguntasCargadas: boolean;
+  resenasCargadas: boolean;
 
 
   ciudad="";
   preguntass: any = [];
+  resenass: any = [];
 
   userid;
   servicioProveedorid;
@@ -101,6 +114,7 @@ export class ServicioComponent {
     private _serviciosService: ServicioService,
     private sanitization: DomSanitizer,
     private _sesionService: SesionService,
+    private _resenaService: ResenaService,
     private router: Router,
     private _preguntaService: PreguntaService,
     private http: HttpClient,
@@ -117,9 +131,11 @@ export class ServicioComponent {
 
 
     this.preguntasCargadas = false;
+    this.resenasCargadas = false;
     this.activatedRoute.params.subscribe(params => {
       this.idServicio = params['id'];
       this.pregunta.idServicio = params['id'];
+      this.resena.idServicio = params['id'];
       if (this._sesionService.getSesion() == "usuario") {
         this.pregunta.cliente.nombreUsuario = this._sesionService.id;
       }
@@ -151,6 +167,11 @@ export class ServicioComponent {
         this._preguntaService.getPreguntasServicio(params['id']).subscribe(res => {
           this.preguntasCargadas = true;
           this.preguntass = res;
+        });
+
+        this._resenaService.getResenasServicio(params['id']).subscribe(res => {
+          this.resenasCargadas = true;
+          this.resenass = res;
         });
 
       });
@@ -212,6 +233,27 @@ export class ServicioComponent {
       this.preguntar = false;
     }
   }
+
+
+
+  hacerResena() {
+    if (this.resena.cliente.nombreUsuario == undefined){
+      this.autenticadoComoCliente = false;
+    }
+    else{
+      this._resenaService.crearResena(this.resena).subscribe(res => {
+        this.actualizarResenas();
+      });
+      this.resena.comentario = "";
+      this.resenar = false;
+    }
+
+  }
+
+  cancelarResena(){
+    this.resena.comentario = "";
+    this.resenar = false;
+  }
   cancelarPregunta() {
     this.pregunta.pregunta = "";
     this.preguntar = false;
@@ -241,6 +283,12 @@ export class ServicioComponent {
 
   actualizarPreguntas() {
     this._preguntaService.getPreguntasServicio(this.idServicio).subscribe(res => {
+      this.preguntass = res;
+    });
+  }
+
+  actualizarResenas(){
+    this._resenaService.getResenasServicio(this.idServicio).subscribe(res => {
       this.preguntass = res;
     });
   }
