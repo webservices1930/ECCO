@@ -40,7 +40,7 @@ export class UsuarioService {
     return this.request.get<Usuario>(url);
   }
 
-  updateUsuario(usuario,base64data, ext){
+  updateUsuario(usuario){
     const url = `${environment.baseUrl}/usuario/cliente/${usuario.id}`;
     return this.request.put(url, {
       nombre: usuario.nombre,
