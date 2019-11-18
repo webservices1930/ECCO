@@ -35,6 +35,7 @@ import { MostrarcarritoComponent } from './mostrarcarrito/mostrarcarrito.compone
 
 //Mapas
 import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
 
 
 
@@ -74,7 +75,8 @@ import { AgmCoreModule } from '@agm/core';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDbLs6hjVLJqgv1EdJDUVXCnyVVnX8OD-0',
       libraries: ['places']
-    })
+    }),
+    AgmDirectionModule,
   ],
   providers: [
     ServicioService

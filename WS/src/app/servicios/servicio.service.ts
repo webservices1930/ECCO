@@ -40,7 +40,7 @@ export class ServicioService {
     });
   }
 
-  updateServicio(servicio, latitude, longitude, latitude1, longitude1, latitude2, longitude2) {
+  updateServicio(servicio, latitude, longitude, latitude1, longitude1, latitude2, longitude2, placeid) {
     console.log(servicio);
     if(servicio.tipo=="Alimentacion"||servicio.tipo=="alimentacion"){
       const url = `${environment.baseUrl}/servicio/alimentacion/${servicio.id}`;
@@ -57,7 +57,8 @@ export class ServicioService {
           cantidadPlatos : servicio.cantidadPlatos,
           proveedor : servicio.proveedor,
           latitud: latitude,
-          longitud: longitude
+          longitud: longitude,
+          placeid: placeid
       });
     }else if(servicio.tipo=="Transporte"||servicio.tipo=="transporte"){
       const url = `${environment.baseUrl}/servicio/transporte/${servicio.id}`;
@@ -121,7 +122,8 @@ export class ServicioService {
         servicioWifi:servicio.servicioWifi,
         proveedor : servicio.proveedor,
         latitud: latitude,
-        longitud: longitude
+        longitud: longitude,
+        placeid: placeid
     });
     }else{
       return this.request.put('', {});
@@ -130,7 +132,7 @@ export class ServicioService {
   }
 
 
-  crearServicio(registerForm,tipo,user,fotico,latitude,longitude,latitude1,longitude1,latitude2,longitude2){
+  crearServicio(registerForm,tipo,user,fotico,latitude,longitude,latitude1,longitude1,latitude2,longitude2, placeid){
       if(tipo=="Alimentacion"){
         const url = `${environment.baseUrl}/servicio/alimentacion/${user.id}`;
           return this.request.post(url, {
@@ -146,7 +148,8 @@ export class ServicioService {
             cantidadPlatos : registerForm.value.cantidadplatos,
             proveedor : user,
             latitud : latitude,
-            longitud: longitude
+            longitud: longitude,
+            placeid: placeid
         });
       }else if(tipo=="Transporte"){
         const url = `${environment.baseUrl}/servicio/transporte/${user.id}`;
@@ -210,7 +213,8 @@ export class ServicioService {
           servicioWifi:registerForm.value.serviciowifi,
           proveedor : user,
           latitud : latitude,
-          longitud: longitude
+          longitud: longitude,
+          placeid: placeid
       });
       }else{
         return this.request.post('', {});

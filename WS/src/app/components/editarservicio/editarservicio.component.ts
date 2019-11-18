@@ -121,7 +121,7 @@ export class EditarservicioComponent implements OnInit {
     }
   }
   guardar(){
-    this._serviciosService.updateServicio(this.servicio[0], this.latitude, this.longitude, this.latitude1, this.longitude1,this.latitude2,this.longitude2).subscribe(
+    this._serviciosService.updateServicio(this.servicio[0], this.latitude, this.longitude, this.latitude1, this.longitude1,this.latitude2,this.longitude2, this.placeid).subscribe(
       results => {
         console.log(results);
         this.router.navigate(['servicioss']);

@@ -237,7 +237,7 @@ export class CrearservicioComponent implements OnInit {
     }else{
       this.proveedorService.getProveedorByUsernameJSON(this.user).subscribe( res => {
         console.log(res);
-        this.servicioService.crearServicio(this.registerForm,this.tipoServicio,res,this.base64data, this.latitude, this.longitude, this.latitude1, this.longitude1,this.latitude2,this.longitude2).subscribe(
+        this.servicioService.crearServicio(this.registerForm,this.tipoServicio,res,this.base64data, this.latitude, this.longitude, this.latitude1, this.longitude1,this.latitude2,this.longitude2, this.placeid).subscribe(
           results => {
             console.log(results);
             this.router.navigate(['servicioss']);
