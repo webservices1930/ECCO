@@ -27,6 +27,7 @@ public class PaseoEcologicoPojo {
     private String destino;
     private String horaInicio;
     private String horaFin;
+    private String tipo;
 
     public static PaseoEcologicoPojo toPojo(PaseoEcologico p){
         PaseoEcologicoPojo x = new PaseoEcologicoPojo();
@@ -47,6 +48,7 @@ public class PaseoEcologicoPojo {
         x.setDestino(p.getDestino());
         x.setHoraFin(p.getHoraFin());
         x.setHoraInicio(p.getHoraInicio());
+        x.setTipo("paseoEcologico");
         return x;
     }
     public Long getId() {
@@ -55,6 +57,14 @@ public class PaseoEcologicoPojo {
 
     public void setId(Long Id) {
         this.Id = Id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getNombre() {

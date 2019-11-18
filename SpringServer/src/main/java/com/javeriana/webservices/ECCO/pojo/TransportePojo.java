@@ -32,7 +32,8 @@ public class TransportePojo {
     private String destino;
     private String horaSalida;
     private String horaLlegada;
-
+    private String tipo;
+    
     public static TransportePojo toPojo(Transporte p){
         TransportePojo x = new TransportePojo();
         x.setId(p.getId());
@@ -47,7 +48,7 @@ public class TransportePojo {
         }
         x.setNumeroPersonas(p.getNumeroPersonas());
         x.setProveedor(ProveedorPojo.toPojo(p.getProveedor()));
-        
+        x.setTipo("transporte");
         x.setEmpresa(p.getEmpresa());
         x.setTipoTransporte(p.getTipoTransporte());
         x.setOrigen(p.getOrigen());
@@ -55,6 +56,14 @@ public class TransportePojo {
         x.setHoraSalida(p.getHoraSalida());
         x.setHoraLlegada(p.getHoraLlegada());
         return x;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
     public Long getId() {

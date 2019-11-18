@@ -25,6 +25,7 @@ public class AlojamientoPojo {
     private String descripcion;
     private String foto;
     private int numeroPersonas;
+    private String tipo;
     private ProveedorPojo proveedor;
     
     
@@ -57,8 +58,18 @@ public class AlojamientoPojo {
         x.setNumeroBanos(p.getNumeroBanos());
         x.setServicioWifi(p.getServicioWifi());
         x.setServicioLimpieza(p.getServicioLimpieza());
+        x.setTipo("alojamiento");
         return x;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
     public Long getId() {
         return Id;
     }

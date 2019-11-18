@@ -22,6 +22,7 @@ public class AlimentacionPojo {
     private float costo;
     private String descripcion;
     private String foto;
+    private String tipo;
     private int numeroPersonas;
     private ProveedorPojo proveedor;
     private String tipoComida;
@@ -41,7 +42,7 @@ public class AlimentacionPojo {
         }
         x.setNumeroPersonas(p.getNumeroPersonas());
         x.setProveedor(ProveedorPojo.toPojo(p.getProveedor()));
-        
+        x.setTipo("alimentacion");
         x.setTipoComida(p.getTipoComida());
         x.setCantidadPlatos(p.getCantidadPlatos());
         return x;
@@ -141,6 +142,14 @@ public class AlimentacionPojo {
 
     public void setCantidadPlatos(int cantidadPlatos) {
         this.cantidadPlatos = cantidadPlatos;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
     
