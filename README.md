@@ -6,8 +6,16 @@
 
 El repositorio estará orientado al desarrollo de una aplicación basada en servicios web enfocada a la comercialización de planes de Turismo Ecológico. Más información del grupo en: "[WikiEcco](https://github.com/webservices1930/ECCO/wiki)"
 
+SOAP:
+
 Cliente: https://spa.juancho-11gm.now.sh/#/servicioss
 
 WSDL: http://whatsmusic.pythonanywhere.com/soap/?wsdl
 
 https://ecco-7820c.firebaseapp.com
+
+
+REST:
+
+Cliente: https://ws-two-tau.now.sh/
+Servidor:https://servidoreccows.herokuapp.com/
