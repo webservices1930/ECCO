@@ -5,11 +5,19 @@
  */
 package com.javeriana.webservices.ECCO.services;
 
+import com.javeriana.webservices.ECCO.Model.Alimentacion;
+import com.javeriana.webservices.ECCO.Model.Alojamiento;
 import com.javeriana.webservices.ECCO.Model.Cliente;
+import com.javeriana.webservices.ECCO.Model.PaseoEcologico;
 import com.javeriana.webservices.ECCO.Model.Proveedor;
 import com.javeriana.webservices.ECCO.Model.Servicio;
+import com.javeriana.webservices.ECCO.Model.Transporte;
+import com.javeriana.webservices.ECCO.pojo.AlimentacionPojo;
+import com.javeriana.webservices.ECCO.pojo.AlojamientoPojo;
 import com.javeriana.webservices.ECCO.pojo.ClientePojo;
+import com.javeriana.webservices.ECCO.pojo.PaseoEcologicoPojo;
 import com.javeriana.webservices.ECCO.pojo.ProveedorPojo;
+import com.javeriana.webservices.ECCO.pojo.TransportePojo;
 import com.javeriana.webservices.ECCO.repositories.ClienteRepository;
 import com.javeriana.webservices.ECCO.repositories.ProveedorRepository;
 import java.util.ArrayList;
@@ -204,16 +212,29 @@ public class UsuarioController {
     
     @GetMapping("/proveedor/{id}/services")
     public ResponseEntity getServiciosProveedor(@PathVariable(value = "id") Long proveedorId){
-        JSONArray res = new JSONArray();
+        List<Object> res = new ArrayList<>();
         Optional<Proveedor> proveedor = this.proveedorRepository.findById(proveedorId);
         if(proveedor.isPresent()){
             List<Servicio> x =proveedor.get().getServicios();
             for (Servicio aux : x){
-                res.put(new JSONObject(aux.toJsonString()));
+                if(aux instanceof Alojamiento){
+                    Alojamiento a = (Alojamiento) aux;
+                    res.add(AlojamientoPojo.toPojo(a));
+                }else if(aux instanceof Transporte ){
+                    Transporte t = (Transporte) aux;
+                    res.add(TransportePojo.toPojo(t));
+                }else if(aux instanceof PaseoEcologico){
+                    PaseoEcologico p =(PaseoEcologico) aux;
+                    res.add(PaseoEcologicoPojo.toPojo(p));
+                }else if(aux instanceof Alimentacion){
+                    Alimentacion a = (Alimentacion) aux;
+                    res.add(AlimentacionPojo.toPojo(a));
+                }
+                
             }
         }
         
-        return ResponseEntity.ok(res.toList());
+        return ResponseEntity.ok(res);
     }
     @PostMapping("/login")
     public ResponseEntity logIn(@Valid @RequestBody String body ){
