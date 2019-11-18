@@ -532,7 +532,13 @@
       </div>
 
     </div>
-
+    <br>
+    <div class="form-group" [hidden]=true>
+      <label>Origen y destino del recorrido</label>
+      <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+        placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+        #search>
+    </div>
     <div class="form-group">
       <button class="btn btn-outline-success mx-auto d-block">Crear servicio</button>
     </div>
