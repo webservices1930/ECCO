@@ -30,7 +30,35 @@ public class Resena {
     @JoinColumn(name = "servicio_id",nullable =false)
     private Servicio servicio;
     
-    private String texto;
+    private String comentario;
+    private float calificacion;
+    private String fecha;
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public float getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(float calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+    
+   
 
     public Long getId() {
         return Id;
@@ -44,9 +72,7 @@ public class Resena {
         return servicio;
     }
 
-    public String getTexto() {
-        return texto;
-    }
+    
 
     public void setId(Long Id) {
         this.Id = Id;
@@ -60,9 +86,7 @@ public class Resena {
         this.servicio = servicio;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
+    
     
     
 }
