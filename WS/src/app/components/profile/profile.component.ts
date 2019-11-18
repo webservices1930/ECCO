@@ -65,8 +65,7 @@ export class ProfileComponent implements OnInit {
     reader.readAsBinaryString(event.target.files[0]);
     this.ext=event.target.files[0].type;
     reader.onload = (event) => { // called once readAsDataURL is completed
-          this.base64data=btoa(reader.result as string);
-          this.cambio = true;
+        this.usuarioMostrar[0].foto=btoa(reader.result as string);
       }
     }
   }
@@ -77,7 +76,15 @@ export class ProfileComponent implements OnInit {
 
   actualizar(){
     if(this.sesionService.sesion === 'usuario'){
-        this.usuarioService.updateUsuario(this.usuarioMostrar[0],this.base64data,this.ext);
+        this.usuarioService.updateUsuario(this.usuarioMostrar[0]).subscribe(
+          result =>{
+             alert("Se actualizó el usuario");
+          },
+          error => {
+           alert("No se actualizó el usuario");
+
+          }
+        )
 
     }else{
       this.proveedorService.updateProveedor(this.usuarioMostrar[0]).subscribe(
