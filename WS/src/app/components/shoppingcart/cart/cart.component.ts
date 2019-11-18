@@ -14,8 +14,7 @@ import { PagoService } from '../../../servicios/pago.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-
-  servicios;
+  servicios =[];
   total;
   carrito: CarritoCompras;
   bandera: boolean = true;
@@ -30,7 +29,6 @@ export class CartComponent implements OnInit {
        this.servicios = servicioss;
      });*/
     //this.carrito = new CarritoCompras();
-    this.servicios =[];
     this.total = 0;
     this.href = this.router.url;
     if (this.href == "/pago"){

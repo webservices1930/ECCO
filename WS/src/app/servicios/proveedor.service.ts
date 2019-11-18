@@ -9,7 +9,7 @@ import { RequestService } from '../Request/request.service';
   providedIn: 'root'
 })
 export class ProveedorService {
-  
+
   ext: string;
   base64data: string;
 
@@ -36,7 +36,6 @@ export class ProveedorService {
 
 
   borrarProveedor(proveedor){
-    console.log("ssss "+proveedor.id);
     const url = `${environment.baseUrl}/usuario/proveedor/${proveedor.id}`;
     return this.request.delete(url, {
       nombre: proveedor.nombre,
@@ -52,6 +51,8 @@ export class ProveedorService {
   }
 
   registrarProveedor(proveedor:Proveedor){
+    console.log("ssss "+proveedor);
+
       const url = `${environment.baseUrl}/usuario/proveedor`;
       return this.request.post(url, {
         nombre: proveedor.nombre,

@@ -20,8 +20,8 @@ export class CarritoService {
     this.ext = " ";
    }
 
-   public agregarAlCarrito(id, servicio: Servis) { //cliente.Id + servicio.Id
-    const url = `${environment.baseUrl}/usuario/carrito/${id}/${servicio.Id}`;
+   public agregarAlCarrito(id, servicio) { //cliente.Id + servicio.Id
+    const url = `${environment.baseUrl}/usuario/carrito/${id}/${servicio.id}`;
     console.log("Entraaa ctm");
     console.log(url);
     return this.http.put<any>(url, {});
@@ -70,8 +70,8 @@ export class CarritoService {
     return this.http.get<CarritoCompras>(url);
   }
 
-  public removerDelCarrito(id, servicio: Servis) {
-    const url = `${environment.baseUrl}/usuario/carrito/${id}/${servicio.Id}`;
+  public removerDelCarrito(id, servicio) {
+    const url = `${environment.baseUrl}/usuario/carrito/${id}/${servicio.id}`;
     return this.http.delete<any>(url);
   }
 }
