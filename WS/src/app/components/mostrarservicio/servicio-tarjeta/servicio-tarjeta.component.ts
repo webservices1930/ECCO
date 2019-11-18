@@ -66,8 +66,9 @@ export class ServicioTarjetaComponent implements OnInit {
     //this.tarjetaCarrito.actualizarCarrito();
   }
 
-  public getSantizeUrl(img) {
-    return this.sanitization.bypassSecurityTrustUrl(img);
+  public getSantizeUrl() {
+    let image = "data:image/.jpg;base64, "+this.servicio.foto;
+    return this.sanitization.bypassSecurityTrustUrl(image);
  }
 
 

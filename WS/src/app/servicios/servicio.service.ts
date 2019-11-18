@@ -40,13 +40,85 @@ export class ServicioService {
     });
   }
 
-  updateServicio(servicio, base64data, tipo) {
-
+  updateServicio(servicio) {
+    console.log(servicio);
+    if(servicio.tipo=="Alimentacion"||servicio.tipo=="alimentacion"){
+      const url = `${environment.baseUrl}/servicio/alimentacion/${servicio.id}`;
+        return this.request.put(url, {
+          nombre : servicio.nombre,
+          pais : servicio.pais,
+          ciudad : servicio.ciudad,
+          costo : servicio.costo,
+          idioma : servicio.idioma,
+          descripcion : servicio.descripcion,
+          foto:servicio.foto,
+          numeroPersonas : servicio.numeroPersonas,
+          tipoComida : servicio.tipoComida,
+          cantidadPlatos : servicio.cantidadPlatos,
+          proveedor : servicio.proveedor
+      });
+    }else if(servicio.tipo=="Transporte"||servicio.tipo=="transporte"){
+      const url = `${environment.baseUrl}/servicio/transporte/${servicio.id}`;
+      return this.request.put(url, {
+        nombre : servicio.nombre,
+        pais : servicio.pais,
+        ciudad : servicio.ciudad,
+        costo : servicio.costo,
+        idioma : servicio.idioma,
+        descripcion : servicio.descripcion,
+        foto:servicio.foto,
+        numeroPersonas : servicio.numeroPersonas,
+        empresa : servicio.empresa,
+        tipoTransporte : servicio.tipoTransporte,
+        origen:servicio.origen,
+        destino:servicio.destino,
+        horaSalida:servicio.horaSalida,
+        horaLlegada:servicio.horaLlegada,
+        proveedor : servicio.proveedor
+    });
+    }else if(servicio.tipo=="PaseoEcologico"||servicio.tipo=="paseoEcologico"){
+      const url = `${environment.baseUrl}/servicio/paseoEcologico/${servicio.id}`;
+      return this.request.put(url, {
+        nombre : servicio.nombre,
+        pais : servicio.pais,
+        ciudad : servicio.ciudad,
+        costo : servicio.costo,
+        idioma : servicio.idioma,
+        descripcion : servicio.descripcion,
+        foto:servicio.foto,
+        numeroPersonas : servicio.numeroPersonas,
+        origen:servicio.origen,
+        destino:servicio.destino,
+        horaInicio:servicio.horaInicio,
+        horaFin:servicio.horaFin,
+        proveedor : servicio.proveedor
+    });
+    }else if(servicio.tipo=="Alojamiento"||servicio.tipo=="alojamiento"){
+      const url = `${environment.baseUrl}/servicio/alojamiento/${servicio.id}`;
+      return this.request.put(url, {
+        nombre : servicio.nombre,
+        pais : servicio.pais,
+        ciudad : servicio.ciudad,
+        costo : servicio.costo,
+        idioma : servicio.idioma,
+        descripcion : servicio.descripcion,
+        foto:servicio.foto,
+        numeroPersonas : servicio.numeroPersonas,
+        tipoAlojamiento: servicio.tipoAlojamiento,
+        numeroHabitaciones: servicio.numeroHabitaciones,
+        numeroBanos: servicio.numeroBanos,
+        servicioLimpieza:servicio.servicioLimpieza,
+        servicioWifi:servicio.servicioWifi,
+        proveedor : servicio.proveedor
+    });
+    }else{
+      return this.request.put('', {});
+    }
 
   }
 
 
-  crearServicio(registerForm,tipo,user){
+  crearServicio(registerForm,tipo,user,fotico){
       if(tipo=="Alimentacion"){
         const url = `${environment.baseUrl}/servicio/alimentacion/${user.id}`;
           return this.request.post(url, {
@@ -56,7 +128,7 @@ export class ServicioService {
             costo : registerForm.value.costo,
             idioma : registerForm.value.idioma,
             descripcion : registerForm.value.descripcion,
-            foto:registerForm.value.foto.foto,
+            foto:fotico,
             numeroPersonas : registerForm.value.numeropersonas,
             tipoComida : registerForm.value.tipocomida,
             cantidadPlatos : registerForm.value.cantidadplatos,
@@ -71,7 +143,7 @@ export class ServicioService {
           costo : registerForm.value.costo,
           idioma : registerForm.value.idioma,
           descripcion : registerForm.value.descripcion,
-          foto:registerForm.value.foto.foto,
+          foto:fotico,
           numeroPersonas : registerForm.value.numeropersonas,
           empresa : registerForm.value.empresa,
           tipoTransporte : registerForm.value.tipotransporte,
@@ -90,7 +162,7 @@ export class ServicioService {
           costo : registerForm.value.costo,
           idioma : registerForm.value.idioma,
           descripcion : registerForm.value.descripcion,
-          foto:registerForm.value.foto.foto,
+          foto:fotico,
           numeroPersonas : registerForm.value.numeropersonas,
           origen:registerForm.value.origen,
           destino:registerForm.value.destino,
@@ -107,7 +179,7 @@ export class ServicioService {
           costo : registerForm.value.costo,
           idioma : registerForm.value.idioma,
           descripcion : registerForm.value.descripcion,
-          foto:registerForm.value.foto.foto,
+          foto:fotico,
           numeroPersonas : registerForm.value.numeropersonas,
           tipoAlojamiento: registerForm.value.tipoalojamiento,
           numeroHabitaciones: registerForm.value.numerohabitaciones,
@@ -125,7 +197,7 @@ export class ServicioService {
 //Busca en TODOS los servicios
 getServicioId(id){
     const url = `${environment.baseUrl}/servicio/${id}`;
-      return this.request.get<Servis>(url);
+      return this.request.get<any>(url);
 }
 
  getTodosServicios(){
@@ -135,7 +207,7 @@ getServicioId(id){
 
   eliminarServicio(servicio){
     console.log(servicio);
-      const url = `${environment.baseUrl}/servicio/${servicio.Id}`;
+      const url = `${environment.baseUrl}/servicio/${servicio.id}`;
         return this.http.delete<any>(url);
 
   }

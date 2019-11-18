@@ -5,6 +5,7 @@ import { SesionService } from '../../servicios/sesion.service';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { Usuario } from '../../model/usuario';
 import { UsuarioService } from '../../servicios/usuario.service';
+import { DomSanitizer } from '@angular/platform-browser';
 declare var FB: any;
 
 
@@ -25,7 +26,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private sesionService:SesionService,
     private usuarioService: UsuarioService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private sanitization: DomSanitizer,
+
     ) { }
 
     usuario: Usuario = new Usuario (
@@ -88,14 +91,18 @@ login() {
           console.log(userInfo);
           this.sesionService.login(userInfo.email,userInfo.email).subscribe( res => {
             console.log(res);
-            if(res.tipo !== 'cliente'){
+            if(res.message == 'Credenciales invalidas'){
               this.usuario.nombre = userInfo.first_name;
               this.usuario.nombreUsuario = userInfo.email;
               this.usuario.descripcion = "Ingresaste con facebook";
               this.usuario.contrasena = userInfo.email;
-              //this.usuario.foto =;
+
               this.usuarioService.registrarUsuario(this.usuario).subscribe( xd =>{
+                console.log(xd);
+
                 this.sesionService.login(userInfo.email,userInfo.email).subscribe( res2 => {
+                  console.log(res2);
+
                     this.sesionService.sesion = 'usuario' ;
                     this.sesionService.sesionCambio.next('usuario');
 
@@ -109,6 +116,7 @@ login() {
               })
 
             }else{
+              console.log(res);
               this.sesionService.sesion = 'usuario' ;
               this.sesionService.sesionCambio.next('usuario');
 
@@ -157,5 +165,7 @@ login() {
   registro(){
     this.router.navigate(['register']);
   }
+
+
 
 }

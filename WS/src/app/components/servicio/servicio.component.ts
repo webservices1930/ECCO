@@ -98,7 +98,7 @@ export class ServicioComponent {
         console.log("entro");
         console.log(res);
         this.servicio[0] = res;
-        this.servicioProveedorid = res.proveedor.Id;
+        this.servicioProveedorid = res.proveedor.id
         this.userid = this._sesionService.id;
 
 
@@ -127,22 +127,22 @@ export class ServicioComponent {
 
   }
 
-  public getSantizeUrl(img) {
-    //console.log(img);
-    //console.log(this.sanitization.bypassSecurityTrustUrl(img));
-    return this.sanitization.bypassSecurityTrustUrl(img);
-  }
+  public getSantizeUrl() {
+    let image = "data:image/.jpg;base64, "+this.servicio[0].foto;
+    return this.sanitization.bypassSecurityTrustUrl(image);
+ }
 
   eliminar() {
     this._serviciosService.eliminarServicio(this.servicio[0]).subscribe(
       res =>{
         console.log(res);
+        this.router.navigate(['servicioss']);
+
       },
       errors=>{
         console.log(errors);
       }
     )
-    this.router.navigate(['servicioss']);
   }
 
   editar() {

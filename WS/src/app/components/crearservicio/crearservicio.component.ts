@@ -237,7 +237,7 @@ export class CrearservicioComponent implements OnInit {
     }else{
       this.proveedorService.getProveedorByUsernameJSON(this.user).subscribe( res => {
         console.log(res);
-        this.servicioService.crearServicio(this.registerForm,this.tipoServicio,res).subscribe(
+        this.servicioService.crearServicio(this.registerForm,this.tipoServicio,res,this.base64data).subscribe(
           results => {
             console.log(results);
             this.router.navigate(['servicioss']);
@@ -266,9 +266,7 @@ export class CrearservicioComponent implements OnInit {
   onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-
       reader.readAsBinaryString(event.target.files[0]);
-
       this.ext=event.target.files[0].type;
       reader.onload = (event) => { // called once readAsDataURL is completed
             this.base64data=btoa(reader.result as string);

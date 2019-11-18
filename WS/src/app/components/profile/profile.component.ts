@@ -43,23 +43,20 @@ export class ProfileComponent implements OnInit {
       this.usuarioService.getUsuarioByUsernameJSON(this.user).subscribe( res => {
         this.usuarioMostrar[0] = res;
         this.base64data=this.usuarioMostrar[0].img;
-        this.ext="data:image/"+this.usuarioMostrar[0].tipo;
         console.log(this.usuarioMostrar);
       });
     }else{
       this.proveedorService.getProveedorByUsernameJSON(this.user).subscribe( res => {
         this.usuarioMostrar[0] = res;
         this.base64data=this.usuarioMostrar[0].img;
-        this.ext="data:image/"+this.usuarioMostrar[0].tipo;
         console.log(this.usuarioMostrar);
       });
     }
 
   }
   public getSantizeUrl() {
-   // this.image = "data:image/"+this.usuarioMostrar[0].tipo+";base64, "+this.usuarioMostrar[0].img;
-    //return this.sanitization.bypassSecurityTrustUrl(this.image);
-    return this.usuarioMostrar[0].tipo;
+    let image = "data:image/.jpg;base64, "+this.usuarioMostrar[0].foto;
+    return this.sanitization.bypassSecurityTrustUrl(image);
  }
 
  onSelectFile(event) { // called each time file input changes

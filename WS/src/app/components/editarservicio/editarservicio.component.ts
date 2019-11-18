@@ -33,7 +33,6 @@ export class EditarservicioComponent implements OnInit {
       this._serviciosService.getServicioId(params['id']).subscribe(res => {
           this.servicio[0]=res;
           console.log(this.servicio[0]);
-          this.image=this.servicio[0].img;
           this.userid = this._sesionService.id;
        });
     });
@@ -44,7 +43,8 @@ export class EditarservicioComponent implements OnInit {
   }
 
   public getSantizeUrl() {
-    return this.sanitization.bypassSecurityTrustUrl(this.image);
+    let image = "data:image/.jpg;base64, "+this.servicio[0].foto;
+    return this.sanitization.bypassSecurityTrustUrl(image);
  }
  onSelectFile(event) { // called each time file input changes
   if (event.target.files && event.target.files[0]) {
@@ -52,12 +52,24 @@ export class EditarservicioComponent implements OnInit {
     reader.readAsBinaryString(event.target.files[0]);
     this.ext=event.target.files[0].type;
     reader.onload = (event) => { // called once readAsDataURL is completed
-          this.base64data=btoa(reader.result as string);
+        this.servicio[0].foto=btoa(reader.result as string);
       }
     }
   }
   guardar(){
-    this._serviciosService.updateServicio(this.servicio[0], this.base64data, this.ext);
+    this._serviciosService.updateServicio(this.servicio[0]).subscribe(
+      results => {
+        console.log(results);
+        this.router.navigate(['servicioss']);
+        alert("Se actualizó el servicio satisfactoriamente");
+
+      },
+      error => {
+        console.error(error);
+        alert("No se actualizó el servicio. Por favor intente nuevamente");
+      }
+    )
+
   }
 
 }
