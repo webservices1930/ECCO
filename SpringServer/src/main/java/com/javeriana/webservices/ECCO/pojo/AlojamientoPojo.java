@@ -27,7 +27,15 @@ public class AlojamientoPojo {
     private int numeroPersonas;
     private String tipo;
     private ProveedorPojo proveedor;
-    
+    private String placeId;
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
     
     
     private TipoAlojamiento tipoAlojamiento;
@@ -63,6 +71,7 @@ public class AlojamientoPojo {
         x.setTipo("alojamiento");
         x.setLatitud(p.getLatitud());
         x.setLongitud(p.getLongitud());
+        x.setPlaceId(p.getPlaceId());
         return x;
     }
 

@@ -38,6 +38,17 @@ public class Alojamiento extends Servicio {
 
     private double latitud;
     private double longitud;
+    private String placeId;
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
+    
+    
 
     public double getLatitud() {
         return latitud;
