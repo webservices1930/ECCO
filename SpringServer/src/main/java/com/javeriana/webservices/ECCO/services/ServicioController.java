@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author randy
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/servicio")
 public class ServicioController {
@@ -189,10 +189,11 @@ public class ServicioController {
                 x.setServicioLimpieza(alojamiento.getServicioLimpieza());
                 x.setLatitud(alojamiento.getLatitud());
                 x.setLongitud(alojamiento.getLongitud());
+                x.setPlaceId(alojamiento.getPlaceId());
                 Alojamiento aux =alojamientoRepository.save(x);
                 proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
-                
+                        
                 return ResponseEntity.ok().body(pay.toMap());
             }
             pay.put("message", "proveedor no encontrado");
@@ -231,7 +232,7 @@ public class ServicioController {
                 alojamiento.get().setServicioLimpieza(alojamientoDetails.getServicioLimpieza());
                 alojamiento.get().setLatitud(alojamientoDetails.getLatitud());
                 alojamiento.get().setLongitud(alojamientoDetails.getLongitud());
-            
+                alojamiento.get().setPlaceId(alojamientoDetails.getPlaceId());
             final Alojamiento x = alojamientoRepository.save(alojamiento.get());
             pay.put("message", "servicio actualizado");
             return ResponseEntity.ok().body(pay.toMap());
@@ -509,6 +510,7 @@ public class ServicioController {
                 x.setTipoComida(alimentacion.getTipoComida());
                 x.setLatitud(alimentacion.getLatitud());
                 x.setLongitud(alimentacion.getLongitud());
+                x.setPlaceId(alimentacion.getPlaceId());
                 Alimentacion aux =alimentacionRepository.save(x);
                 proveedor.get().getServicios().add(x);
                 proveedorRepository.save(proveedor.get());
@@ -547,7 +549,7 @@ public class ServicioController {
             alimentacion.get().setTipoComida(alimentacionDetails.getTipoComida());
             alimentacion.get().setLatitud(alimentacionDetails.getLatitud());
             alimentacion.get().setLongitud(alimentacionDetails.getLongitud());
-            
+            alimentacion.get().setPlaceId(alimentacionDetails.getPlaceId());
             final Alimentacion x = alimentacionRepository.save(alimentacion.get());
             return ResponseEntity.ok(pay.toMap());
         }else{

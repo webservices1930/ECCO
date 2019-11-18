@@ -30,6 +30,15 @@ public class AlimentacionPojo {
     private double latitud;
     private double longitud;
 
+    private String placeId;
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
     public static AlimentacionPojo toPojo(Alimentacion p){
         AlimentacionPojo x = new AlimentacionPojo();
         x.setId(p.getId());
@@ -49,6 +58,7 @@ public class AlimentacionPojo {
         x.setCantidadPlatos(p.getCantidadPlatos());
         x.setLatitud(p.getLatitud());
         x.setLongitud(p.getLongitud());
+        x.setPlaceId(p.getPlaceId());
         return x;
     }
 
