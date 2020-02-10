@@ -20,4 +20,4 @@ REST:
 Cliente: https://ws-two-tau.now.sh/
 Servidor:https://servidoreccows.herokuapp.com/
 
-Por favor sigue nuestro API REST: https://github.com/webservices1930/ECCO/blob/master/RutasRecursosREST%20-%20Hoja%201.pdf
+Por favor sigue nuestro "[API REST](https://github.com/webservices1930/ECCO/blob/master/RutasRecursosREST%20-%20Hoja%201.pdf)"
